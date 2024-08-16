@@ -11306,6 +11306,7 @@ a:focus {
 .progress-sm {
     height: .5rem
 }
+
 .dropdown .dropdown-menu {
     font-size: .85rem
 }
@@ -11653,6 +11654,13 @@ a:focus {
     z-index: 1
 }
 
+.sidebar-brand-icon img {
+    max-width: 80%;
+    /* Atur sesuai kebutuhan */
+    height: auto;
+    /* Jaga agar gambar tetap proporsional */
+}
+
 .sidebar .sidebar-brand .sidebar-brand-icon i {
     font-size: 2rem
 }
@@ -11703,6 +11711,11 @@ a:focus {
 @media (min-width:768px) {
     .sidebar {
         width: 14rem !important
+    }
+
+    .sidebar-brand-text {
+        display: inline;
+        margin: 30px;
     }
 
     .sidebar .nav-item .collapse {
@@ -12585,6 +12598,7 @@ form.user .btn-user {
     clip: rect(0, 900px, 0, 0);
     animation: noise-anim-2 3s infinite linear alternate-reverse
 }
+
 body.sidebar-toggled footer.sticky-footer {
     width: 100%
 }
