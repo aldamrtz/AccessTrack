@@ -5,16 +5,16 @@ class Kakses extends CI_Controller {
 
     public function createCard() {
         // ambil data pengguna dari session atau parameter
-        $user_id = $this->session->userdata('user_id'); // Tambahkan tanda titik koma (;) yang hilang
+        $user_id = $this->session->userdata('user_id'); 
 
         // Cek berapa kali pengguna telah mengajukan kartu akses
         $this->load->model('KartuAkses_model'); //terhubung ke model KartuAkses_model
         $submission_count = $this->KartuAkses_model->getSubmissionCount($user_id);
 
         if ($submission_count >= 7) {
-            // if pengajuan sudah mencapat batas max, beri pemberitahuan
+            // if pengajuan sudah mencapai batas max, beri pemberitahuan
             $this->session->set_flashdata('error', 'Sudah melebihi batas pengajuan!');
-            redirect('kakses/errorPage'); // redirect ke halaman error atau berikan pesan error
+            redirect('kakses/errorPage'); 
         } else {
             // logic u/membuat pengajuan kartu akses baru
             $data = array(
@@ -39,7 +39,7 @@ class Kakses extends CI_Controller {
             if ($submission) {
                 // ditemukan, update statusnya
                 $data = array('status' => $status);
-                $this->KartuAkses_model->updateCard($id, $data); // Perbaikan penamaan fungsi updateCard
+                $this->KartuAkses_model->updateCard($id, $data); 
 
                 // notif update berhasil
                 $this->session->set_flashdata('success', 'Status Pengajuan berhasil diupdate');
@@ -48,7 +48,7 @@ class Kakses extends CI_Controller {
                 $this->session->set_flashdata('error', 'Pengajuan Tidak Ditemukan');
             } 
         } else {
-            $this->session->set_flashdata('error', 'Status Tidak Valid'); // Perbaikan penulisan $this->session
+            $this->session->set_flashdata('error', 'Status Tidak Valid'); 
         }
         $this->sendNotification($id, 'Status pengajuan kartu akses Anda telah diperbarui menjadi: ' . $status);
         redirect('kakses/adminPage');
@@ -65,18 +65,18 @@ class Kakses extends CI_Controller {
 
     public function validatePayment($id) {
         $this->load->model('KartuAkses_model');
-        $submission = $this->KartuAkses_model->getCardByID($id); // Pastikan nama fungsi benar-benar case-sensitive
+        $submission = $this->KartuAkses_model->getCardByID($id);
 
         // mengecek tipe pengguna
-        if ($submission) { // Perbaikan penulisan variabel submission
+        if ($submission) { 
             if ($submission->user_type == 'mahasiswa') {
-                // mengecek apakah pembayaran sudah dilakukan (melalui kolo payment_status)
+                // mengecek apakah pembayaran sudah dilakukan (melalui kolom payment_status)
                 if ($submission->payment_status == 'paid') {
-                    $this->KartuAkses_model->updateCard($id, array('status' => 'Sedang Diproses')); // Perbaikan penamaan fungsi updateCard dan tanda panah
+                    $this->KartuAkses_model->updateCard($id, array('status' => 'Sedang Diproses')); 
                     $this->session->set_flashdata('success', 'Pembayaran telah divalidasi. Pengajuan sedang diproses.'); //notifikasi bahwa pembayaran valid dan pengajuan diteruskan
                 } else {
                     $this->session->set_flashdata('error', 'Pembayaran belum dilakukan atau tidak valid'); // pembayaran belum dilakukan atau tidak valid, tolak pengajuan
-                    redirect('kakses/paymentPage'); // ke halaman pembayaran
+                    redirect('kakses/paymentPage'); 
                 }
             } else {
                 // jika pengguna dosen dan staf, tidak perlu verifikasi pembayaran
@@ -87,12 +87,12 @@ class Kakses extends CI_Controller {
             $this->session->set_flashdata('error', 'Pengajuan tidak ditemukan.');
         }
         $this->sendNotification($id, 'Pembayaran Anda telah divalidasi. Pengajuan kartu akses Anda sedang diproses.');
-        redirect('kakses/adminPage'); // Pindahkan redirect ke bawah setelah notifikasi
+        redirect('kakses/adminPage'); 
     }
 
 
     public function generateReceipt($id) {
-        $this->load->model('KartuAkses_model'); // Perbaikan case-sensitive nama model
+        $this->load->model('KartuAkses_model'); 
 
         // ambil data pengajuan berdasarkan ID
         $submission = $this->KartuAkses_model->getCardById($id);
@@ -100,7 +100,7 @@ class Kakses extends CI_Controller {
             if ($submission->user_type == 'mahasiswa') {
                 $receipt_data = array(
                     'user_name' => $submission->user_name,
-                    'tanggal_kwitansi' => date('Y-m-d H:i:s'), // Perbaikan penamaan kunci dan format tanggal
+                    'tanggal_kwitansi' => date('Y-m-d H:i:s'), 
                     'jumlah_pembayaran' => 'Rp 40.000',
                     'keterangan' => 'Pembayaran Kartu Akses',
                     'no_kwitansi' => 'KW-' . strtoupper(uniqid()) // example format no kwitansi
@@ -109,7 +109,7 @@ class Kakses extends CI_Controller {
                 $this->load->view('receipt_view', $receipt_data); // view yg menampilkan kwitansi
             } else {
                 $this->session->set_flashdata('error', 'Pembayaran belum dilakukan atau tidak valid.');
-                redirect('kakses/adminPage'); // Perbaikan penulisan redirect
+                redirect('kakses/adminPage');
             }
         } else {
             $this->session->set_flashdata('error', 'Pengajuan tidak ditemukan.');
@@ -120,7 +120,7 @@ class Kakses extends CI_Controller {
 
     public function sendNotification($user_id, $message) {
         $this->load->model('User_model');
-        $submission = $this->KartuAkses_model->getCardById($user_id); // Perbaikan penamaan variabel id
+        $submission = $this->KartuAkses_model->getCardById($user_id); 
 
         if ($submission) {
             // Ambil data pengguna berdasarkan ID pengajuan
