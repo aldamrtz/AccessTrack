@@ -10410,6 +10410,7 @@ a:focus {
   font-weight: 700;
 }
 
+/* Sidebar Toggle Button */
 .sidebar #sidebarToggle {
   width: 2.5rem;
   height: 2.5rem;
@@ -10420,7 +10421,7 @@ a:focus {
 
 .sidebar #sidebarToggle::after {
   font-weight: 900;
-  content: '\f104';
+  content: '\f104'; /* Left arrow icon */
   font-family: 'Font Awesome 5 Free';
   margin-right: 0.1rem;
 }
@@ -10433,19 +10434,34 @@ a:focus {
   outline: none;
 }
 
+/* Sidebar Toggle Behavior */
 .sidebar.toggled {
-  width: 0 !important;
-  overflow: hidden;
+  width: 0 !important;  /* Sidebar shrinks to 0 width */
+  overflow: hidden;      /* Hides overflow content */
 }
 
+/* Change Icon when Sidebar is Toggled */
 .sidebar.toggled #sidebarToggle::after {
-  content: '\f105';
+  content: '\f105'; /* Right arrow icon */
   font-family: 'Font Awesome 5 Free';
   margin-left: 0.25rem;
 }
 
+/* Hiding Additional Sidebar Content */
 .sidebar.toggled .sidebar-card {
   display: none;
+}
+
+/* Hide "Access Track" Text and Adjust Logo Size when Toggled */
+.sidebar.toggled .sidebar-brand-text {
+  display: none;  /* Hide the text */
+}
+
+.sidebar.toggled .sidebar-brand-icon {
+  width: 40px;    /* Ensure the logo is visible */
+  height: 40px;
+  margin: 0 auto; /* Center the logo */
+  display: block;
 }
 
 .sidebar .sidebar-brand {

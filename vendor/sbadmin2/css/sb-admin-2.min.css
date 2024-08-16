@@ -11306,15 +11306,6 @@ a:focus {
 .progress-sm {
     height: .5rem
 }
-
-.rotate-15 {
-    transform: rotate(15deg)
-}
-
-.rotate-n-15 {
-    transform: rotate(-15deg)
-}
-
 .dropdown .dropdown-menu {
     font-size: .85rem
 }
@@ -12594,17 +12585,6 @@ form.user .btn-user {
     clip: rect(0, 900px, 0, 0);
     animation: noise-anim-2 3s infinite linear alternate-reverse
 }
-
-footer.sticky-footer {
-    padding: 2rem 0;
-    flex-shrink: 0
-}
-
-footer.sticky-footer .copyright {
-    line-height: 1;
-    font-size: .8rem
-}
-
 body.sidebar-toggled footer.sticky-footer {
     width: 100%
 }
