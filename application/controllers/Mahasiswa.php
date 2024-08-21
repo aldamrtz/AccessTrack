@@ -36,12 +36,13 @@ class Mahasiswa extends CI_Controller {
                     'email' => $email,
                     'ktm' => $ktm,
                     'bukti_bayar' => $bukti_bayar,
-                    'tanggal_pengajuan' => $tanggal_pengajuan,
-                    'status' => $status,
+                    'tanggal_pengajuan' => date('Y-m-d H:i:s'),
+                    'status' => 'Belum Diproses',
                 );
 
                 $this->KartuAkses_model->createCard($data);
-                $this->sendEmailNotification($email, 'Pengajuan Kartu Akses', 'Pengajuan kartu akses Anda telah diterima dan sedang diproses.');
+                $kwitansi_path = $this->generateReceipt($data);
+                $this->sendEmailWithAttachment()($email, 'Pengajuan Kartu Akses', 'Pengajuan kartu akses Anda telah diterima dan sedang diproses.');
                 $this->session->set_flashdata('success', 'Pengajuan kartu akses berhasil. Silakan cek email untuk notifikasi.');
                 redirect('mahasiswa/successPage');
             } else {
@@ -68,17 +69,18 @@ class Mahasiswa extends CI_Controller {
      private function sendEmailWithAttachment($to_email, $subject, $message, $attachment_path) {
         $this->load->library('email');
 
-        $this->email->from('no-reply@domain.com', 'Sistem Kartu Akses');
+        $this->email->from('no-reply@domain.com', 'Sistem Kartu Akses UNJANI');
         $this->email->to($to_email);
 
         $this->email->subject($subject);
         $this->email->message($message);
-        $this->email->message($attachment_path);
+        $this->email->message($attachment_path); //melampirkan kwitansi
 
         $this->email->send();
      }
 
      private function generateReceipt($data) {
+        // dalam bentuk PDF
         $this->load->library('pdf');
 
         $pdf_content = 'Kwitansi Pembayaran Kartu Akses' . "\n" .
@@ -95,7 +97,7 @@ class Mahasiswa extends CI_Controller {
         return $pdf_file_path
      }
 
-     public funtion notifyCompletion($id) {
+     public function notifyCompletion($id) {
         $submission = $this->KartuAkses_model->getCardByID($id);
 
         if ($submission && $submission->status == 'Selesai dan Belum Diambil') {

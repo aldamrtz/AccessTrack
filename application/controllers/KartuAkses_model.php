@@ -17,9 +17,9 @@ class KartuAkses_model extends CI_Model {
         return $query->row(); // Mengembalikan satu baris data
     }
     // Metode untuk mengupdate status pengajuan kartu akses
-    public function updateCard($id, $data) {
+    public function updateCard($id, $status) {
         $this->db->where('id', $id);
-        $this->db->update('kartu_akses', $data);
+        $this->db->update('kartu_akses', array('status' => $status));
     }
 
     
@@ -41,4 +41,10 @@ class KartuAkses_model extends CI_Model {
         $this->db->insert('notifications', $data); // Simpan notifikasi ke tabel 'notifications'
     }
 
+    // Mendapatkan semua pengajuan oleh mahasiswa 
+    public function getSubmissionsByUserId($user_id) {
+        $this->db->where('user_id', $user_id);
+        $query = $this->db->get('kartu_akses');
+        return $query->result();
+    }
 }
