@@ -74,7 +74,8 @@ class Mahasiswa extends CI_Controller {
 
         $this->email->subject($subject);
         $this->email->message($message);
-        $this->email->attach()($attachment_path); //melampirkan kwitansi
+        $this->sendEmailWithAttachment($email, 'Pengajuan Kartu Akses', 'Pengajuan kartu akses Anda telah diterima dan sedang diproses.', $kwitansi_path);
+
 
         $this->email->send();
      }
@@ -98,7 +99,7 @@ class Mahasiswa extends CI_Controller {
      }
 
      public function notifyCompletion($id) {
-        $submission = $this->KartuAkses_model->getCardByID($id);
+        $submission = $this->KartuAkses_model->getCardById($id);
 
         if ($submission && $submission->status == 'Selesai dan Belum Diambil') {
             $message = 'Kartu Akses Anda telah selesai diproses dan siap diambil. Harap perlihatkan kwitansi pembayaran Anda saat pengambilan kartu akses.';
