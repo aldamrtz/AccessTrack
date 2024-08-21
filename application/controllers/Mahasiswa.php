@@ -51,7 +51,7 @@ class Mahasiswa extends CI_Controller {
             }
         }
     }
-     private funtion uploadFile($field_name) {
+     private function uploadFile($field_name) {
 
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = 'pdf|jpg|png';
@@ -74,7 +74,7 @@ class Mahasiswa extends CI_Controller {
 
         $this->email->subject($subject);
         $this->email->message($message);
-        $this->email->message($attachment_path); //melampirkan kwitansi
+        $this->email->attach()($attachment_path); //melampirkan kwitansi
 
         $this->email->send();
      }
@@ -89,12 +89,12 @@ class Mahasiswa extends CI_Controller {
                        'Tanggal: ' . $data['tanggal_pengajuan'] . "\n" . 
                        'Jumlah: Rp 40.000 ';
         
-        $pdf_file_path = './receipts/kwitansi_' / $data['nim'] . '.pdf';
+        $pdf_file_path = './receipts/kwitansi_' . $data['nim'] . '.pdf';
         $this->pdf->loadHtml($pdf_content);
         $this->pdf->render();
         file_put_contents($pdf_file_path, $this->pdf->output());
 
-        return $pdf_file_path
+        return $pdf_file_path;
      }
 
      public function notifyCompletion($id) {
