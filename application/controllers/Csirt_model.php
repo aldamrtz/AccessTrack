@@ -1,6 +1,10 @@
 <?php
 class Csirt_model extends CI_Model {
 
+    public function createLaporan($data) {
+        $this->db->insert('csirt_laporan', $data);
+    }
+
     public function getAllLaporan() {
         $query = $this->db->get('csirt_laporan');
         return $query->result();
