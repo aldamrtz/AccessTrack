@@ -59,7 +59,7 @@ class StafCsirt extends CI_Controller {
 
         $this->load->library('upload', $config);
 
-        if ($this-upload->do_upload($field_name)) {
+        if ($this->upload->do_upload($field_name)) {
             return $this->upload->data('file_name');
         } else {
             return false;
@@ -73,7 +73,7 @@ class StafCsirt extends CI_Controller {
         $this->email->to($to_email);
 
         $this->email->subject($subject);
-        $this_>email->message($message);
+        $this->email->message($message);
 
         $this->email->send();
     }
