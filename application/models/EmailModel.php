@@ -1,19 +1,21 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
 class EmailModel extends CI_Model {
 
-    public function insert_pengajuan_email($data) {
-        $this->db->insert('pengajuan_email', $data);
-        return $this->db->insert_id();
+    public function insert($data) {
+        // Periksa apakah NIM sudah ada
+        if ($this->db->get_where('pengajuan_email', ['nim' => $data['nim']])->num_rows() > 0) {
+            return FALSE; // NIM sudah ada, tidak bisa disimpan
+        } else {
+            return $this->db->insert('pengajuan_email', $data);
+        }
     }
 
-    public function check_existing_email($email_diajukan) {
-        $this->db->where('email_diajukan', $email_diajukan);
+    public function isEmailExist($email) {
+        $this->db->where('email_diajukan', $email);
         $query = $this->db->get('pengajuan_email');
-        return $query->row();
-    }
-
-    public function get_all_pengajuan_email() {
-        return $this->db->get('pengajuan_email')->result_array();
+        return $query->num_rows() > 0;
     }
 }
 ?>
