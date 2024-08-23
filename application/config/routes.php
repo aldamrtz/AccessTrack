@@ -52,3 +52,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'auth';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+$route['captcha'] = 'CaptchaController/generateCaptcha';
+$route['check_email_availability'] = 'EmailController/check_email_availability';

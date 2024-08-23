@@ -8,21 +8,34 @@ class EmailController extends CI_Controller {
         $this->load->model('EmailModel');
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
+        $this->load->library('session');
     }
 
     public function index() {
-        $data['captcha'] = $this->generateCaptcha();
+        $data['program_studi'] = $this->EmailModel->getProgramStudi();
         $this->load->view('pengajuan_email', $data);
     }
 
     public function submit() {
+        // Dapatkan input dari user
+        $email_diajukan = $this->input->post('email_diajukan');
+        
+        // Tambahkan domain @if.unjani.ac.id jika belum ada
+        if (strpos($email_diajukan, '@if.unjani.ac.id') === false) {
+            $email_diajukan .= '@if.unjani.ac.id';
+        }
+        
+        // Set input email yang sudah ditambahkan domain
+        $_POST['email_diajukan'] = $email_diajukan;
+
+        // Validasi form
         $this->form_validation->set_rules('nama', 'Nama', 'required');
         $this->form_validation->set_rules('nim', 'Nomor Induk Mahasiswa', 'required');
         $this->form_validation->set_rules('prodi', 'Program Studi', 'required');
         $this->form_validation->set_rules('email_diajukan', 'Email yang Diajukan', 'required|valid_email|callback_checkEmailExistence');
         $this->form_validation->set_rules('email_pengguna', 'Email Pengguna', 'required|valid_email');
 
-        // Cek apakah file KTM diupload
+        // Validasi file KTM
         if (empty($_FILES['ktm']['name'])) {
             $this->form_validation->set_rules('ktm', 'Kartu Tanda Mahasiswa', 'required');
         }
@@ -30,10 +43,8 @@ class EmailController extends CI_Controller {
         $this->form_validation->set_rules('captcha', 'Captcha', 'required|callback_validateCaptcha');
 
         if ($this->form_validation->run() == FALSE) {
-            $data['captcha'] = $this->generateCaptcha();
-            $this->load->view('pengajuan_email', $data);
+            $this->load->view('pengajuan_email');
         } else {
-            // Upload KTM
             $ktm = '';
             if (!empty($_FILES['ktm']['name'])) {
                 $config['upload_path'] = './uploads/';
@@ -45,18 +56,16 @@ class EmailController extends CI_Controller {
                     $uploadData = $this->upload->data();
                     $ktm = $uploadData['file_name'];
                 } else {
-                    // Jika gagal mengupload, tambahkan pesan error
                     $this->session->set_flashdata('error', $this->upload->display_errors());
                     redirect('EmailController');
                 }
             }
 
-            // Menyimpan data ke database
             $data = array(
                 'nama' => $this->input->post('nama'),
                 'nim' => $this->input->post('nim'),
                 'prodi' => $this->input->post('prodi'),
-                'email_diajukan' => $this->generateEmail($this->input->post('email_diajukan')),
+                'email_diajukan' => $email_diajukan,
                 'email_pengguna' => $this->input->post('email_pengguna'),
                 'ktm' => $ktm
             );
@@ -70,7 +79,7 @@ class EmailController extends CI_Controller {
             redirect('EmailController');
         }
     }
-
+    
     public function checkEmailExistence($email) {
         if ($this->EmailModel->isEmailExist($email)) {
             $this->form_validation->set_message('checkEmailExistence', 'Email yang diajukan sudah ada, silakan coba email lain.');
@@ -80,10 +89,43 @@ class EmailController extends CI_Controller {
         }
     }
 
-    public function generateCaptcha() {
-        $captchaStr = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 6);
-        $this->session->set_userdata('captcha', $captchaStr);
-        return $captchaStr;
+    public function generateEmail($emailPrefix) {
+        $emailDomain = '@if.unjani.ac.id';
+        $fullEmail = $emailPrefix . $emailDomain;
+
+        $counter = 1;
+        while ($this->EmailModel->isEmailExist($fullEmail)) {
+            $fullEmail = $emailPrefix . $counter . $emailDomain;
+            $counter++;
+        }
+
+        return $fullEmail;
+    }
+
+    public function check_email_availability() {
+        $email_prefix = $this->input->post('email_diajukan');
+        $email_full = $email_prefix . '@if.unjani.ac.id';
+
+        if ($this->EmailModel->isEmailExist($email_full)) {
+            // Generate alternative usernames
+            $suggestions = [];
+            $counter = 1;
+            while(count($suggestions) < 3) {
+                $new_username = $email_prefix . $counter;
+                $new_email = $new_username . '@if.unjani.ac.id';
+                if (!$this->EmailModel->isEmailExist($new_email)) {
+                    $suggestions[] = $new_username;
+                }
+                $counter++;
+            }
+
+            echo json_encode([
+                'status' => 'taken',
+                'suggestions' => $suggestions
+            ]);
+        } else {
+            echo json_encode(['status' => 'available']);
+        }
     }
 
     public function validateCaptcha($input) {
@@ -93,20 +135,6 @@ class EmailController extends CI_Controller {
             $this->form_validation->set_message('validateCaptcha', 'Captcha yang dimasukkan salah.');
             return FALSE;
         }
-    }
-
-    public function generateEmail($emailPrefix) {
-        $emailDomain = '@if.unjani.ac.id';
-        $fullEmail = $emailPrefix . $emailDomain;
-
-        // Check if the email already exists and append number if necessary
-        $counter = 1;
-        while ($this->EmailModel->isEmailExist($fullEmail)) {
-            $fullEmail = $emailPrefix . $counter . $emailDomain;
-            $counter++;
-        }
-
-        return $fullEmail;
     }
 }
 ?>
