@@ -25,7 +25,7 @@ class User extends CI_Controller {
     }
 
     private function loadSubmissionForm() {
-        $role = $->getUserRole();
+        $role = $this->getUserRole();
         $data = $this->prepareFormData($role);
         $this->load->view('user/form_pengajuan', $data);
     }
