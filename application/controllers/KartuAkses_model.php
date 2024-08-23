@@ -44,7 +44,7 @@ class KartuAkses_model extends CI_Model {
     }
 
     // Menyimpan notifikasi ke dalam tabel notifikasi
-    public function sendNotification($data) {
+    public function saveNotification($data) {
         $this->db->insert('notifications', $data);
     }
 
