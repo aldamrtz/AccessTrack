@@ -11,7 +11,7 @@ class User extends CI_Controller {
 
     public function handleKartuAksesSubmission() {
         $role = $this->getUserRole();
-        $this->setValidationRule($role);
+        $this->setValidationRules($role);
 
         if ($this->form_validation->run() == FALSE) {
             $this->loadSubmissionForm();
@@ -25,12 +25,12 @@ class User extends CI_Controller {
     }
 
     private function loadSubmissionForm() {
-        $role = $this->getUserRole();
+        $role = $->getUserRole();
         $data = $this->prepareFormData($role);
         $this->load->view('user/form_pengajuan', $data);
     }
 
-    perivate function setValidationRules($role) {
+    private function setValidationRules($role) {
         if ($role == 'mahasiswa') {
             $this->form_validation->set_rules('ktm', 'KTM', 'required');
             $this->form_validation->set_rules('bukti_bayar', 'Bukti Bayar', 'required');
@@ -53,7 +53,7 @@ class User extends CI_Controller {
             $data['nid'] = $this->session->userdata('nid');
             $data['prodi'] = $this->session->userdata('prodi');
             $data['fakultas'] = $this->session->userdata('fakultas');
-        } elseif (4role == 'staf') {
+        } elseif ($role == 'staf') {
             $data['nip'] = $this->session->userdata('nip');
             $data['departemen'] = $this->session->userdata('departemen');
         }
@@ -85,11 +85,11 @@ class User extends CI_Controller {
 
     private function prepareSubmissionData($role, $document) {
         $data = array(
-            'user_id' > $this->session->userdata('user_id'),
-            'nama' > $this->session->userdata('nama'),
-            'email' > $this->session->userdata('email'),
-            'tanggal_pengajuan' > date('Y-m-d H:i:s'),
-            'status' > 'Belum Diproses'
+            'user_id' => $this->session->userdata('user_id'),
+            'nama' => $this->session->userdata('nama'),
+            'email' => $this->session->userdata('email'),
+            'tanggal_pengajuan' => date('Y-m-d H:i:s'),
+            'status' => 'Belum Diproses'
         );
 
         if ($role == 'mahasiswa') {
@@ -109,31 +109,34 @@ class User extends CI_Controller {
         return $data;
     }
 
-    //Mengunggah file ke server
+    // Mengunggah file ke server
     private function uploadFile($field_name) {
-        'upload_path' => './uploads/',
-        'allowed_types' => 'pdf|jpg|png',
-        'max_sixe' => 2048
-    };
-    $this->load->library('upload', $config);
+        $config = array(
+            'upload_path' => './uploads/',
+            'allowed_types' => 'pdf|jpg|png',
+            'max_size' => 2048
+        );
 
-    if($this->upload->do_upload($field_name)) {
-        return $this->upload->data('file_name');
-    } else {
-        return false;
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload($field_name)) {
+            return $this->upload->data('file_name');
+        } else {
+            return false;
+        }
     }
 
     private function sendNotification($role, $data) {
         if($role == 'mahasiswa') {
             $kwitansi_path = $this->generateReceipt($data);
-            $this->sendEmailWitahAttachment($data['email'], 'Pengajuan Kartu Akses', 'Pengajuan kartu akses Anda telah diterima dan sedang diproses.', $kwitansi_path);
+            $this->sendEmailWithAttachment($data['email'], 'Pengajuan Kartu Akses', 'Pengajuan kartu akses Anda telah diterima dan sedang diproses.', $kwitansi_path);
         } else {
-            $this->sendNotification($data['email'], 'Pengajuan Kartu Akses', 'Pengajuan kartu akses Anda telah diterima dan sedang diproses.');
+            $this->sendEmailNotification($data['email'], 'Pengajuan Kartu Akses', 'Pengajuan kartu akses Anda telah diterima dan sedang diproses.');
         }
     }
 
-    //Mengirimkan email dengan lampiran
-    private function sendEmailWitahAttachment($to_email, $subject, $message, $attachment_path) {
+    // Mengirimkan email dengan lampiran
+    private function sendEmailWithAttachment($to_email, $subject, $message, $attachment_path) {
         $this->load->library('email');
 
         $this->email->from('no-reply@domain.com', 'Sistem Kartu Akses UNJANI');
