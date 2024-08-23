@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    background-color: #4CAF50;
+    /* Green background similar to your image */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 350px;
+}
+
+.login-container img.logo {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+.login-container h2 {
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.login-container h3 {
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.captcha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.captcha img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+    color: #fff;
+}
+
+.error {
+    color: red;
+    margin-top: 10px;
+}
