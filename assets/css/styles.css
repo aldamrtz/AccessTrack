@@ -1,55 +1,56 @@
 body {
-    background-color: #f5f5fa;
+	background-color: #f5f5fa;
 }
 
 .card {
-    background-color: #ffffff;
-    border-radius: 8px;
-    border: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	background-color: #ffffff;
+	border-radius: 8px;
+	border: none;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-    color: #5a189a;
-    font-weight: bold;
+	color: #5a189a;
+	font-weight: bold;
 }
 
 .form-label {
-    font-weight: 600;
-    color: #5a189a;
+	font-weight: 600;
+	color: #5a189a;
 }
 
-.form-control, .form-select {
-    border-radius: 6px;
-    border: 1px solid #ced4da;
-    padding: 10px;
+.form-control,
+.form-select {
+	border-radius: 6px;
+	border: 1px solid #ced4da;
+	padding: 10px;
 }
 
 .btn-primary {
-    background-color: #6a0dad;
-    border-color: #6a0dad;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+	background-color: #6a0dad;
+	border-color: #6a0dad;
+	transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn-primary:hover {
-    background-color: #4b0082;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	background-color: #4b0082;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Tambahan untuk tabel keterangan */
 .table-keterangan {
-    margin-top: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+	margin-top: 20px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
 }
 
 .table-keterangan th {
-    background-color: #6a0dad;
-    color: white;
-    text-align: center;
+	background-color: #6a0dad;
+	color: white;
+	text-align: center;
 }
 
 .table-keterangan td {
-    padding: 10px;
-    text-align: left;
+	padding: 10px;
+	text-align: left;
 }

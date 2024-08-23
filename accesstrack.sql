@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 15 Agu 2024 pada 08.14
+-- Waktu pembuatan: 16 Agu 2024 pada 09.09
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `accesstrack`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `login`
+--
+
+CREATE TABLE `login` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `login`
+--
+
+INSERT INTO `login` (`id`, `email`, `password`) VALUES
+(1, 'user1@example.com', 'password123'),
+(2, 'user2@example.com', 'password456');
 
 -- --------------------------------------------------------
 
@@ -87,9 +107,81 @@ INSERT INTO `pegawai` (`id`, `nip_nid`, `nama`) VALUES
 (4, '412159746', 'Dra. Indrya Ami Ruliyati Darsono M.A.'),
 (5, '412152671', 'Dr. Asep Kurniawan S.E., M.T., M.I.P., ASCA., CIBA.');
 
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pelaporan_csirt`
+--
+
+CREATE TABLE `pelaporan_csirt` (
+  `id_laporan` int(11) NOT NULL,
+  `id_pengguna` int(11) NOT NULL,
+  `tanggal_laporan` date NOT NULL,
+  `namaWebsite` varchar(255) NOT NULL,
+  `deskripsi_insiden` text NOT NULL,
+  `status_laporan` enum('Belum Diproses','Sedang Diproses','Selesai') DEFAULT 'Belum Diproses',
+  `kategori_insiden` varchar(255) DEFAULT NULL,
+  `lampiran` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `pelaporan_csirt`
+--
+
+INSERT INTO `pelaporan_csirt` (`id_laporan`, `id_pengguna`, `tanggal_laporan`, `namaWebsite`, `deskripsi_insiden`, `status_laporan`, `kategori_insiden`, `lampiran`) VALUES
+(1, 1, '2024-08-16', 'www.contohwebsite.com', 'Terjadi downtime pada website utama.', 'Belum Diproses', 'Downtime', 'lampiran1.pdf'),
+(2, 2, '2024-08-17', 'www.websitehacked.com', 'Terdeteksi aktivitas hacking pada server.', 'Sedang Diproses', 'Hacking', 'lampiran2.pdf');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pengajuan_email`
+--
+
+CREATE TABLE `pengajuan_email` (
+  `id` int(11) NOT NULL,
+  `nim` varchar(20) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `prodi` varchar(100) NOT NULL,
+  `email_diajukan` varchar(100) NOT NULL,
+  `email_pengguna` varchar(100) NOT NULL,
+  `ktm` varchar(255) NOT NULL,
+  `tgl_pengajuan` date NOT NULL,
+  `status_pengajuan` enum('Pending','Approved','Rejected') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pengajuan_ka`
+--
+
+CREATE TABLE `pengajuan_ka` (
+  `id_KA` int(11) NOT NULL,
+  `id_pengguna` int(11) NOT NULL,
+  `id_pengajuan` int(11) NOT NULL,
+  `kwitansi` varchar(255) DEFAULT NULL,
+  `Date` date DEFAULT NULL,
+  `ketPengajuan` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `pengajuan_ka`
+--
+
+INSERT INTO `pengajuan_ka` (`id_KA`, `id_pengguna`, `id_pengajuan`, `kwitansi`, `Date`, `ketPengajuan`) VALUES
+(1, 1, 101, 'KW12345', '2024-08-16', 'Pengajuan untuk akses ke area XYZ'),
+(2, 2, 102, 'KW12346', '2024-08-17', 'Pengajuan untuk akses ke area ABC');
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indeks untuk tabel `login`
+--
+ALTER TABLE `login`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeks untuk tabel `mahasiswa`
@@ -104,8 +196,32 @@ ALTER TABLE `pegawai`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `pelaporan_csirt`
+--
+ALTER TABLE `pelaporan_csirt`
+  ADD PRIMARY KEY (`id_laporan`);
+
+--
+-- Indeks untuk tabel `pengajuan_email`
+--
+ALTER TABLE `pengajuan_email`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `pengajuan_ka`
+--
+ALTER TABLE `pengajuan_ka`
+  ADD PRIMARY KEY (`id_KA`);
+
+--
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
+
+--
+-- AUTO_INCREMENT untuk tabel `login`
+--
+ALTER TABLE `login`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `mahasiswa`
@@ -118,6 +234,24 @@ ALTER TABLE `mahasiswa`
 --
 ALTER TABLE `pegawai`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT untuk tabel `pelaporan_csirt`
+--
+ALTER TABLE `pelaporan_csirt`
+  MODIFY `id_laporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `pengajuan_email`
+--
+ALTER TABLE `pengajuan_email`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `pengajuan_ka`
+--
+ALTER TABLE `pengajuan_ka`
+  MODIFY `id_KA` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
