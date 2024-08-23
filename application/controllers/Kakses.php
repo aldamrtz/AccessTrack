@@ -31,7 +31,7 @@ class Kakses extends CI_Controller {
         $allowed_statuses = ['Belum Diproses', 'Sedang Diproses', 'Selesai'];
 
         if (in_array($status, $allowed_statuses)) {
-            $this->KartuAkses_model->updateStatusPengajuan($id, $status);
+            $this->KartuAkses_model->updateCard($id, $status);
             $this->session->set_flashdata('success', 'Status pengajuan berhasil diperbarui');
         } else {
             $this->session->set_flashdata('error', 'Status tidak valid');
