@@ -66,7 +66,7 @@ class User extends CI_Controller {
         if ($document) {
             $data = $this->prepareSubmissionData($role, $document);
             $this->KartuAkses_model->createCard($data);
-            $this->sendNotification($role, $data);
+            $this->sendNotificationBasedOnRole($role, $data);
             $this->redirectToSuccessPage();
         } else {
             $this->redirectToFormWithError();
@@ -126,7 +126,7 @@ class User extends CI_Controller {
         }
     }
 
-    private function sendNotification($role, $data) {
+    private function sendNotificationBasedOnRole($role, $data) {
         if($role == 'mahasiswa') {
             $kwitansi_path = $this->generateReceipt($data);
             $this->sendEmailWithAttachment($data['email'], 'Pengajuan Kartu Akses', 'Pengajuan kartu akses Anda telah diterima dan sedang diproses.', $kwitansi_path);
