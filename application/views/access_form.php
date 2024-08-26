@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pengajuan Kartu Akses</title>
-    <!-- Bootstrap CSS -->
+    <!-- Memuat CSS Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CSS Internal -->
     <style>
         body {
             background-color: #f5f5fa;
@@ -44,56 +45,66 @@
             background-color: #4b0082;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-
-        .btn-secondary {
-            background-color: #a7a7cc;
-            border-color: #a7a7cc;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            background-color: #8a8aab;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
     </style>
 </head>
 <body>
     <div class="container my-5">
         <div class="card shadow-lg p-4">
             <h2 class="text-center mb-4">Pengajuan Kartu Akses</h2>
-            <form method="post" action="<?= base_url('access/submit'); ?>" enctype="multipart/form-data">
-                <!-- Nama Lengkap -->
+            <form method="post" action="<?= base_url('access/submit'); ?>">
+                <!-- Pilih Jenis Pemohon -->
                 <div class="mb-3">
-                    <label for="fullName" class="form-label">Nama Lengkap</label>
-                    <input type="text" class="form-control" id="fullName" name="fullName" required>
-                </div>
-
-                <!-- NIM/NID/NIP -->
-                <div class="mb-3">
-                    <label for="identityNumber" class="form-label">NIM/NID/NIP</label>
-                    <input type="text" class="form-control" id="identityNumber" name="identityNumber" required>
-                </div>
-
-                <!-- Fakultas/Departemen -->
-                <div class="mb-3">
-                    <label for="facultyDepartment" class="form-label">Fakultas/Departemen</label>
-                    <select class="form-select" id="facultyDepartment" name="facultyDepartment" required>
-                        <option value="" disabled selected>Pilih Fakultas/Departemen</option>
-                        <option value="Teknik Informatika">Teknik Informatika</option>
-                        <option value="Fakultas Ekonomi">Fakultas Ekonomi</option>
-                        <option value="Fakultas Hukum">Fakultas Hukum</option>
+                    <label for="applicantType" class="form-label">Jenis Pemohon</label>
+                    <select class="form-select" id="applicantType" name="applicantType" onchange="showFormPart(this.value);" required>
+                        <option value="" disabled selected>Pilih jenis pemohon</option>
+                        <option value="Mahasiswa">Mahasiswa</option>
+                        <option value="Dosen">Dosen</option>
                     </select>
                 </div>
 
-                <!-- Program Studi (Hanya untuk Mahasiswa) -->
-                <div class="mb-3" id="studyProgramGroup" style="display: none;">
-                    <label for="studyProgram" class="form-label">Program Studi</label>
-                    <select class="form-select" id="studyProgram" name="studyProgram">
-                        <option value="" disabled selected>Pilih Program Studi</option>
-                        <option value="Teknik Informatika">Teknik Informatika</option>
-                        <option value="Manajemen">Manajemen</option>
-                        <option value="Ilmu Hukum">Ilmu Hukum</option>
-                    </select>
+                <!-- Form untuk Mahasiswa -->
+                <div id="formMahasiswa" style="display: none;">
+                    <div class="mb-3">
+                        <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
+                        <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nim" class="form-label">NIM</label>
+                        <input type="text" class="form-control" id="nim" name="identityNumber">
+                    </div>
+                    <div class="mb-3">
+                        <label for="facultyDepartment" class="form-label">Fakultas/Departemen</label>
+                        <input type="text" class="form-control" id="facultyDepartment" name="facultyDepartment">
+                    </div>
+                    <div class="mb-3">
+                        <label for="programStudi" class="form-label">Program Studi</label>
+                        <input type="text" class="form-control" id="programStudi" name="programStudi">
+                    </div>
+                </div>
+
+                <!-- Form untuk Dosen -->
+                <div id="formDosen" style="display: none;">
+                    <div class="mb-3">
+                        <label for="nama_lengkap_dosen" class="form-label">Nama Lengkap</label>
+                        <input type="text" class="form-control" id="nama_lengkap_dosen" name="nama_lengkap">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nid" class="form-label">NID</label>
+                        <input type="text" class="form-control" id="nid" name="identityNumber">
+                    </div>
+                    <div class="mb-3">
+                        <label for="facultyDepartmentDosen" class="form-label">Fakultas/Departemen</label>
+                        <select class="form-select" id="facultyDepartmentDosen" name="facultyDepartmentDosen">
+                            <option value="" disabled selected>Pilih Fakultas/Departemen</option>
+                            <option value="Fakultas Teknik">Fakultas Teknik</option>
+                            <option value="Fakultas Ekonomi">Fakultas Ekonomi</option>
+                            <option value="Fakultas Hukum">Fakultas Hukum</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="jabatan" class="form-label">Jabatan</label>
+                        <input type="text" class="form-control" id="jabatan" name="jabatan">
+                    </div>
                 </div>
 
                 <!-- Email -->
@@ -102,13 +113,32 @@
                     <input type="email" class="form-control" id="email" name="email" required>
                 </div>
 
-                <!-- Tombol Submit -->
-                <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                <!-- Keterangan Pengajuan -->
+                <div class="mb-3">
+                    <label for="keteranganPengajuan" class="form-label">Keterangan Pengajuan</label>
+                    <textarea class="form-control" id="keteranganPengajuan" name="keteranganPengajuan" rows="4"></textarea>
                 </div>
+
+                <!-- Tombol Submit -->
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript untuk Menampilkan Form Berdasarkan Jenis Pemohon -->
+    <script>
+        function showFormPart(value) {
+            if (value === 'Mahasiswa') {
+                document.getElementById('formMahasiswa').style.display = 'block';
+                document.getElementById('formDosen').style.display = 'none';
+            } else if (value === 'Dosen') {
+                document.getElementById('formMahasiswa').style.display = 'none';
+                document.getElementById('formDosen').style.display = 'block';
+            } else {
+                document.getElementById('formMahasiswa').style.display = 'none';
+                document.getElementById('formDosen').style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>

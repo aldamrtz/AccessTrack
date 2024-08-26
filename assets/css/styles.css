@@ -1,78 +1,56 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+	background-color: #f5f5fa;
 }
 
-.login-container {
-    background-color: #4CAF50;
-    /* Green background similar to your image */
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 350px;
+.card {
+	background-color: #ffffff;
+	border-radius: 8px;
+	border: none;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.login-container img.logo {
-    width: 100px;
-    margin-bottom: 20px;
+h2 {
+	color: #5a189a;
+	font-weight: bold;
 }
 
-.login-container h2 {
-    color: #fff;
-    margin-bottom: 5px;
+.form-label {
+	font-weight: 600;
+	color: #5a189a;
 }
 
-.login-container h3 {
-    color: #fff;
-    margin-bottom: 20px;
+.form-control,
+.form-select {
+	border-radius: 6px;
+	border: 1px solid #ced4da;
+	padding: 10px;
 }
 
-.input-group {
-    margin-bottom: 15px;
+.btn-primary {
+	background-color: #6a0dad;
+	border-color: #6a0dad;
+	transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-input[type="text"],
-input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    margin-bottom: 10px;
+.btn-primary:hover {
+	background-color: #4b0082;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.captcha {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* Tambahan untuk tabel keterangan */
+.table-keterangan {
+	margin-top: 20px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
 }
 
-.captcha img {
-    height: 40px;
-    margin-right: 10px;
+.table-keterangan th {
+	background-color: #6a0dad;
+	color: white;
+	text-align: center;
 }
 
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #fff;
-    color: #4CAF50;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
-    color: #fff;
-}
-
-.error {
-    color: red;
-    margin-top: 10px;
+.table-keterangan td {
+	padding: 10px;
+	text-align: left;
 }
