@@ -19,20 +19,33 @@ class EmailController extends CI_Controller {
     public function submit() {
         // Dapatkan input dari user
         $email_diajukan = $this->input->post('email_diajukan');
-        
-        // Tambahkan domain @if.unjani.ac.id jika belum ada
-        if (strpos($email_diajukan, '@if.unjani.ac.id') === false) {
-            $email_diajukan .= '@if.unjani.ac.id';
+        $program_studi = $this->input->post('prodi');
+
+        // Tambahkan domain berdasarkan program studi
+        $domain = $this->getDomainByProdi($program_studi);
+        if (strpos($email_diajukan, $domain) === false) {
+            $email_diajukan .= $domain;
         }
         
         // Set input email yang sudah ditambahkan domain
         $_POST['email_diajukan'] = $email_diajukan;
 
         // Validasi form
-        $this->form_validation->set_rules('nama', 'Nama', 'required');
+        $this->form_validation->set_rules('nama_depan', 'Nama Depan', 'required');
+        $this->form_validation->set_rules('nama_belakang', 'Nama Belakang', 'required');
         $this->form_validation->set_rules('nim', 'Nomor Induk Mahasiswa', 'required');
         $this->form_validation->set_rules('prodi', 'Program Studi', 'required');
         $this->form_validation->set_rules('email_diajukan', 'Email yang Diajukan', 'required|valid_email|callback_checkEmailExistence');
+        $this->form_validation->set_rules('email_pengguna', 'Email Pengguna', 'required|valid_email');
+
+        // Jika opsi radio untuk custom email dipilih
+        if ($this->input->post('email_option') == 'custom') {
+            $this->form_validation->set_rules('email_diajukan', 'Email yang Diajukan', 'required|valid_email|callback_checkEmailExistence');
+        } else {
+            // Jika opsi saran dipilih, email_diajukan tidak perlu diisi
+            $this->form_validation->set_rules('email_diajukan', 'Email yang Diajukan', 'callback_checkEmailExistence');
+        }
+        
         $this->form_validation->set_rules('email_pengguna', 'Email Pengguna', 'required|valid_email');
 
         // Validasi file KTM
@@ -43,7 +56,8 @@ class EmailController extends CI_Controller {
         $this->form_validation->set_rules('captcha', 'Captcha', 'required|callback_validateCaptcha');
 
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('pengajuan_email');
+            $data['program_studi'] = $this->EmailModel->getProgramStudi();
+            $this->load->view('pengajuan_email', $data);
         } else {
             $ktm = '';
             if (!empty($_FILES['ktm']['name'])) {
@@ -62,7 +76,8 @@ class EmailController extends CI_Controller {
             }
 
             $data = array(
-                'nama' => $this->input->post('nama'),
+                'nama_depan' => $this->input->post('nama_depan'),
+                'nama_belakang' => $this->input->post('nama_belakang'),
                 'nim' => $this->input->post('nim'),
                 'prodi' => $this->input->post('prodi'),
                 'email_diajukan' => $email_diajukan,
@@ -89,35 +104,34 @@ class EmailController extends CI_Controller {
         }
     }
 
-    public function generateEmail($emailPrefix) {
-        $emailDomain = '@if.unjani.ac.id';
-        $fullEmail = $emailPrefix . $emailDomain;
+    public function getDomainByProdi($prodi) {
+        $domains = [
+            'Informatika' => '@if.unjani.ac.id',
+            'Sistem Informasi' => '@si.unjani.ac.id'
+            // Tambahkan domain lain sesuai kebutuhan
+        ];
 
-        $counter = 1;
-        while ($this->EmailModel->isEmailExist($fullEmail)) {
-            $fullEmail = $emailPrefix . $counter . $emailDomain;
-            $counter++;
-        }
-
-        return $fullEmail;
+        return isset($domains[$prodi]) ? $domains[$prodi] : '@if.unjani.ac.id'; // Default domain
     }
 
     public function check_email_availability() {
-        $email_prefix = $this->input->post('email_diajukan');
-        $email_full = $email_prefix . '@if.unjani.ac.id';
+        $email_prefix = $this->input->post('email_prefix');
+        $program_studi = $this->input->post('prodi');
+        $domain = $this->getDomainByProdi($program_studi);
+        $email_full = $email_prefix . $domain;
 
         if ($this->EmailModel->isEmailExist($email_full)) {
-            // Generate alternative usernames
             $suggestions = [];
-            $counter = 1;
-            while(count($suggestions) < 3) {
-                $new_username = $email_prefix . $counter;
-                $new_email = $new_username . '@if.unjani.ac.id';
-                if (!$this->EmailModel->isEmailExist($new_email)) {
-                    $suggestions[] = $new_username;
-                }
-                $counter++;
-            }
+            $nama_depan = $this->input->post('nama_depan');
+            $nama_belakang = $this->input->post('nama_belakang');
+
+            $suggestions[] = strtolower($nama_depan . '.' . $nama_belakang . $domain);
+            $suggestions[] = strtolower($nama_belakang . '.' . $nama_depan . $domain);
+            $suggestions[] = strtolower(substr($nama_depan, 0, 1) . '.' . $nama_belakang);
+
+            $suggestions = array_filter($suggestions, function($suggestion) use ($domain) {
+                return !$this->EmailModel->isEmailExist($suggestion . $domain);
+            });
 
             echo json_encode([
                 'status' => 'taken',
@@ -126,6 +140,37 @@ class EmailController extends CI_Controller {
         } else {
             echo json_encode(['status' => 'available']);
         }
+    }
+
+    public function generateSuggestions() {
+        $nama_depan = strtolower(str_replace(' ', '', $this->input->post('nama_depan')));
+        $nama_belakang = strtolower(str_replace(' ', '', $this->input->post('nama_belakang')));
+        $prodi = $this->input->post('prodi');
+        
+        $domain = $this->getDomainByProdi($prodi);
+        
+        $suggestions = [
+            $nama_depan . '.' . $nama_belakang,
+            $nama_belakang . '.' . $nama_depan,
+            substr($nama_depan, 0, 1) . '.' . $nama_belakang,
+            $nama_depan . substr($nama_belakang, 0, 1),
+            $nama_depan . rand(100, 999),
+        ];
+        
+        $valid_suggestions = array();
+        foreach ($suggestions as $suggestion) {
+            $full_email = $suggestion . $domain;
+            if (!$this->EmailModel->isEmailExist($full_email)) {
+                $valid_suggestions[] = $full_email;
+            }
+        }
+
+        $valid_suggestions = array_slice($valid_suggestions, 0, 2);
+        
+        echo json_encode([
+            'status' => 'success',
+            'suggestions' => $valid_suggestions
+        ]);
     }
 
     public function validateCaptcha($input) {
