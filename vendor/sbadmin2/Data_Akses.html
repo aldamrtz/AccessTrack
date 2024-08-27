@@ -367,26 +367,55 @@
 
             <script>
                 document.addEventListener('DOMContentLoaded', function () {
-                    fetch('http://localhost:3000/api/pengajuan_ka')
-                        .then(response => response.json())
-                        .then(data => {
-                            const tableBody = document.querySelector('#dataTable tbody');
-                            tableBody.innerHTML = ''; // Clear existing data
+                    const table = $('#dataTable').DataTable({
+                        ajax: {
+                            url: 'http://localhost:3000/api/pengajuan_ka',
+                            dataSrc: ''
+                        },
+                        columns: [
+                            {
+                                data: null, render: function (data, type, row, meta) {
+                                    return meta.row + 1; // Menampilkan nomor urut
+                                }
+                            },
+                            { data: 'id_pengguna' },
+                            { data: 'id_pengajuan' },
+                            { data: 'kwitansi' },
+                            { data: 'date' },
+                            { data: 'ketPengajuan' }
+                        ],
+                        order: [[0, 'asc']], //urutkan berdasarkan kolom pertama secara ascending
+                        language: {
+                            search: "Search:"
+                        }
+                    });
 
-                            data.forEach((row, index) => {
-                                const tr = document.createElement('tr');
-                                tr.innerHTML = `
-                                    <td>${index + 1}</td>
-                                    <td>${row.id_pengguna}</td>
-                                    <td>${row.id_pengajuan}</td>
-                                    <td>${row.kwitansi}</td>
-                                    <td>${row.date}</td>
-                                    <td>${row.ketPengajuan}</td>
-                                `;
-                                tableBody.appendChild(tr);
-                            });
-                        })
-                        .catch(error => console.error('Error fetching data:', error));
+                    // Fungsi untuk menyoroti teks
+                    function highlightText(text) {
+                        const regex = new RegExp('(${text})', 'gi');
+                        $('td').each(function () {
+                            const originalText = $(this).html();
+                            const newText = originalText.replace(regex, '<span class="highlight">$1</span>');
+                            $(this).html(newText);
+                        });
+                    }
+
+                    //EventListener untuk error handling
+                    table.on('error.dt', function (e, setting, techNote, message) {
+                        console.error('Error loading data:', message);
+                    });
+
+                    //Penambahan Event Listener untuk pencarian di DataTable
+                    $('#dataTable_filter input').on('input', function () {
+                        table.search(this.value).draw();
+                        highlightText(searchValue); // Menyoroti text setelah pencarian
+                    });
+
+                    //Event listener untuk menyoroti text ketika kolom search digunakan
+                    table.on('draw', function () {
+                        const searchValue = $('#dataTable_filter input').val();
+                        highlightText(searchValue);
+                    });
                 });
             </script>
 
