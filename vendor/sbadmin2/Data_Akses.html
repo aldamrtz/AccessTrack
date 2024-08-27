@@ -25,7 +25,6 @@
 
     <!-- Menambahkan favicon -->
     <link rel="icon" href="img/Unjani.png" type="image/png">
-
 </head>
 
 <body id="page-top">
@@ -370,7 +369,11 @@
                     const table = $('#dataTable').DataTable({
                         ajax: {
                             url: 'http://localhost:3000/api/pengajuan_ka',
-                            dataSrc: ''
+                            dataSrc: '',
+                            error: function (xhr, error, thrown) {
+                                console.error('Error loading data:', thrown);
+                                alert('Gagal memuat data. Silakan coba lagi nanti.');
+                            }
                         },
                         columns: [
                             {
@@ -384,40 +387,78 @@
                             { data: 'date' },
                             { data: 'ketPengajuan' }
                         ],
-                        order: [[0, 'asc']], //urutkan berdasarkan kolom pertama secara ascending
+                        order: [[0, 'asc']], // Urutkan berdasarkan kolom pertama secara ascending
                         language: {
                             search: "Search:"
                         }
                     });
 
-                    // Fungsi untuk menyoroti teks
-                    function highlightText(text) {
-                        const regex = new RegExp('(${text})', 'gi');
+                    // Fungsi untuk menghapus semua highlight
+                    function clearHighlight() {
                         $('td').each(function () {
-                            const originalText = $(this).html();
-                            const newText = originalText.replace(regex, '<span class="highlight">$1</span>');
-                            $(this).html(newText);
+                            let originalText = $(this).data('original-text');
+                            if (originalText) {
+                                $(this).html(originalText); // Kembalikan ke teks asli
+                            }
                         });
                     }
 
-                    //EventListener untuk error handling
-                    table.on('error.dt', function (e, setting, techNote, message) {
-                        console.error('Error loading data:', message);
-                    });
+                    // Fungsi untuk menyoroti teks
+                    function highlightText(text) {
+                        if (!text) {
+                            clearHighlight(); // Hapus highlight jika tidak ada teks
+                            return;
+                        }
 
-                    //Penambahan Event Listener untuk pencarian di DataTable
+                        try {
+                            // Escape special characters for regex
+                            text = text.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                            const regex = new RegExp(`(${text})`, 'gi');
+
+                            $('td').each(function () {
+                                let originalText = $(this).html();
+                                if (!$(this).data('original-text')) {
+                                    $(this).data('original-text', originalText); // Simpan teks asli jika belum
+                                }
+
+                                // Clear previous highlights
+                                const cleanText = originalText.replace(/<span class="highlight">|<\/span>/g, '');
+                                // Highlight new text
+                                const newText = cleanText.replace(regex, '<span class="highlight">$1</span>');
+                                $(this).html(newText);
+                            });
+                        } catch (e) {
+                            console.error('Error highlighting text:', e);
+                            alert('Gagal menyoroti teks. Silakan coba lagi.');
+                        }
+                    }
+
+                    // Event Listener untuk pencarian
                     $('#dataTable_filter input').on('input', function () {
-                        table.search(this.value).draw();
-                        highlightText(searchValue); // Menyoroti text setelah pencarian
+                        const searchValue = this.value;
+                        try {
+                            table.search(searchValue).draw();
+                            highlightText(searchValue); // Menyoroti teks setelah pencarian
+                        } catch (e) {
+                            console.error('Error during search:', e);
+                            alert('Gagal melakukan pencarian. Silakan coba lagi.');
+                        }
                     });
 
-                    //Event listener untuk menyoroti text ketika kolom search digunakan
+                    // Event Listener untuk menyoroti teks ketika DataTable diupdate
                     table.on('draw', function () {
                         const searchValue = $('#dataTable_filter input').val();
-                        highlightText(searchValue);
+                        try {
+                            highlightText(searchValue);
+                        } catch (e) {
+                            console.error('Error during DataTable draw:', e);
+                            alert('Gagal memperbarui highlight teks. Silakan coba lagi.');
+                        }
                     });
                 });
             </script>
+
+
 
 </body>
 
