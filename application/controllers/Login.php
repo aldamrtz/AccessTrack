@@ -1,13 +1,16 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Login extends CI_Controller {
+class Login extends CI_Controller
+{
 
-    public function index() {
+    public function index()
+    {
         $this->load->view('auth/login');
     }
 
-    public function authenticate() {
+    public function authenticate()
+    {
         $username = $this->input->post('username');
         $password = $this->input->post('password');
 
@@ -22,10 +25,20 @@ class Login extends CI_Controller {
         }
     }
 
-    public function logout() {
+    public function logout()
+    {
         // Logika untuk logout
         $this->session->unset_userdata('username');
         $this->session->set_flashdata('success', 'Anda berhasil logout');
         redirect('login');
+    }
+    public function validateCaptcha($input)
+    {
+        if ($input == $this->session->userdata('captcha')) {
+            return TRUE;
+        } else {
+            $this->form_validation->set_message('validateCaptcha', 'Captcha yang dimasukkan salah.');
+            return FALSE;
+        }
     }
 }
