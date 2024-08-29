@@ -82,7 +82,8 @@ class EmailController extends CI_Controller {
                 'prodi' => $this->input->post('prodi'),
                 'email_diajukan' => $email_diajukan,
                 'email_pengguna' => $this->input->post('email_pengguna'),
-                'ktm' => $ktm
+                'ktm' => $ktm,
+                'tgl_pengajuan' => date('Y-m-d')
             );
 
             if ($this->EmailModel->insert($data)) {
@@ -122,20 +123,42 @@ class EmailController extends CI_Controller {
 
         if ($this->EmailModel->isEmailExist($email_full)) {
             $suggestions = [];
-            $nama_depan = $this->input->post('nama_depan');
-            $nama_belakang = $this->input->post('nama_belakang');
+            $nama_depan = strtolower(str_replace(' ', '', $this->input->post('nama_depan')));
+            $nama_belakang = strtolower(str_replace(' ', '', $this->input->post('nama_belakang')));
 
-            $suggestions[] = strtolower($nama_depan . '.' . $nama_belakang . $domain);
-            $suggestions[] = strtolower($nama_belakang . '.' . $nama_depan . $domain);
-            $suggestions[] = strtolower(substr($nama_depan, 0, 1) . '.' . $nama_belakang);
+            // Generate suggestions for the radio button (with domain)
+            $suggestionsWithDomain = [
+                $nama_depan . '.' . $nama_belakang . $domain,
+                $nama_belakang . '.' . $nama_depan . $domain,
+                substr($nama_depan, 0, 1) . '.' . $nama_belakang . $domain
+            ];
 
-            $suggestions = array_filter($suggestions, function($suggestion) use ($domain) {
+            $suggestionsWithDomain = array_filter($suggestionsWithDomain, function($suggestion) use ($domain) {
+                return !$this->EmailModel->isEmailExist($suggestion);
+            });
+
+            // Generate suggestions for email feedback (without domain)
+            $suggestionsWithoutDomain = [
+                $nama_depan . '.' . $nama_belakang,
+                $nama_belakang . '.' . $nama_depan,
+                substr($nama_depan, 0, 1) . '.' . $nama_belakang,
+                $nama_depan . rand(100, 999),
+                $nama_belakang . rand(100, 999)
+            ];
+
+            // Filter out suggestions that appear in radio buttons
+            $suggestionsWithoutDomain = array_diff($suggestionsWithoutDomain, array_map(function($suggestion) use ($domain) {
+                return str_replace($domain, '', $suggestion);
+            }, $suggestionsWithDomain));
+
+            $suggestionsWithoutDomain = array_filter($suggestionsWithoutDomain, function($suggestion) use ($domain) {
                 return !$this->EmailModel->isEmailExist($suggestion . $domain);
             });
 
             echo json_encode([
                 'status' => 'taken',
-                'suggestions' => $suggestions
+                'suggestions' => array_slice($suggestionsWithoutDomain, 0, 3),
+                'radioSuggestions' => $suggestionsWithDomain
             ]);
         } else {
             echo json_encode(['status' => 'available']);
@@ -165,7 +188,8 @@ class EmailController extends CI_Controller {
             }
         }
 
-        $valid_suggestions = array_slice($valid_suggestions, 0, 2);
+        // Pastikan valid_suggestions berbeda dari saran di radio buttons
+        $valid_suggestions = array_slice(array_unique($valid_suggestions), 0, 2);
         
         echo json_encode([
             'status' => 'success',

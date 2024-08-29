@@ -7,8 +7,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="icon" href="./assets/img/Unjani.png" type="image/png">
     <style>
         body {
@@ -59,6 +57,18 @@
         .email-options {
             display: none;
         }
+        #emailSuggestions input[type="radio"] {
+            margin-right: 0.25rem;
+        }
+        .feedback {
+            font-size: 0.875rem;
+        }
+        .feedback.error {
+            color: red;
+        }
+        .feedback.success {
+            color: green;
+        }
     </style>
 </head>
 <body>
@@ -105,7 +115,6 @@
                         </div>
                         <div class="mb-3 suggestion-radio">
                             <div id="emailSuggestions">
-                                <!-- Suggestions will be injected here by JavaScript -->
                             </div>
                             <div>
                                 <input type="radio" id="customEmail" name="email_option" value="custom">
@@ -119,6 +128,7 @@
                                     <input type="text" class="form-control" id="email_diajukan" name="email_diajukan" value="<?= set_value('email_diajukan'); ?>" required>
                                     <span class="input-group-text" id="emailDomain">@if.unjani.ac.id</span>
                                 </div>
+                                <div id="emailFeedback"></div>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -145,8 +155,49 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(document).ready(function() {
+            $('#email_diajukan').on('input', function() {
+                var emailPrefix = $(this).val();
+                var prodi = $('#prodi').val();
+                if (emailPrefix.length > 0) {
+                    $.ajax({
+                        url: '<?= site_url('EmailController/check_email_availability'); ?>',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            email_prefix: emailPrefix,
+                            prodi: prodi,
+                            nama_depan: $('#nama_depan').val(),
+                            nama_belakang: $('#nama_belakang').val()
+                        },
+                        success: function(response) {
+                            var feedback = '';
+                            var suggestionsHtml = '';
+                            if (response.status === 'taken') {
+                                feedback = '<span class="feedback error">Email sudah terdaftar</span><br>';
+                                if (response.suggestions.length > 0) {
+                                    suggestionsHtml = '<br><span class="feedback success">Saran Email: </span>';
+                                    response.suggestions.forEach(function(suggestion) {
+                                        suggestionsHtml = '<span class="feedback success">Saran Email: ' + response.suggestions.join(', ') + '</span>';
+                                    });
+                                }
+                            } else {
+                                feedback = '<span class="feedback success">Email tersedia</span>';
+                            }
+                            $('#emailFeedback').html(feedback + suggestionsHtml);
+                        }
+                    });
+                } else {
+                    $('#emailFeedback').empty();
+                }
+            });
+
+            $('#prodi').on('change', function() {
+                $('#email_diajukan').trigger('input');
+            });
+
             function updateDomain() {
                 var prodi = $('#prodi').val();
                 var domain = '';
