@@ -47,6 +47,42 @@
     /*menebalkan text*/
 }
 
+.username-text {
+    display: inline;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* Adjust the profile picture size */
+.img-profile {
+    width: 40px;
+    /* Adjust size as needed */
+    height: 40px;
+}
+
+/* Ensure the username is visible on smaller screens */
+@media (max-width: 768px) {
+    .username-text {
+        font-size: 12px;
+    }
+
+    .img-profile {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 576px) {
+    .username-text {
+        font-size: 10px;
+    }
+
+    .img-profile {
+        width: 30px;
+        height: 30px;
+    }
+}
+
 *,
 ::after,
 ::before {
