@@ -44,37 +44,21 @@ body {
     box-sizing: border-box;
 }
 
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #fff;
-    font-weight: bold;
-}
-
 .input-group input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 20px;
     box-sizing: border-box;
-    placeholder-color: #333;
+    color: #333;
     text-align: center;
 }
 
-.captcha-box {
-    width: 100%;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 20px;
-    text-align: center;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-}
-
-.captcha-text {
-    font-size: 24px;
-    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
-    color: #FF00FF;
+.g-recaptcha {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    /* Menambah jarak di atas dan bawah */
 }
 
 .input-group button {
@@ -87,6 +71,8 @@ body {
     border-radius: 20px;
     cursor: pointer;
     box-sizing: border-box;
+    margin-top: 20px;
+    /* Menambah jarak di atas tombol */
 }
 
 .input-group button:hover {
