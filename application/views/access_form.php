@@ -59,6 +59,7 @@
                         <option value="" disabled selected>Pilih jenis pemohon</option>
                         <option value="Mahasiswa">Mahasiswa</option>
                         <option value="Dosen">Dosen</option>
+                        <option value="Staf">Staf</option>
                     </select>
                 </div>
 
@@ -73,8 +74,20 @@
                         <input type="text" class="form-control" id="nim" name="identityNumber">
                     </div>
                     <div class="mb-3">
-                        <label for="facultyDepartment" class="form-label">Fakultas/Departemen</label>
-                        <input type="text" class="form-control" id="facultyDepartment" name="facultyDepartment">
+                        <label for="facultyDepartment" class="form-label">Fakultas</label>
+                        <select class="form-select" id="facultyDepartmentDosenStaf" name="facultyDepartmentDosenStaf">
+                            <option value="" disabled selected>Pilih Fakultas</option>
+                            <option value="Fakultas Sains dan Informatika">Fakultas Sains dan Informatika</option>
+                            <option value="Fakultas Teknik Metalurgi">Fakultas Teknik Metalurgi</option>
+                            <option value="Fakultas Teknik">Fakultas Teknik</option>
+                            <option value="Fakultas Ekonomi dan Bisnis">Fakultas Ekonomi dan Bisnis</option>
+                            <option value="Fakultas Ilmu Sosial dan Ilmu Politik">Fakultas Ilmu Sosial dan Ilmu Politik</option>
+                            <option value="Fakultas Farmasi">Fakultas Farmasi</option>
+                            <option value="Fakultas Kedokteran">Fakultas Kedokteran</option>
+                            <option value="Fakultas Kedokteran Gigi">Fakultas Kedokteran Gigi</option>
+                            <option value="Fakultas Ilmu Teknologi Kesehatan">Fakultas Ilmu Teknologi Kesehatan</option>
+                            <option value="Fakultas Psikologi">Fakultas Psikologi</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="programStudi" class="form-label">Program Studi</label>
@@ -82,19 +95,19 @@
                     </div>
                 </div>
 
-                <!-- Form untuk Dosen -->
-                <div id="formDosen" style="display: none;">
+                <!-- Form untuk Dosen dan Staf -->
+                <div id="formDosenStaf" style="display: none;">
                     <div class="mb-3">
-                        <label for="nama_lengkap_dosen" class="form-label">Nama Lengkap</label>
-                        <input type="text" class="form-control" id="nama_lengkap_dosen" name="nama_lengkap">
+                        <label for="nama_lengkap_dosen_staf" class="form-label">Nama Lengkap</label>
+                        <input type="text" class="form-control" id="nama_lengkap_dosen_staf" name="nama_lengkap">
                     </div>
                     <div class="mb-3">
-                        <label for="nid" class="form-label">NID</label>
-                        <input type="text" class="form-control" id="nid" name="identityNumber">
+                        <label for="nid_staf" class="form-label">NID</label>
+                        <input type="text" class="form-control" id="nid_staf" name="identityNumber">
                     </div>
                     <div class="mb-3">
-                        <label for="facultyDepartmentDosen" class="form-label">Fakultas/Departemen</label>
-                        <select class="form-select" id="facultyDepartmentDosen" name="facultyDepartmentDosen">
+                        <label for="facultyDepartmentDosenStaf" class="form-label">Fakultas/Departemen</label>
+                        <select class="form-select" id="facultyDepartmentDosenStaf" name="facultyDepartmentDosenStaf">
                             <option value="" disabled selected>Pilih Fakultas/Departemen</option>
                             <option value="Fakultas Teknik">Fakultas Teknik</option>
                             <option value="Fakultas Ekonomi">Fakultas Ekonomi</option>
@@ -102,8 +115,8 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="jabatan" class="form-label">Jabatan</label>
-                        <input type="text" class="form-control" id="jabatan" name="jabatan">
+                        <label for="jabatan_staf" class="form-label">Jabatan</label>
+                        <input type="text" class="form-control" id="jabatan_staf" name="jabatan">
                     </div>
                 </div>
 
@@ -130,13 +143,13 @@
         function showFormPart(value) {
             if (value === 'Mahasiswa') {
                 document.getElementById('formMahasiswa').style.display = 'block';
-                document.getElementById('formDosen').style.display = 'none';
-            } else if (value === 'Dosen') {
+                document.getElementById('formDosenStaf').style.display = 'none';
+            } else if (value === 'Dosen' || value === 'Staf') {
                 document.getElementById('formMahasiswa').style.display = 'none';
-                document.getElementById('formDosen').style.display = 'block';
+                document.getElementById('formDosenStaf').style.display = 'block';
             } else {
                 document.getElementById('formMahasiswa').style.display = 'none';
-                document.getElementById('formDosen').style.display = 'none';
+                document.getElementById('formDosenStaf').style.display = 'none';
             }
         }
     </script>
