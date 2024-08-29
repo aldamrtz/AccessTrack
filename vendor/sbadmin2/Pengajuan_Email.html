@@ -236,7 +236,7 @@
                     <!-- Content row -->
                     <div class="row">
 
-                        <!-- Terverifikasi -->
+                        <!-- Email Dikirimkan -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card shadow h-100 py-2 border-left-primary"
                                 style="border-left: 5px solid #f8bbd0;">
@@ -244,20 +244,20 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Email Terverifikasi
+                                                Email Dikirimkan
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">120</div>
-                                            <div class="text-xs">Total Pengajuan</div>
+                                            <div class="text-xs">Total</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-id-card fa-2x text-gray-300"></i>
+                                            <i class="fa fa-paper-plane fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Diajukan -->
+                        <!-- Email Terverifikasi -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card shadow h-100 py-2 border-left-success"
                                 style="border-left: 5px solid #f48fb1;">
@@ -265,14 +265,57 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Diajukan
+                                                Email Terverifikasi
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
                                             <div class="text-xs">Total Pengajuan
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-shield-alt fa-2x text-gray-300"></i>
+                                            <i class="fa fa-check-circle fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email diproses -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card shadow h-100 py-2 border-left-warning"
+                                style="border-left: 5px solid #f8bbd0;">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Email Diproses
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">120</div>
+                                            <div class="text-xs">Total</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa fa-cogs fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email Diajukan -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card shadow h-100 py-2 border-left-info"
+                                style="border-left: 5px solid #f48fb1;">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Email Diajukan
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                                            <div class="text-xs">Total
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa fa-envelope fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -282,15 +325,10 @@
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
 
-                            <!-- Page Heading -->
-                            <!-- <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4"><a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p> -->
-
                             <!-- DataTales -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Tabel Pengajuan Email</h6>
+                                    <h6 class="m-0 font-weight-bold text-success">Tabel Pengajuan Email</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -301,8 +339,10 @@
                                                     <th>Nama</th>
                                                     <th>NIM</th>
                                                     <th>Prodi</th>
-                                                    <th>E-mail</th>
-                                                    <th></th>
+                                                    <th>E-mail Pengguna</th>
+                                                    <th>E-mail Diajukan</th>
+                                                    <th>Tanggal Pengajuan</th>
+                                                    <th>Status Pengajuan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
