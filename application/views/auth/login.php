@@ -6,8 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="icon" href="<?= base_url('assets/img/Unjani.png'); ?>" type="image/png">
-    <link rel="stylesheet" href="assets/css/login.css">
+    <link rel="stylesheet" href="<?= base_url('assets/css/login.css'); ?>">
+    <script src="https://www.google.com/recaptcha/api.js?render=<?= $this->config->item('recaptcha_site_key'); ?>"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('<?= $this->config->item('recaptcha_site_key'); ?>', { action: 'login' }).then(function(token) {
+                document.getElementById('g-recaptcha-response').value = token;
+            });
+        });
+    </script>
 </head>
+
 <body>
     <div class="login-wrapper">
         <div class="login-header">
@@ -23,18 +32,14 @@
             <?php endif; ?>
             <form action="<?= base_url('login/authenticate'); ?>" method="POST">
                 <div class="input-group">
-                    <!-- <label for="username">Masukkan Email/Username</label> -->
-                    <input type="text" id="username" name="username" placeholder="Masukkan Email/Username" required>
+                    <input type="email" id="email" name="email" placeholder="Masukkan Email" required>
                 </div>
                 <div class="input-group">
                     <input type="password" id="password" name="password" placeholder="Masukkan Password" required>
                 </div>
-                <div class="mb-3">
-                    <img src="<?= site_url('CaptchaController/generateCaptcha') . '?t=' . time(); ?>" alt="Captcha">
-                </div>
-                <div class="input-group">
-                    <input type="text" id="captcha" name="captcha" placeholder="Masukkan Kode Diatas" required>
-                </div>
+
+                <!-- reCAPTCHA Token -->
+                <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
 
                 <div class="input-group">
                     <button type="submit">Masuk</button>
@@ -43,4 +48,5 @@
         </div>
     </div>
 </body>
+
 </html>
