@@ -185,6 +185,119 @@ td a:hover {
     /* Warna merah lebih gelap saat hover */
 }
 
+/* Modal container */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 700px;
+    border-radius: 8px;
+}
+
+/* Close button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Overlay untuk menampilkan file */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    /* Warna hitam dengan transparansi */
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* Atur konten secara vertikal */
+}
+
+/* Header overlay untuk ikon dan close button */
+.overlay-header {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.overlay-icon {
+    color: white;
+    font-size: 30px;
+    margin-right: 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-decoration: none;
+}
+
+.overlay-icon:hover {
+    color: #bbb;
+}
+
+/* Tombol close */
+.overlay .close {
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.overlay .close:hover,
+.overlay .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Konten modal */
+.overlay-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 80%;
+    max-height: 80%;
+}
+
+.overlay img,
+.overlay iframe {
+    max-width: 100%;
+    max-height: 100%;
+    transform-origin: center;
+    /* Untuk zoom in dan zoom out */
+    transition: transform 0.3s ease;
+    /* Smooth zooming */
+}
+
 /* Responsive design adjustments */
 @media (max-width: 768px) {
     .container {
