@@ -11,20 +11,16 @@
 
     <title>Data Kartu Akses</title>
 
-    <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template -->
+    <!-- Custom fonts for this template-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Custom styles for this template-->
     <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
     <!-- Menambahkan favicon -->
-    <link rel="icon" href="assets/img/Unjani.png" type="image/png">
+    <link rel="icon" href="assets/img/Unjani.png" type="img/png">
+    <!-- Custom styles for this page -->
+    <link href="assets/js/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -64,7 +60,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item active">
-                <a class="nav-link" href="href="<?php echo site_url('dashboard_akses'); ?>"">
+                <a class="nav-link" href="<?php echo site_url('Dashboard_akses'); ?>">
                     <i class="fas fa-id-card"></i>
                     <span>Data Kartu Akses</span>
                 </a>
@@ -72,7 +68,7 @@
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link active" href="Data_Laporan_Keluhan.html">
+                <a class="nav-link active" href="<?php echo site_url('DashboardCSIRT'); ?>">>
                     <i class="fas fa-exclamation-circle"></i>
                     <span>Laporan Keluhan</span>
                 </a>
@@ -80,7 +76,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="Pengajuan_Email.html">
+                <a class="nav-link" href="<?php echo site_url('DashboardPengajuanEmail'); ?>">>
                     <i class="fas fa-envelope"></i>
                     <span>Pengajuan Email</span>
                 </a>
@@ -88,7 +84,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="Pengajuan_Domain.html">
+                <a class="nav-link" href="<?php echo site_url('DashboardPengajuanDomain'); ?>">>
                     <i class="fas fa-globe"></i>
                     <span>Pengajuan Domain</span></a>
             </li>
@@ -204,15 +200,14 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas
-                                    McGee</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="d-flex align-items-center">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small username-text"><?= $email; ?></span>
+                                    <img class="img-profile rounded-circle" src="assets/img/undraw_profile.svg" alt="Profile Picture">
+                                </div>
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
                                 </a>
@@ -506,6 +501,17 @@
                         console.error('Error during DataTable draw:', e);
                         alert('Gagal memperbarui highlight teks. Silakan coba lagi.');
                     }
+                });
+            });
+        </script>
+        <script>
+            // JavaScript untuk toggle sidebar
+            document.addEventListener('DOMContentLoaded', function() {
+                var sidebarToggle = document.getElementById('sidebarToggle');
+                var sidebar = document.getElementById('accordionSidebar');
+
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('toggled');
                 });
             });
         </script>
