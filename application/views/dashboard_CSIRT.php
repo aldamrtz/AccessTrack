@@ -11,20 +11,19 @@
 
     <title>Laporan Keluhan</title>
 
-    <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Menambahkan favicon -->
-    <link rel="icon" href="img/Unjani.png" type="image/png">
+    <link rel="icon" href="assets/img/Unjani.png" type="img/png">
+    <!-- Custom styles for this page -->
+    <link href="assets/js/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <!-- Menambahkan favicon -->
+    <link rel="icon" href="assets/img/Unjani.png" type="image/png">
 
 </head>
 
@@ -37,9 +36,9 @@
         <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo site_url('dashboard'); ?>">
                 <div class="sidebar-brand-icon d-inline-block">
-                    <img src="img/Unjani.png">
+                    <img src="assets/img/Unjani.png">
                 </div>
                 <div class="sidebar-brand-text">
                     Access Track
@@ -50,7 +49,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="<?php echo site_url('dashboard'); ?>">
                     <i class="fas fa-home"></i>
                     <span>Home</span></a>
             </li>
@@ -65,7 +64,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="Data_Akses.html">
+                <a class="nav-link" href="<?php echo site_url('Dashboard_akses'); ?>">
                     <i class="fas fa-id-card"></i>
                     <span>Data Kartu Akses</span>
                 </a>
@@ -73,7 +72,7 @@
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item  active">
-                <a class="nav-link" href="Data_Laporan_Keluhan.html">
+                <a class="nav-link" href="<?php echo site_url('dashboardCSIRT'); ?>">
                     <i class="fas fa-exclamation-circle"></i>
                     <span>Laporan Keluhan</span>
                 </a>
@@ -81,7 +80,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="Pengajuan_Email.html">
+                <a class="nav-link" href="<?php echo site_url('DashboardPengajuanEmail'); ?>">
                     <i class="fas fa-envelope"></i>
                     <span>Pengajuan Email</span>
                 </a>
@@ -89,7 +88,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="Pengajuan_Domain.html">
+                <a class="nav-link" href="<?php echo site_url('DashboardPengajuanDomain'); ?>">
                     <i class="fas fa-globe"></i>
                     <span>Pengajuan Domain</span></a>
             </li>
@@ -203,17 +202,15 @@
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
-                        <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas
-                                    McGee</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="d-flex align-items-center">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small username-text"><?= $email; ?></span>
+                                    <img class="img-profile rounded-circle" src="assets/img/undraw_profile.svg" alt="Profile Picture">
+                                </div>
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
                                 </a>
@@ -328,85 +325,104 @@
                         <div class="container-fluid">
 
                             <!-- DataTales -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-success">Tabel Laporan Keluhan </h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Nama</th>
-                                                    <th>Office</th>
-                                                    <th>Age</th>
-                                                    <th>Start date</th>
-                                                    <th>Salary</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-success">Tabel Laporan Keluhan </h6>
+                                        <input type="text" id="searchInput" class="form-control" placeholder="Search for..." style="max-width: 300px;">
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Nama</th>
+                                                        <th>Office</th>
+                                                        <th>Age</th>
+                                                        <th>Start date</th>
+                                                        <th>Salary</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
+                            <!-- /.container-fluid -->
 
                         </div>
-                        <!-- /.container-fluid -->
+                        <!-- End of Main Content -->
 
                     </div>
-                    <!-- End of Main Content -->
+                    <!-- End of Content Wrapper -->
 
                 </div>
-                <!-- End of Content Wrapper -->
+                <!-- End of Page Wrapper -->
 
-            </div>
-            <!-- End of Page Wrapper -->
+                <!-- Scroll to Top Button-->
+                <a class="scroll-to-top rounded" href="#page-top">
+                    <i class="fas fa-angle-up"></i>
+                </a>
 
-            <!-- Scroll to Top Button-->
-            <a class="scroll-to-top rounded" href="#page-top">
-                <i class="fas fa-angle-up"></i>
-            </a>
-
-            <!-- Logout Modal-->
-            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             <!-- Logout Modal -->
+             <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?
-                            </h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Apakah Anda Yakin Untuk Keluar ?</h5>
                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.
-                        </div>
+                        <div class="modal-body">Pilih "Keluar" di bawah jika Anda siap mengakhiri sesi Anda saat ini.</div>
                         <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="login.html">Logout</a>
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                            <a class="btn btn-primary" href="<?= base_url('login/logout'); ?>">Keluar</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Bootstrap core JavaScript-->
-            <script src="vendor/jquery/jquery.min.js"></script>
-            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+           <!-- Bootstrap core JavaScript-->
+           <script src="assets/js/jquery/jquery.min.js"></script>
+            <script src="assets/js/bootstrap/js/bootstrap.bundle.min.js"></script>
 
             <!-- Core plugin JavaScript-->
-            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+            <script src="assets/js/jquery-easing/jquery.easing.min.js"></script>
 
             <!-- Custom scripts for all pages-->
-            <script src="js/sb-admin-2.min.js"></script>
+            <script src="assets/js/sb-admin-2.min.js"></script>
 
             <!-- Page level plugins -->
-            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+            <script src="assets/js/datatables/jquery.dataTables.min.js"></script>
+            <script src="assets/js/datatables/dataTables.bootstrap4.min.js"></script>
 
             <!-- Page level custom scripts -->
-            <script src="js/demo/datatables-demo.js"></script>
+            <script src="assets/js/demo/datatables-demo.js"></script>
+
+            <script>
+                // JavaScript untuk toggle sidebar
+                document.addEventListener('DOMContentLoaded', function() {
+                    var sidebarToggle = document.getElementById('sidebarToggle');
+                    var sidebar = document.getElementById('accordionSidebar');
+
+                    sidebarToggle.addEventListener('click', function() {
+                        sidebar.classList.toggle('toggled');
+                    });
+                });
+            </script>
+            <!-- jQuery pertama -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+            <!-- Kemudian Bootstrap JavaScript -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+
 
 </body>
 

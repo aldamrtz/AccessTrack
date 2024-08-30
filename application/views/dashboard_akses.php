@@ -322,206 +322,211 @@
                         <div class="container-fluid">
 
                             <!-- DataTales -->
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>NIM</th>
-                                                <th>Nama</th>
-                                                <th>Jurusan</th>
-                                                <th>Fakultas</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <!-- Data rows go here -->
-                                        </tbody>
-                                    </table>
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                    <h6 class="m-0 font-weight-bold text-success">Tabel Pengajuan Email</h6>
+                                    <input type="text" id="searchInput" class="form-control" placeholder="Search for..." style="max-width: 300px;">
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>NIM</th>
+                                                    <th>Nama</th>
+                                                    <th>Jurusan</th>
+                                                    <th>Fakultas</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Data rows go here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
+                        <!-- /.container-fluid -->
 
                     </div>
-                    <!-- /.container-fluid -->
+                    <!-- End of Main Content -->
 
                 </div>
-                <!-- End of Main Content -->
+                <!-- End of Content Wrapper -->
 
             </div>
-            <!-- End of Content Wrapper -->
+            <!-- End of Page Wrapper -->
 
-        </div>
-        <!-- End of Page Wrapper -->
+            <!-- Scroll to Top Button-->
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
 
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
-
-        <!-- Logout Modal -->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Apakah Anda Yakin Untuk Keluar ?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Pilih "Keluar" di bawah jika Anda siap mengakhiri sesi Anda saat ini.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                        <a class="btn btn-primary" href="<?= base_url('login/logout'); ?>">Keluar</a>
+            <!-- Logout Modal -->
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Apakah Anda Yakin Untuk Keluar ?</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Pilih "Keluar" di bawah jika Anda siap mengakhiri sesi Anda saat ini.</div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                            <a class="btn btn-primary" href="<?= base_url('login/logout'); ?>">Keluar</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="assets/js/jquery/jquery.min.js"></script>
-        <script src="assets/js/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <!-- Bootstrap core JavaScript-->
+            <script src="assets/js/jquery/jquery.min.js"></script>
+            <script src="assets/js/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="assets/js/jquery-easing/jquery.easing.min.js"></script>
+            <!-- Core plugin JavaScript-->
+            <script src="assets/js/jquery-easing/jquery.easing.min.js"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="assets/js/sb-admin-2.min.js"></script>
+            <!-- Custom scripts for all pages-->
+            <script src="assets/js/sb-admin-2.min.js"></script>
 
-        <!-- Page level plugins -->
-        <script src="assets/js/datatables/jquery.dataTables.min.js"></script>
-        <script src="assets/js/datatables/dataTables.bootstrap4.min.js"></script>
+            <!-- Page level plugins -->
+            <script src="assets/js/datatables/jquery.dataTables.min.js"></script>
+            <script src="assets/js/datatables/dataTables.bootstrap4.min.js"></script>
 
-        <!-- Page level custom scripts -->
-        <script src="assets/js/demo/datatables-demo.js"></script>
+            <!-- Page level custom scripts -->
+            <script src="assets/js/demo/datatables-demo.js"></script>
 
-        <!-- Script berfungsi pada searchbar untuk menghighlight huruf yang dicar-->
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const table = $('#dataTable').DataTable({
-                    ajax: {
-                        url: 'http://localhost:3000/api/pengajuan_ka',
-                        dataSrc: '',
-                        error: function(xhr, error, thrown) {
-                            console.error('Error loading data:', thrown);
-                            alert('Gagal memuat data. Silakan coba lagi nanti.');
-                        }
-                    },
-                    columns: [{
-                            data: null,
-                            render: function(data, type, row, meta) {
-                                return meta.row + 1; // Menampilkan nomor urut
+            <!-- Script berfungsi pada searchbar untuk menghighlight huruf yang dicar-->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const table = $('#dataTable').DataTable({
+                        ajax: {
+                            url: 'http://localhost:3000/api/pengajuan_ka',
+                            dataSrc: '',
+                            error: function(xhr, error, thrown) {
+                                console.error('Error loading data:', thrown);
+                                alert('Gagal memuat data. Silakan coba lagi nanti.');
                             }
                         },
-                        {
-                            data: 'id_pengguna'
-                        },
-                        {
-                            data: 'id_pengajuan'
-                        },
-                        {
-                            data: 'kwitansi'
-                        },
-                        {
-                            data: 'date'
-                        },
-                        {
-                            data: 'ketPengajuan'
-                        }
-                    ],
-                    ordering: false, //Menonaktifkan fitur sort
-                    order: [
-                        [0, 'asc']
-                    ], // Urutkan berdasarkan kolom pertama secara ascending
-                    language: {
-                        search: "Search:"
-                    }
-                });
-
-                // Fungsi untuk menghapus semua highlight
-                function clearHighlight() {
-                    $('td').each(function() {
-                        let originalText = $(this).data('original-text');
-                        if (originalText) {
-                            $(this).html(originalText); // Kembalikan ke teks asli
+                        columns: [{
+                                data: null,
+                                render: function(data, type, row, meta) {
+                                    return meta.row + 1; // Menampilkan nomor urut
+                                }
+                            },
+                            {
+                                data: 'id_pengguna'
+                            },
+                            {
+                                data: 'id_pengajuan'
+                            },
+                            {
+                                data: 'kwitansi'
+                            },
+                            {
+                                data: 'date'
+                            },
+                            {
+                                data: 'ketPengajuan'
+                            }
+                        ],
+                        ordering: false, //Menonaktifkan fitur sort
+                        order: [
+                            [0, 'asc']
+                        ], // Urutkan berdasarkan kolom pertama secara ascending
+                        language: {
+                            search: "Search:"
                         }
                     });
-                }
 
-                // Fungsi untuk menyoroti teks
-                function highlightText(text) {
-                    if (!text) {
-                        clearHighlight(); // Hapus highlight jika tidak ada teks
-                        return;
-                    }
-
-                    try {
-                        // Escape special characters for regex
-                        text = text.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-                        const regex = new RegExp(`(${text})`, 'gi');
-
+                    // Fungsi untuk menghapus semua highlight
+                    function clearHighlight() {
                         $('td').each(function() {
-                            let originalText = $(this).html();
-                            if (!$(this).data('original-text')) {
-                                $(this).data('original-text', originalText); // Simpan teks asli jika belum
+                            let originalText = $(this).data('original-text');
+                            if (originalText) {
+                                $(this).html(originalText); // Kembalikan ke teks asli
                             }
-
-                            // Clear previous highlights
-                            const cleanText = originalText.replace(/<span class="highlight">|<\/span>/g, '');
-                            // Highlight new text
-                            const newText = cleanText.replace(regex, '<span class="highlight">$1</span>');
-                            $(this).html(newText);
                         });
-                    } catch (e) {
-                        console.error('Error highlighting text:', e);
-                        alert('Gagal menyoroti teks. Silakan coba lagi.');
                     }
-                }
 
-                // Event Listener untuk pencarian
-                $('#dataTable_filter input').on('input', function() {
-                    const searchValue = this.value;
-                    try {
-                        table.search(searchValue).draw();
-                        highlightText(searchValue); // Menyoroti teks setelah pencarian
-                    } catch (e) {
-                        console.error('Error during search:', e);
-                        alert('Gagal melakukan pencarian. Silakan coba lagi.');
+                    // Fungsi untuk menyoroti teks
+                    function highlightText(text) {
+                        if (!text) {
+                            clearHighlight(); // Hapus highlight jika tidak ada teks
+                            return;
+                        }
+
+                        try {
+                            // Escape special characters for regex
+                            text = text.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                            const regex = new RegExp(`(${text})`, 'gi');
+
+                            $('td').each(function() {
+                                let originalText = $(this).html();
+                                if (!$(this).data('original-text')) {
+                                    $(this).data('original-text', originalText); // Simpan teks asli jika belum
+                                }
+
+                                // Clear previous highlights
+                                const cleanText = originalText.replace(/<span class="highlight">|<\/span>/g, '');
+                                // Highlight new text
+                                const newText = cleanText.replace(regex, '<span class="highlight">$1</span>');
+                                $(this).html(newText);
+                            });
+                        } catch (e) {
+                            console.error('Error highlighting text:', e);
+                            alert('Gagal menyoroti teks. Silakan coba lagi.');
+                        }
                     }
+
+                    // Event Listener untuk pencarian
+                    $('#dataTable_filter input').on('input', function() {
+                        const searchValue = this.value;
+                        try {
+                            table.search(searchValue).draw();
+                            highlightText(searchValue); // Menyoroti teks setelah pencarian
+                        } catch (e) {
+                            console.error('Error during search:', e);
+                            alert('Gagal melakukan pencarian. Silakan coba lagi.');
+                        }
+                    });
+
+                    // Event Listener untuk menyoroti teks ketika DataTable diupdate
+                    table.on('draw', function() {
+                        const searchValue = $('#dataTable_filter input').val();
+                        try {
+                            highlightText(searchValue);
+                        } catch (e) {
+                            console.error('Error during DataTable draw:', e);
+                            alert('Gagal memperbarui highlight teks. Silakan coba lagi.');
+                        }
+                    });
                 });
+            </script>
+            <script>
+                // JavaScript untuk toggle sidebar
+                document.addEventListener('DOMContentLoaded', function() {
+                    var sidebarToggle = document.getElementById('sidebarToggle');
+                    var sidebar = document.getElementById('accordionSidebar');
 
-                // Event Listener untuk menyoroti teks ketika DataTable diupdate
-                table.on('draw', function() {
-                    const searchValue = $('#dataTable_filter input').val();
-                    try {
-                        highlightText(searchValue);
-                    } catch (e) {
-                        console.error('Error during DataTable draw:', e);
-                        alert('Gagal memperbarui highlight teks. Silakan coba lagi.');
-                    }
+                    sidebarToggle.addEventListener('click', function() {
+                        sidebar.classList.toggle('toggled');
+                    });
                 });
-            });
-        </script>
-        <script>
-            // JavaScript untuk toggle sidebar
-            document.addEventListener('DOMContentLoaded', function() {
-                var sidebarToggle = document.getElementById('sidebarToggle');
-                var sidebar = document.getElementById('accordionSidebar');
+            </script>
+            <!-- jQuery pertama -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-                sidebarToggle.addEventListener('click', function() {
-                    sidebar.classList.toggle('toggled');
-                });
-            });
-        </script>
-        <!-- jQuery pertama -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <!-- Kemudian Bootstrap JavaScript -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Kemudian Bootstrap JavaScript -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 
 </body>
 
