@@ -25,7 +25,6 @@
 
     <!-- Menambahkan favicon -->
     <link rel="icon" href="img/Unjani.png" type="image/png">
-
 </head>
 
 <body id="page-top">
@@ -235,28 +234,29 @@
 
                     <!-- Content row -->
                     <div class="row">
-                        <!-- Kartu Akses -->
+
+                        <!-- Kartu Aktif -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card shadow h-100 py-2 border-left-primary"
                                 style="border-left: 5px solid #f8bbd0;">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Kartu
-                                                Diajukan
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Kartu Aktif
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">120</div>
-                                            <div class="text-xs">Total Pengajuan</div>
+                                            <div class="text-xs">Total</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-id-card fa-2x text-gray-300"></i>
+                                            <i class="fa fa-paper-plane fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- CSIRT -->
+                        <!-- Kartu Terverifikasi -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card shadow h-100 py-2 border-left-success"
                                 style="border-left: 5px solid #f48fb1;">
@@ -264,130 +264,240 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Kartu
-                                                Diproses
+                                                Terverifikasi
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
-                                            <div class="text-xs">Total Pengajuan
+                                            <div class="text-xs">Total
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-shield-alt fa-2x text-gray-300"></i>
+                                            <i class="fa fa-check-circle fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Pengajuan Email -->
+                        <!-- Kartu Diproses -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card shadow h-100 py-2 border-left-info"
-                                style="border-left: 5px solid #ce93d8;">
+                            <div class="card shadow h-100 py-2 border-left-warning"
+                                style="border-left: 5px solid #f8bbd0;">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Berhasil
-                                                diproses
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Kartu Diproses
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">50</div>
-                                            <div class="text-xs">Total Pengajuan
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">120</div>
+                                            <div class="text-xs">Total</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa fa-cogs fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Kartu Diajukan -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card shadow h-100 py-2 border-left-info"
+                                style="border-left: 5px solid #f48fb1;">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Kartu Diajukan
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                                            <div class="text-xs">Total
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-envelope fa-2x text-gray-300"></i>
+                                            <i class="fa fa-id-card fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <!-- End Content Row -->
+
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
 
-                            <!-- Page Heading -->
-                            <!-- <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4"><a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p> -->
-
                             <!-- DataTales -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Tabel Kartu Akses Mahasiswa </h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>NIM</th>
-                                                    <th>Nama</th>
-                                                    <th>Jurusan</th>
-                                                    <th>Fakultas</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>NIM</th>
+                                                <th>Nama</th>
+                                                <th>Jurusan</th>
+                                                <th>Fakultas</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Data rows go here -->
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-
                         </div>
-                        <!-- /.container-fluid -->
 
                     </div>
-                    <!-- End of Main Content -->
+                    <!-- /.container-fluid -->
 
                 </div>
-                <!-- End of Content Wrapper -->
+                <!-- End of Main Content -->
 
             </div>
-            <!-- End of Page Wrapper -->
+            <!-- End of Content Wrapper -->
 
-            <!-- Scroll to Top Button-->
-            <a class="scroll-to-top rounded" href="#page-top">
-                <i class="fas fa-angle-up"></i>
-            </a>
+        </div>
+        <!-- End of Page Wrapper -->
 
-            <!-- Logout Modal-->
-            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="login.html">Logout</a>
-                        </div>
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="login.html">Logout</a>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Bootstrap core JavaScript-->
-            <script src="vendor/jquery/jquery.min.js"></script>
-            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-            <!-- Core plugin JavaScript-->
-            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-            <!-- Custom scripts for all pages-->
-            <script src="js/sb-admin-2.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
 
-            <!-- Page level plugins -->
-            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <!-- Page level plugins -->
+        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-            <!-- Page level custom scripts -->
-            <script src="js/demo/datatables-demo.js"></script>
+        <!-- Page level custom scripts -->
+        <script src="js/demo/datatables-demo.js"></script>
+
+        <!-- Script berfungsi pada searchbar untuk menghighlight huruf yang dicar-->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const table = $('#dataTable').DataTable({
+                    ajax: {
+                        url: 'http://localhost:3000/api/pengajuan_ka',
+                        dataSrc: '',
+                        error: function (xhr, error, thrown) {
+                            console.error('Error loading data:', thrown);
+                            alert('Gagal memuat data. Silakan coba lagi nanti.');
+                        }
+                    },
+                    columns: [
+                        {
+                            data: null, render: function (data, type, row, meta) {
+                                return meta.row + 1; // Menampilkan nomor urut
+                            }
+                        },
+                        { data: 'id_pengguna' },
+                        { data: 'id_pengajuan' },
+                        { data: 'kwitansi' },
+                        { data: 'date' },
+                        { data: 'ketPengajuan' }
+                    ],
+                    ordering: false, //Menonaktifkan fitur sort
+                    order: [[0, 'asc']], // Urutkan berdasarkan kolom pertama secara ascending
+                    language: {
+                        search: "Search:"
+                    }
+                });
+
+                // Fungsi untuk menghapus semua highlight
+                function clearHighlight() {
+                    $('td').each(function () {
+                        let originalText = $(this).data('original-text');
+                        if (originalText) {
+                            $(this).html(originalText); // Kembalikan ke teks asli
+                        }
+                    });
+                }
+
+                // Fungsi untuk menyoroti teks
+                function highlightText(text) {
+                    if (!text) {
+                        clearHighlight(); // Hapus highlight jika tidak ada teks
+                        return;
+                    }
+
+                    try {
+                        // Escape special characters for regex
+                        text = text.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                        const regex = new RegExp(`(${text})`, 'gi');
+
+                        $('td').each(function () {
+                            let originalText = $(this).html();
+                            if (!$(this).data('original-text')) {
+                                $(this).data('original-text', originalText); // Simpan teks asli jika belum
+                            }
+
+                            // Clear previous highlights
+                            const cleanText = originalText.replace(/<span class="highlight">|<\/span>/g, '');
+                            // Highlight new text
+                            const newText = cleanText.replace(regex, '<span class="highlight">$1</span>');
+                            $(this).html(newText);
+                        });
+                    } catch (e) {
+                        console.error('Error highlighting text:', e);
+                        alert('Gagal menyoroti teks. Silakan coba lagi.');
+                    }
+                }
+
+                // Event Listener untuk pencarian
+                $('#dataTable_filter input').on('input', function () {
+                    const searchValue = this.value;
+                    try {
+                        table.search(searchValue).draw();
+                        highlightText(searchValue); // Menyoroti teks setelah pencarian
+                    } catch (e) {
+                        console.error('Error during search:', e);
+                        alert('Gagal melakukan pencarian. Silakan coba lagi.');
+                    }
+                });
+
+                // Event Listener untuk menyoroti teks ketika DataTable diupdate
+                table.on('draw', function () {
+                    const searchValue = $('#dataTable_filter input').val();
+                    try {
+                        highlightText(searchValue);
+                    } catch (e) {
+                        console.error('Error during DataTable draw:', e);
+                        alert('Gagal memperbarui highlight teks. Silakan coba lagi.');
+                    }
+                });
+            });
+        </script>
 
 </body>
 

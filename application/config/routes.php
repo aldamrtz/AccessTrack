@@ -76,5 +76,10 @@ $route['translate_uri_dashes'] = FALSE;
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-
-
+$route['default_controller'] = 'auth';
+$route['404_override'] = '';
+$route['translate_uri_dashes'] = FALSE;
+$route['captcha'] = 'CaptchaController/generateCaptcha';
+$route['check_email_availability'] = 'EmailController/check_email_availability';
+$route['logincontroller'] = 'LoginController/index';
+$route['logincontroller/login'] = 'LoginController/login';

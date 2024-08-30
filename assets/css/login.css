@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #4CAF50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-wrapper {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: #228B22;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    text-align: center;
+}
+
+.login-header img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.login-header h2 {
+    color: #fff;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.login-box h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    box-sizing: border-box;
+    color: #333;
+    text-align: center;
+}
+
+.g-recaptcha {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    /* Menambah jarak di atas dan bawah */
+}
+
+.input-group button {
+    width: 100%;
+    padding: 12px;
+    background-color: #fff;
+    border: none;
+    color: #228B22;
+    font-weight: bold;
+    border-radius: 20px;
+    cursor: pointer;
+    box-sizing: border-box;
+    margin-top: 20px;
+    /* Menambah jarak di atas tombol */
+}
+
+.input-group button:hover {
+    background-color: #ddd;
+}
+
+.alert {
+    padding: 10px;
+    background-color: #e74c3c;
+    color: #fff;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 20px;
+}

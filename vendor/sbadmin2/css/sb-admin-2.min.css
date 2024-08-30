@@ -40,6 +40,13 @@
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
 }
 
+.highlight {
+    background-color: yellow;
+    /*Highlight Text stabilo*/
+    font-weight: bold;
+    /*menebalkan text*/
+}
+
 *,
 ::after,
 ::before {
