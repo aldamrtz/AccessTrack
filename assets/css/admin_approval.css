@@ -1,4 +1,3 @@
-/* Body style */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #eaf4ea;
@@ -7,112 +6,103 @@ body {
     padding: 0;
 }
 
-/* Container utama */
 .container {
     width: 95%;
+    /* Meningkatkan lebar kontainer */
     max-width: 1400px;
+    /* Meningkatkan lebar maksimum kontainer */
     margin: 40px auto;
     background: #ffffff;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    /* Pastikan konten tidak melampaui kontainer */
 }
 
-/* Heading */
 h2 {
     text-align: center;
-    color: #4b9164;
+    color: #000000;
     /* Warna hijau sage tua untuk judul */
     margin-bottom: 20px;
     font-size: 28px;
     font-weight: 600;
 }
 
-/* Table responsive container */
-.table-responsive {
-    overflow-x: auto;
-    /* Memastikan tabel bisa di-scroll secara horizontal jika terlalu besar */
-    margin-bottom: 20px;
-}
-
-/* Table styling */
 table {
     width: 100%;
+    /* Memastikan tabel memanfaatkan lebar penuh kontainer */
     border-collapse: collapse;
+    margin-bottom: 20px;
     table-layout: auto;
-    /* Mengubah layout tabel menjadi auto untuk menyesuaikan lebar kolom */
+    /* Menyesuaikan lebar tabel dengan konten */
 }
 
-/* Table headers and cells */
 table th,
 table td {
-    padding: 14px 18px;
-    /* Perbesar padding */
+    padding: 12px 15px;
     border: 1px solid #ddd;
     text-align: left;
+    /* Default alignment untuk kolom data */
     vertical-align: top;
     /* Menjaga konten vertikal */
 }
 
-/* Table header styling */
 table th {
     background-color: #4b9164;
     /* Warna hijau sage tua */
     color: white;
-    font-weight: 595;
-    font-size: 17px;
-    /* Perbesar ukuran font header tabel */
+    font-weight: 590;
+    font-size: 16px;
     text-transform: uppercase;
     text-align: center;
     /* Menyelaraskan teks header tabel ke tengah */
 }
 
-/* Even row background color */
 table tr:nth-child(even) {
     background-color: #f1f8f4;
     /* Warna hijau sage yang sangat terang */
 }
 
-/* Hover effect on rows */
 table tr:hover {
     background-color: #dceee5;
     /* Warna hijau sage yang sedikit lebih gelap saat hover */
 }
 
-/* Column for ID */
+td {
+    word-wrap: break-word;
+    /* Mengatasi konten yang panjang */
+    white-space: normal;
+    /* Mengizinkan konten untuk melipat */
+}
+
+/* Menyesuaikan ukuran kolom ID */
 table th.column-id,
 table td.column-id {
-    width: 100px;
-    /* Perbesar lebar kolom ID */
+    width: 80px;
+    /* Lebar kolom ID yang lebih kecil */
 }
 
-/* Column for Deskripsi Masalah */
+/* Menyesuaikan ukuran kolom Deskripsi Masalah */
 table th.column-deskripsi,
 table td.column-deskripsi {
-    width: 30%;
-    /* Perbesar lebar kolom Deskripsi Masalah */
+    width: 45%;
+    /* Lebar kolom Deskripsi Masalah yang lebih lebar */
     word-wrap: break-word;
-    /* Membungkus kata-kata panjang */
-    white-space: normal;
-    /* Izinkan teks untuk membungkus */
+    /* Membungkus teks dalam kolom */
     overflow: hidden;
-    /* Sembunyikan teks yang melebihi batas */
+    /* Menyembunyikan teks yang melebihi lebar kolom */
     position: relative;
-    vertical-align: top;
-    /* Menjaga teks tetap di atas */
+    /* Untuk posisi relatif pada teks tambahan */
 }
 
-/* More text functionality for Deskripsi Masalah */
-.column-deskripsi .short-text {
-    display: inline;
-}
-
+/* Menambahkan gaya untuk tombol 'Selanjutnya' */
 .column-deskripsi .more-text {
     display: none;
-    white-space: normal;
-    /* Izinkan teks tambahan untuk membungkus */
+    /* Menyembunyikan teks tambahan secara default */
+}
+
+.column-deskripsi.show-more .more-text {
+    display: block;
+    /* Menampilkan teks tambahan jika dibutuhkan */
 }
 
 .column-deskripsi .toggle-more {
@@ -120,14 +110,12 @@ table td.column-deskripsi {
     color: #4b9164;
     text-decoration: none;
     cursor: pointer;
-    margin-left: 5px;
 }
 
 .column-deskripsi .toggle-more:hover {
     text-decoration: underline;
 }
 
-/* Styling for links */
 td a {
     color: #4b9164;
     /* Warna hijau sage untuk link */
@@ -138,32 +126,27 @@ td a:hover {
     text-decoration: underline;
 }
 
-/* Button container */
 .btn-container {
     display: flex;
     justify-content: center;
     /* Menyelaraskan tombol di tengah */
-    gap: 15px;
-    /* Perbesar jarak antara tombol */
+    gap: 10px;
+    /* Memberikan jarak antara tombol */
 }
 
-/* Button styling */
 .btn {
-    padding: 12px 20px;
-    /* Perbesar padding tombol */
+    padding: 8px 15px;
     border: none;
     border-radius: 5px;
     color: white;
     text-decoration: none;
-    font-size: 14px;
-    /* Perbesar ukuran font tombol */
+    font-size: 12px;
     margin: 0;
     display: inline-block;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-/* Approve button styling */
 .btn-approve {
     background-color: #5aaf76;
     /* Warna hijau sage yang lebih dalam */
@@ -174,7 +157,6 @@ td a:hover {
     /* Warna hijau sage lebih gelap saat hover */
 }
 
-/* Reject button styling */
 .btn-reject {
     background-color: #dc3545;
     /* Warna merah */
@@ -185,7 +167,7 @@ td a:hover {
     /* Warna merah lebih gelap saat hover */
 }
 
-/* Responsive design adjustments */
+/* Responsive Design */
 @media (max-width: 768px) {
     .container {
         width: 95%;
