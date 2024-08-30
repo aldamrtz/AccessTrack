@@ -1844,11 +1844,13 @@ pre code {
 
 .table thead th {
     vertical-align: bottom;
-    border-bottom: 2px solid #e3e6f0
+    border-bottom: 2px solid #e3e6f0;
+    font-size: 1rem;
 }
 
 .table tbody+tbody {
-    border-top: 2px solid #e3e6f0
+    border-top: 2px solid #e3e6f0;
+    font-size: 0, 875rem;
 }
 
 .table-sm td,
