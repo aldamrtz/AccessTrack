@@ -1,8 +1,30 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+// Rute untuk login dan logout
 $route['login'] = 'login/index';
 $route['login/authenticate'] = 'login/authenticate';
 $route['logout'] = 'login/logout';
+
+// Rute untuk akses pengajuan dan konfirmasi
+$route['access/submit'] = 'access/submit';
+$route['access'] = 'access/form';  // Rute untuk mengakses form pengajuan
+$route['access/confirmation'] = 'access/confirmation';  // Rute untuk halaman konfirmasi
+
+// Rute untuk admin approval dan laporan
+$route['admin/approval_list'] = 'access/approval_list';
+$route['admin/laporan'] = 'access/laporan';
+
+// Rute untuk captcha
+$route['captcha'] = 'CaptchaController/generateCaptcha';
+
+// Rute untuk cek ketersediaan email
+$route['check_email_availability'] = 'EmailController/check_email_availability';
+
+// Rute default dan lainnya
+$route['default_controller'] = 'auth';
+$route['404_override'] = '';
+$route['translate_uri_dashes'] = FALSE;
+
 
 
 
@@ -54,8 +76,5 @@ $route['logout'] = 'login/logout';
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'auth';
-$route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
-$route['captcha'] = 'CaptchaController/generateCaptcha';
-$route['check_email_availability'] = 'EmailController/check_email_availability';
+
+
