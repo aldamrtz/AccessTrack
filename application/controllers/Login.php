@@ -3,6 +3,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Login extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        // Load necessary libraries and helpers
+        $this->load->library('form_validation');
+        $this->load->helper('cookie'); // Load the cookie helper
+        $this->load->model('LoginModel');
+    }
 
     public function index()
     {
@@ -13,10 +21,6 @@ class Login extends CI_Controller
 
     public function authenticate()
     {
-        // Load library dan model yang diperlukan
-        $this->load->library('form_validation');
-        $this->load->model('LoginModel');
-
         // Aturan validasi form
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'required');
@@ -59,7 +63,7 @@ class Login extends CI_Controller
                 $this->input->set_cookie($cookie);
 
                 // Redirect ke dashboard jika login berhasil
-                redirect('vendor/sbadmin2/index.html');
+                redirect('dashboard');
             } else {
                 // Tampilkan pesan error jika email atau password salah
                 $this->session->set_flashdata('error', 'Email atau Password salah');
@@ -70,6 +74,7 @@ class Login extends CI_Controller
 
     public function logout()
     {
+        // Load Cookie Helper (should be already loaded in constructor)
         // Hapus cookie saat logout
         delete_cookie('user_session');
 
@@ -84,7 +89,7 @@ class Login extends CI_Controller
 
     private function verifyRecaptcha($recaptcha_response)
     {
-        $secret = $this->config->item('recaptcha_secret_key'); 
+        $secret = $this->config->item('recaptcha_secret_key');
         $url = 'https://www.google.com/recaptcha/api/siteverify';
 
         $data = array(

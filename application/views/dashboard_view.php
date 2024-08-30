@@ -198,7 +198,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="d-flex align-items-center">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small username-text">Douglas McGee</span>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small username-text"><?= $email; ?></span>
                                     <img class="img-profile rounded-circle" src="assets/img/undraw_profile.svg" alt="Profile Picture">
                                 </div>
                             </a>
@@ -221,9 +221,6 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">DASHBOARD</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i>
-                            Cetak Laporan</a>
                     </div>
 
                     <!-- Content Row -->
@@ -350,26 +347,26 @@
             <i class="fas fa-angle-up"></i>
         </a>
 
-        <!-- Logout Modal-->
+        <!-- Logout Modal -->
         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Apakah Anda Yakin Untuk Keluar ?
-                        </h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Apakah Anda Yakin Untuk Keluar ?</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-body">Pilih "Keluar" di bawah jika Anda siap mengakhiri sesi Anda saat ini.</div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Keluar</a>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                        <a class="btn btn-primary" href="<?= base_url('login/logout'); ?>">Keluar</a>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <!-- Bootstrap core JavaScript-->
         <script src="js/jquery/jquery.min.js"></script>
@@ -466,6 +463,15 @@
                 });
             });
         </script>
+        <!-- Popper.js -->
+         <!-- jQuery pertama -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Kemudian Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+
 
 </body>
 
