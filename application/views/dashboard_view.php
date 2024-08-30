@@ -75,7 +75,7 @@
 
             <!-- Nav Item - Pengajuan Email -->
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo site_url('DashboardpPengajuanEmail'); ?>">
+                <a class="nav-link" href="<?php echo site_url('DashboardPengajuanEmail'); ?>">
                     <i class="fas fa-envelope"></i>
                     <span>Pengajuan Email</span>
                 </a>
