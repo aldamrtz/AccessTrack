@@ -24,7 +24,7 @@
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     <!-- Menambahkan favicon -->
-    <link rel="icon" href="img/Unjani.png" type="image/png">
+    <link rel="icon" href="assets/img/Unjani.png" type="image/png">
 
 </head>
 
@@ -37,9 +37,9 @@
         <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo site_url('Dashboard'); ?>">
                 <div class="sidebar-brand-icon d-inline-block">
-                    <img src="img/Unjani.png">
+                    <img src="assets/img/Unjani.png">
                 </div>
                 <div class="sidebar-brand-text">
                     Access Track
@@ -50,7 +50,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="<?php echo site_url('Dashboard'); ?>">
                     <i class="fas fa-home"></i>
                     <span>Home</span></a>
             </li>
@@ -63,33 +63,30 @@
                 Laporan
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Navigasi -->
             <li class="nav-item">
-                <a class="nav-link" href="Data_Akses.html">
+                <a class="nav-link" href="<?php echo site_url('Dashboard_akses'); ?>">
                     <i class="fas fa-id-card"></i>
                     <span>Data Kartu Akses</span>
                 </a>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="Data_Laporan_Keluhan.html">
+                <a class="nav-link" href="<?php echo site_url('Dashboard_akses'); ?>">
                     <i class="fas fa-exclamation-circle"></i>
                     <span>Laporan Keluhan</span>
                 </a>
             </li>
 
-            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="Pengajuan_Email.html">
+                <a class="nav-link" href="<?php echo site_url('DashboardPengajuanEmail'); ?>">
                     <i class="fas fa-envelope"></i>
                     <span>Pengajuan Email</span>
                 </a>
             </li>
 
-            <!-- Nav Item - Charts -->
             <li class="nav-item active">
-                <a class="nav-link" href="Pengajuan_Domain.html">
+                <a class="nav-link" href="<?php echo site_url('DashboardPengajuanDomain'); ?>">
                     <i class="fas fa-globe"></i>
                     <span>Pengajuan Domain</span></a>
             </li>
