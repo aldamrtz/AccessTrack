@@ -60,7 +60,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo site_url('Dashboard_akses'); ?>">
                     <i class="fas fa-id-card"></i>
-                    <span>Dashboard Akses</span>
+                    <span>Data Kartu Akses</span>
                 </a>
             </li>
 

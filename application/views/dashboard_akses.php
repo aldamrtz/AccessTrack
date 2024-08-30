@@ -68,7 +68,7 @@
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link active" href="<?php echo site_url('DashboardCSIRT'); ?>">>
+                <a class="nav-link active" href="<?php echo site_url('DashboardCSIRT'); ?>">
                     <i class="fas fa-exclamation-circle"></i>
                     <span>Laporan Keluhan</span>
                 </a>
@@ -76,7 +76,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo site_url('DashboardPengajuanEmail'); ?>">>
+                <a class="nav-link" href="<?php echo site_url('DashboardPengajuanEmail'); ?>">
                     <i class="fas fa-envelope"></i>
                     <span>Pengajuan Email</span>
                 </a>
@@ -84,7 +84,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo site_url('DashboardPengajuanDomain'); ?>">>
+                <a class="nav-link" href="<?php echo site_url('DashboardPengajuanDomain'); ?>">
                     <i class="fas fa-globe"></i>
                     <span>Pengajuan Domain</span></a>
             </li>
