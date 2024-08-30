@@ -318,8 +318,9 @@
 
                             <!-- DataTales -->
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-success">Tabel Pengajuan Domain </h6>
+                                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                    <h6 class="m-0 font-weight-bold text-success">Tabel Pengajuan Email</h6>
+                                    <input type="text" id="searchInput" class="form-control" placeholder="Search for..." style="max-width: 300px;">
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -396,6 +397,18 @@
 
             <!-- Page level custom scripts -->
             <script src="js/demo/datatables-demo.js"></script>
+
+            <script>
+                // JavaScript untuk toggle sidebar
+                document.addEventListener('DOMContentLoaded', function() {
+                    var sidebarToggle = document.getElementById('sidebarToggle');
+                    var sidebar = document.getElementById('accordionSidebar');
+
+                    sidebarToggle.addEventListener('click', function() {
+                        sidebar.classList.toggle('toggled');
+                    });
+                });
+            </script>
 
 </body>
 
