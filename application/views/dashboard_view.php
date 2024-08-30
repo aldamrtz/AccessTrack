@@ -67,7 +67,7 @@
 
             <!-- Nav Item - Laporan Keluhan -->
             <li class="nav-item">
-                <a class="nav-link" href="Data_Laporan_Keluhan.html">
+                <a class="nav-link" href="<?php echo site_url('dashboard_CSIRT'); ?>">
                     <i class="fas fa-exclamation-circle"></i>
                     <span>Laporan Keluhan</span>
                 </a>
@@ -75,7 +75,7 @@
 
             <!-- Nav Item - Pengajuan Email -->
             <li class="nav-item">
-                <a class="nav-link" href="Pengajuan_Email.html">
+                <a class="nav-link" href="<?php echo site_url('dashboard_pengajuan_email'); ?>">
                     <i class="fas fa-envelope"></i>
                     <span>Pengajuan Email</span>
                 </a>
@@ -83,7 +83,7 @@
 
             <!-- Nav Item - Pengajuan Domain -->
             <li class="nav-item">
-                <a class="nav-link" href="Pengajuan_Domain.html">
+                <a class="nav-link" href="<?php echo site_url('dashboard_pengajuan_domain'); ?>">
                     <i class="fas fa-globe"></i>
                     <span>Pengajuan Domain</span>
                 </a>
