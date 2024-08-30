@@ -22,4 +22,9 @@ class Csirt_model extends CI_Model {
         $this->db->where('id', $report_id);
         return $this->db->update('pelaporan_csirt', array('status' => $status));
     }
+
+    public function get_all_reports() {
+        $query = $this->db->get('pelaporan_csirt');
+        return $query->result_array();
+    }
 }
