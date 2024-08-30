@@ -52,6 +52,3 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'auth';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-$route['admin_csirt'] = 'admin_csirt/index';
-$route['admin_csirt/approve_report/(:num)'] = 'admin_csirt/approve_report/$1';
-$route['admin_csirt/reject_report/(:num)'] = 'admin_csirt/reject_report/$1';
