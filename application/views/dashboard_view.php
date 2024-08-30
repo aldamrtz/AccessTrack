@@ -394,7 +394,7 @@
                         labels: ['Kartu Akses', 'Laporan Keluhan', 'Pengajuan Email', 'Pengajuan Domain'],
                         datasets: [{
                             label: 'Total',
-                            data: [120, 10, 50, 15], // Values from your card body
+                            data: [120, 10, 50, 15],
                             backgroundColor: [
                                 'rgba(78, 115, 223, 0.6)',
                                 'rgba(28, 200, 138, 0.6)',
@@ -412,6 +412,8 @@
                     },
                     options: {
                         responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 2, // Ini menentukan rasio tinggi/lebar chart. Bisa disesuaikan.
                         plugins: {
                             legend: {
                                 position: 'top',
@@ -436,18 +438,21 @@
                         elements: {
                             bar: {
                                 borderWidth: 1,
-                                borderRadius: 4 // Add rounded corners
+                                borderRadius: 4 // Menambahkan sudut bulat
                             }
                         },
-                        // Enable 3D effect using chartjs-plugin-3d
                         layout: {
                             padding: 20
                         },
-                        // Adjust 3D effect parameters
                         animation: {
                             duration: 2000
                         }
                     }
+                });
+
+                // Re-render chart on window resize
+                window.addEventListener('resize', function() {
+                    my3DBarChart.resize();
                 });
             });
         </script>
@@ -464,13 +469,13 @@
             });
         </script>
         <!-- Popper.js -->
-         <!-- jQuery pertama -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- jQuery pertama -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Kemudian Bootstrap JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Kemudian Bootstrap JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 
 
 </body>
