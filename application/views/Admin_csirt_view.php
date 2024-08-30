@@ -47,12 +47,12 @@
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <?php if (!empty($report['bukti_file'])): ?>
-                                        <a href="<?php echo base_url('uploads/' . $report['bukti_file']); ?>" target="_blank">Lihat Gambar</a>
-                                    <?php else: ?>
-                                        Tidak Ada Bukti
-                                    <?php endif; ?>
-                                </td>
+    <?php if (!empty($report['bukti_file'])): ?>
+        <a href="<?php echo base_url('uploads/' . $report['bukti_file']); ?>" target="_blank">Lihat</a>
+    <?php else: ?>
+        Tidak Ada Bukti
+    <?php endif; ?>
+</td>
                                 <td><?php echo ucfirst($report['status']); ?></td>
                                 <td>
                                     <div class="btn-container">

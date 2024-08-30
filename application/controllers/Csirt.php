@@ -13,6 +13,7 @@ class Csirt extends CI_Controller {
     }
 
     public function submit_report() {
+        // Ambil data dari form
         $data = array(
             'nama_pelapor' => $this->input->post('nama_pelapor'),
             'email_pelapor' => $this->input->post('email_pelapor'),
@@ -22,30 +23,34 @@ class Csirt extends CI_Controller {
             'bagian' => $this->input->post('bagian'),
             'nama_website' => $this->input->post('nama_website'),
             'deskripsi_masalah' => $this->input->post('deskripsi_masalah'),
-            'bukti_file' => $this->_uploadFile(),
-            'tanggal_pelaporan' => date('Y-m-d H:i:s'),
-            'status' => 'pending'  // Pastikan status disimpan sebagai 'pending'
+            'bukti_file' => $this->_uploadFile(), // Proses unggah file
+            'tanggal_pelaporan' => date('Y-m-d H:i:s')
         );
     
+        // Masukkan data ke dalam database
         if ($this->Csirt_model->insert_report($data)) {
+            // Jika berhasil, tampilkan halaman sukses
             $this->load->view('report_success');
         } else {
+            // Jika gagal, tampilkan pesan error
             echo "Gagal mengirim laporan.";
         }
     }
-
+    
     private function _uploadFile() {
         $config['upload_path'] = './uploads/';
-        $config['allowed_types'] = 'jpg|png|pdf';
+        $config['allowed_types'] = 'jpg|png|pdf|jpeg';
         $config['file_name'] = time() . '_' . $_FILES['bukti_file']['name'];
         $config['max_size'] = 2048; // 2MB
     
         $this->load->library('upload', $config);
     
         if ($this->upload->do_upload('bukti_file')) {
-            return $this->upload->data("file_name");
-        } else {
-            return $this->upload->display_errors(); // Cek jika ada error dalam upload
+            // Pastikan tidak ada print_r atau var_dump di sini
+            // return $this->upload->data("file_name");
+            return $this->upload->data("file_name"); // Jangan echo atau print array data di sini
         }
+    
+        return null; // atau Anda bisa menangani error di sini
     }
 }
