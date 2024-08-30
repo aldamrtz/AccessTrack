@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class DashboardPengajuanEmail extends CI_Controller
+class DashboardPengajuanDomain extends CI_Controller
 {
     public function __construct()
     {
@@ -23,8 +23,6 @@ class DashboardPengajuanEmail extends CI_Controller
 
     public function index()
     {
-        // Mengambil data dari model
-        $data['dashboard_data'] = $this->Dashboard_model->get_dashboard_data();
         $data['email'] = $this->session->userdata('email'); // Ambil email dari session
 
         // Mengirim data ke view

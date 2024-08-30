@@ -11,20 +11,15 @@
 
     <title>Pengajuan Email</title>
 
-    <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <!-- Custom fonts for this template-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Menambahkan favicon -->
-    <link rel="icon" href="img/Unjani.png" type="image/png">
+    <link rel="icon" href="assets/img/Unjani.png" type="img/png">
 
 </head>
 
@@ -37,9 +32,9 @@
         <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo site_url('Dashboard_akses'); ?>">
                 <div class="sidebar-brand-icon d-inline-block">
-                    <img src="img/Unjani.png">
+                    <img src="assets/img/Unjani.png">
                 </div>
                 <div class="sidebar-brand-text">
                     Access Track
@@ -50,7 +45,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="<?php echo site_url('Dashboard_akses'); ?>">
                     <i class="fas fa-home"></i>
                     <span>Home</span></a>
             </li>
@@ -63,35 +58,37 @@
                 Laporan
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Nav Item - Dashboard Akses -->
             <li class="nav-item">
-                <a class="nav-link" href="Data_Akses.html">
+                <a class="nav-link" href="<?php echo site_url('Dashboard_akses'); ?>">
                     <i class="fas fa-id-card"></i>
                     <span>Data Kartu Akses</span>
                 </a>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item ">
-                <a class="nav-link" href="Data_Laporan_Keluhan.html">
+
+            <!-- Nav Item - Laporan Keluhan -->
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo site_url('DashboardCSIRT'); ?>">
                     <i class="fas fa-exclamation-circle"></i>
                     <span>Laporan Keluhan</span>
                 </a>
             </li>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Nav Item - Pengajuan Email -->
             <li class="nav-item active">
-                <a class="nav-link" href="Pengajuan_Email.html">
+                <a class="nav-link" href="<?php echo site_url('DashboardPengajuanEmail'); ?>">
                     <i class="fas fa-envelope"></i>
                     <span>Pengajuan Email</span>
                 </a>
             </li>
 
-            <!-- Nav Item - Charts -->
+            <!-- Nav Item - Pengajuan Domain -->
             <li class="nav-item">
-                <a class="nav-link" href="Pengajuan_Domain.html">
+                <a class="nav-link" href="<?php echo site_url('DashboardPengajuanDomain'); ?>">
                     <i class="fas fa-globe"></i>
-                    <span>Pengajuan Domain</span></a>
+                    <span>Pengajuan Domain</span>
+                </a>
             </li>
 
             <!-- Divider -->
@@ -325,10 +322,11 @@
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
 
-                            <!-- DataTales -->
+                            <!-- DataTables -->
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3">
+                                <div class="card-header py-3 d-flex justify-content-between align-items-center">
                                     <h6 class="m-0 font-weight-bold text-success">Tabel Pengajuan Email</h6>
+                                    <input type="text" id="searchInput" class="form-control" placeholder="Search for..." style="max-width: 300px;">
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -346,12 +344,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <!-- Data tabel akan dimuat di sini -->
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <!-- /.container-fluid -->
 
@@ -391,22 +389,26 @@
                 </div>
             </div>
 
-            <!-- Bootstrap core JavaScript-->
-            <script src="vendor/jquery/jquery.min.js"></script>
-            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <!-- jQuery pertama -->
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-            <!-- Core plugin JavaScript-->
-            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+            <!-- Kemudian Bootstrap JavaScript -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
-            <!-- Custom scripts for all pages-->
-            <script src="js/sb-admin-2.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 
-            <!-- Page level plugins -->
-            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-            <!-- Page level custom scripts -->
-            <script src="js/demo/datatables-demo.js"></script>
+            <script>
+                // JavaScript untuk toggle sidebar
+                document.addEventListener('DOMContentLoaded', function() {
+                    var sidebarToggle = document.getElementById('sidebarToggle');
+                    var sidebar = document.getElementById('accordionSidebar');
+
+                    sidebarToggle.addEventListener('click', function() {
+                        sidebar.classList.toggle('toggled');
+                    });
+                });
+            </script>
 
 </body>
 
