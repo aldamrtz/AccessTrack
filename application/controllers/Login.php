@@ -47,7 +47,7 @@ class Login extends CI_Controller
 
             if ($user) {
                 // Set session jika login berhasil
-                $this->session->set_userdata('user_id', $user->id);
+                $this->session->set_userdata('username', $user->username);
                 $this->session->set_userdata('email', $user->email);
 
                 // Set cookie untuk sesi login

@@ -202,7 +202,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="d-flex align-items-center">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small username-text"><?= $email; ?></span>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small username-text"><?= $username; ?></span>
                                     <img class="img-profile rounded-circle" src="assets/img/undraw_profile.svg" alt="Profile Picture">
                                 </div>
                             </a>
@@ -332,16 +332,31 @@
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>No</th>
-                                                    <th>NIM</th>
-                                                    <th>Nama</th>
-                                                    <th>Jurusan</th>
-                                                    <th>Fakultas</th>
+                                                    <th>ID KA</th>
+                                                    <th>Nama Lengkap</th>
+                                                    <th>Identity Number</th>
+                                                    <th>Faculty/Department</th>
+                                                    <th>Program Studi</th>
+                                                    <th>Email</th>
+                                                    <th>Keterangan Pengajuan</th>
+                                                    <th>Applicant Type</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Data rows go here -->
+                                                <?php foreach ($kartu_akses as $data) : ?>
+                                                    <tr>
+                                                        <td><?php echo $data['id_KA']; ?></td>
+                                                        <td><?php echo $data['nama_lengkap']; ?></td>
+                                                        <td><?php echo $data['identity_number']; ?></td>
+                                                        <td><?php echo $data['faculty_department']; ?></td>
+                                                        <td><?php echo $data['program_studi']; ?></td>
+                                                        <td><?php echo $data['email']; ?></td>
+                                                        <td><?php echo $data['keterangan_pengajuan']; ?></td>
+                                                        <td><?php echo $data['applicant_type']; ?></td>
+                                                        <td><?php echo $data['status']; ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
                                             </tbody>
                                         </table>
                                     </div>

@@ -12,8 +12,8 @@ class Dashboard extends CI_Controller
         // Load the cookie helper to use delete_cookie function
         $this->load->helper('cookie');
 
-        // Cek apakah pengguna sudah login atau belum menggunakan email
-        if (!$this->session->userdata('email')) {
+        // Cek apakah pengguna sudah login menggunakan username atau email
+        if (!$this->session->userdata('username') && !$this->session->userdata('email')) {
             // Jika belum login, hapus cookie dan redirect ke halaman login
             delete_cookie('user_session'); // Hapus cookie
             $this->session->set_flashdata('error', 'Anda harus login terlebih dahulu.');
@@ -25,7 +25,8 @@ class Dashboard extends CI_Controller
     {
         // Mengambil data dari model
         $data['dashboard_data'] = $this->Dashboard_model->get_dashboard_data();
-        $data['email'] = $this->session->userdata('email'); // Ambil email dari session
+        // Ambil username atau email dari session
+        $data['username'] = $this->session->userdata('username') ? $this->session->userdata('username') : $this->session->userdata('email');
 
         // Mengirim data ke view
         $this->load->view('dashboard_view', $data);
@@ -39,7 +40,7 @@ class Dashboard extends CI_Controller
         // Hapus session dan cookie saat logout
         $this->session->unset_userdata('email'); // Hapus session email
         delete_cookie('user_session'); // Hapus cookie
-        
+
         // Redirect ke halaman login
         $this->session->set_flashdata('success', 'Anda berhasil logout.');
         redirect('login');
