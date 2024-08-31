@@ -25,6 +25,7 @@ class Dashboard extends CI_Controller
     {
         // Mengambil data dari model
         $data['dashboard_data'] = $this->Dashboard_model->get_dashboard_data();
+
         // Ambil username atau email dari session
         $data['username'] = $this->session->userdata('username') ? $this->session->userdata('username') : $this->session->userdata('email');
 
@@ -38,6 +39,7 @@ class Dashboard extends CI_Controller
         $this->load->helper('cookie');
 
         // Hapus session dan cookie saat logout
+        $this->session->unset_userdata('username'); // Hapus session username
         $this->session->unset_userdata('email'); // Hapus session email
         delete_cookie('user_session'); // Hapus cookie
 

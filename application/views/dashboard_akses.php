@@ -21,6 +21,8 @@
     <link rel="icon" href="assets/img/Unjani.png" type="img/png">
     <!-- Custom styles for this page -->
     <link href="assets/js/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -399,62 +401,15 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Bootstrap core JavaScript-->
-            <script src="assets/js/jquery/jquery.min.js"></script>
-            <script src="assets/js/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-            <!-- Core plugin JavaScript-->
-            <script src="assets/js/jquery-easing/jquery.easing.min.js"></script>
-
-            <!-- Custom scripts for all pages-->
-            <script src="assets/js/sb-admin-2.min.js"></script>
-
-            <!-- Page level plugins -->
-            <script src="assets/js/datatables/jquery.dataTables.min.js"></script>
-            <script src="assets/js/datatables/dataTables.bootstrap4.min.js"></script>
-
-            <!-- Page level custom scripts -->
-            <script src="assets/js/demo/datatables-demo.js"></script>
-
             <!-- Script berfungsi pada searchbar untuk menghighlight huruf yang dicar-->
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const table = $('#dataTable').DataTable({
-                        ajax: {
-                            url: 'http://localhost:3000/api/pengajuan_ka',
-                            dataSrc: '',
-                            error: function(xhr, error, thrown) {
-                                console.error('Error loading data:', thrown);
-                                alert('Gagal memuat data. Silakan coba lagi nanti.');
-                            }
-                        },
-                        columns: [{
-                                data: null,
-                                render: function(data, type, row, meta) {
-                                    return meta.row + 1; // Menampilkan nomor urut
-                                }
-                            },
-                            {
-                                data: 'id_pengguna'
-                            },
-                            {
-                                data: 'id_pengajuan'
-                            },
-                            {
-                                data: 'kwitansi'
-                            },
-                            {
-                                data: 'date'
-                            },
-                            {
-                                data: 'ketPengajuan'
-                            }
-                        ],
-                        ordering: false, //Menonaktifkan fitur sort
+                        dom: '<"top">rt<"bottom"ilp><"clear">', // Menghilangkan search bar default
+                        ordering: true, // Aktifkan sorting
                         order: [
                             [0, 'asc']
-                        ], // Urutkan berdasarkan kolom pertama secara ascending
+                        ], // Mengurutkan berdasarkan kolom pertama (ID KA)
                         language: {
                             search: "Search:"
                         }
@@ -501,7 +456,7 @@
                     }
 
                     // Event Listener untuk pencarian
-                    $('#dataTable_filter input').on('input', function() {
+                    $('#searchInput').on('input', function() {
                         const searchValue = this.value;
                         try {
                             table.search(searchValue).draw();
@@ -514,7 +469,7 @@
 
                     // Event Listener untuk menyoroti teks ketika DataTable diupdate
                     table.on('draw', function() {
-                        const searchValue = $('#dataTable_filter input').val();
+                        const searchValue = $('#searchInput').val();
                         try {
                             highlightText(searchValue);
                         } catch (e) {
@@ -542,6 +497,10 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+
+            <!-- DataTables JS -->
+            <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
 
 </body>
 
