@@ -21,6 +21,12 @@
 </head>
 
 <body id="page-top">
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" style="position: fixed; width: 100%; height: 100%; background: white; top: 0; left: 0; z-index: 9999; display: flex; justify-content: center; align-items: center;">
+        <div class="spinner-border text-success" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -293,7 +299,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Pengajuan Domain -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card shadow h-100 py-2 border-left-info"
@@ -387,80 +393,79 @@
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-3d"></script>
 
         <script>
-
-                document.addEventListener('DOMContentLoaded', function() {
-                    var ctx = document.getElementById('my3DBarChart').getContext('2d');
-                    var my3DBarChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: ['Kartu Akses', 'Laporan Keluhan', 'Pengajuan Email', 'Pengajuan Domain'],
-                            datasets: [{
-                                label: 'Total',
-                                data: [
-                                    <?= $dashboard_data['kartu_akses']; ?>,
-                                    <?= $dashboard_data['laporan_keluhan']; ?>,
-                                    <?= $dashboard_data['pengajuan_email']; ?>,
-                                    <?= $dashboard_data['pengajuan_domain']; ?>
-                                ],
-                                backgroundColor: [
-                                    'rgba(78, 115, 223, 0.6)',
-                                    'rgba(28, 200, 138, 0.6)',
-                                    'rgba(255, 193, 7, 0.6)',
-                                    'rgba(54, 185, 204, 0.6)'
-                                ],
-                                borderColor: [
-                                    'rgba(78, 115, 223, 1)',
-                                    'rgba(28, 200, 138, 1)',
-                                    'rgba(255, 193, 7, 1)',
-                                    'rgba(54, 185, 204, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: true,
-                            aspectRatio: 2,
-                            plugins: {
-                                legend: {
-                                    position: 'top',
-                                },
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(tooltipItem) {
-                                            return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
-                                        }
+            document.addEventListener('DOMContentLoaded', function() {
+                var ctx = document.getElementById('my3DBarChart').getContext('2d');
+                var my3DBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Kartu Akses', 'Laporan Keluhan', 'Pengajuan Email', 'Pengajuan Domain'],
+                        datasets: [{
+                            label: 'Total',
+                            data: [
+                                <?= $dashboard_data['kartu_akses']; ?>,
+                                <?= $dashboard_data['laporan_keluhan']; ?>,
+                                <?= $dashboard_data['pengajuan_email']; ?>,
+                                <?= $dashboard_data['pengajuan_domain']; ?>
+                            ],
+                            backgroundColor: [
+                                'rgba(78, 115, 223, 0.6)',
+                                'rgba(28, 200, 138, 0.6)',
+                                'rgba(255, 193, 7, 0.6)',
+                                'rgba(54, 185, 204, 0.6)'
+                            ],
+                            borderColor: [
+                                'rgba(78, 115, 223, 1)',
+                                'rgba(28, 200, 138, 1)',
+                                'rgba(255, 193, 7, 1)',
+                                'rgba(54, 185, 204, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 2,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(tooltipItem) {
+                                        return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
                                     }
                                 }
-                            },
-                            scales: {
-                                x: {
-                                    stacked: true
-                                },
-                                y: {
-                                    stacked: true,
-                                    beginAtZero: true
-                                }
-                            },
-                            elements: {
-                                bar: {
-                                    borderWidth: 1,
-                                    borderRadius: 4
-                                }
-                            },
-                            layout: {
-                                padding: 20
-                            },
-                            animation: {
-                                duration: 2000
                             }
+                        },
+                        scales: {
+                            x: {
+                                stacked: true
+                            },
+                            y: {
+                                stacked: true,
+                                beginAtZero: true
+                            }
+                        },
+                        elements: {
+                            bar: {
+                                borderWidth: 1,
+                                borderRadius: 4
+                            }
+                        },
+                        layout: {
+                            padding: 20
+                        },
+                        animation: {
+                            duration: 2000
                         }
-                    });
-
-                    window.addEventListener('resize', function() {
-                        my3DBarChart.resize();
-                    });
+                    }
                 });
+
+                window.addEventListener('resize', function() {
+                    my3DBarChart.resize();
+                });
+            });
         </script>
 
         <script>
@@ -474,6 +479,32 @@
                 });
             });
         </script>
+
+        <!-- Loading -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Fungsi untuk menghapus spinner setelah halaman selesai dimuat
+                function hideLoadingSpinner() {
+                    document.getElementById('loading-spinner').style.display = 'none';
+                }
+
+                // Menunggu hingga semua data selesai dimuat
+                var dashboardDataLoad = new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve();
+                    }, 2000);
+                });
+
+                dashboardDataLoad.then(() => {
+                    // Menghilangkan spinner setelah data selesai dimuat
+                    hideLoadingSpinner();
+                }).catch((error) => {
+                    console.error('Error loading dashboard data:', error);
+                    hideLoadingSpinner(); 
+                });
+            });
+        </script>
+
         <!-- Popper.js -->
         <!-- jQuery pertama -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

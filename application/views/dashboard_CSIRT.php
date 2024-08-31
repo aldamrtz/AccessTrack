@@ -28,7 +28,12 @@
 </head>
 
 <body id="page-top">
-
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" style="position: fixed; width: 100%; height: 100%; background: white; top: 0; left: 0; z-index: 9999; display: flex; justify-content: center; align-items: center;">
+        <div class="spinner-border text-success" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -512,6 +517,32 @@
                     });
                 });
             </script>
+
+        <!-- Loading -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Fungsi untuk menghapus spinner setelah halaman selesai dimuat
+                function hideLoadingSpinner() {
+                    document.getElementById('loading-spinner').style.display = 'none';
+                }
+
+                // Menunggu hingga semua data selesai dimuat
+                var dashboardDataLoad = new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve(); 
+                    }, 2000);
+                });
+
+                dashboardDataLoad.then(() => {
+                    // Menghilangkan spinner setelah data selesai dimuat
+                    hideLoadingSpinner();
+                }).catch((error) => {
+                    console.error('Error loading dashboard data:', error);
+                    hideLoadingSpinner(); 
+                });
+            });
+        </script>
+
             <!-- jQuery pertama -->
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
