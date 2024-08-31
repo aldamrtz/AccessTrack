@@ -236,7 +236,7 @@
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Kartu
                                                 Akses
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $dashboard_data['kartu_akses']; ?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $dashboard_data['kartu_akses']; ?></div>
                                             <div class="text-xs">Total</div>
                                         </div>
                                         <div class="col-auto">
@@ -259,7 +259,7 @@
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Laporan Keluhan
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $dashboard_data['laporan_keluhan']; ?></div>
                                             <div class="text-xs">Total</div>
                                         </div>
                                         <div class="col-auto">
@@ -281,7 +281,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Pengajuan Email</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">50</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $dashboard_data['pengajuan_email']; ?></div>
                                             <div class="text-xs">Total</div>
                                         </div>
                                         <div class="col-auto">
@@ -293,7 +293,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        
                         <!-- Pengajuan Domain -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card shadow h-100 py-2 border-left-info"
@@ -303,7 +303,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                                 Pengajuan Domain</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">15</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $dashboard_data['pengajuan_domain']; ?></div>
                                             <div class="text-xs">Total</div>
                                         </div>
                                         <div class="col-auto">
@@ -387,75 +387,80 @@
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-3d"></script>
 
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var ctx = document.getElementById('my3DBarChart').getContext('2d');
-                var my3DBarChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Kartu Akses', 'Laporan Keluhan', 'Pengajuan Email', 'Pengajuan Domain'],
-                        datasets: [{
-                            label: 'Total',
-                            data: [120, 10, 50, 15],
-                            backgroundColor: [
-                                'rgba(78, 115, 223, 0.6)',
-                                'rgba(28, 200, 138, 0.6)',
-                                'rgba(255, 193, 7, 0.6)',
-                                'rgba(54, 185, 204, 0.6)'
-                            ],
-                            borderColor: [
-                                'rgba(78, 115, 223, 1)',
-                                'rgba(28, 200, 138, 1)',
-                                'rgba(255, 193, 7, 1)',
-                                'rgba(54, 185, 204, 1)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: true,
-                        aspectRatio: 2, // Ini menentukan rasio tinggi/lebar chart. Bisa disesuaikan.
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(tooltipItem) {
-                                        return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    var ctx = document.getElementById('my3DBarChart').getContext('2d');
+                    var my3DBarChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Kartu Akses', 'Laporan Keluhan', 'Pengajuan Email', 'Pengajuan Domain'],
+                            datasets: [{
+                                label: 'Total',
+                                data: [
+                                    <?= $dashboard_data['kartu_akses']; ?>,
+                                    <?= $dashboard_data['laporan_keluhan']; ?>,
+                                    <?= $dashboard_data['pengajuan_email']; ?>,
+                                    <?= $dashboard_data['pengajuan_domain']; ?>
+                                ],
+                                backgroundColor: [
+                                    'rgba(78, 115, 223, 0.6)',
+                                    'rgba(28, 200, 138, 0.6)',
+                                    'rgba(255, 193, 7, 0.6)',
+                                    'rgba(54, 185, 204, 0.6)'
+                                ],
+                                borderColor: [
+                                    'rgba(78, 115, 223, 1)',
+                                    'rgba(28, 200, 138, 1)',
+                                    'rgba(255, 193, 7, 1)',
+                                    'rgba(54, 185, 204, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            aspectRatio: 2,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(tooltipItem) {
+                                            return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        scales: {
-                            x: {
-                                stacked: true
                             },
-                            y: {
-                                stacked: true,
-                                beginAtZero: true
+                            scales: {
+                                x: {
+                                    stacked: true
+                                },
+                                y: {
+                                    stacked: true,
+                                    beginAtZero: true
+                                }
+                            },
+                            elements: {
+                                bar: {
+                                    borderWidth: 1,
+                                    borderRadius: 4
+                                }
+                            },
+                            layout: {
+                                padding: 20
+                            },
+                            animation: {
+                                duration: 2000
                             }
-                        },
-                        elements: {
-                            bar: {
-                                borderWidth: 1,
-                                borderRadius: 4 // Menambahkan sudut bulat
-                            }
-                        },
-                        layout: {
-                            padding: 20
-                        },
-                        animation: {
-                            duration: 2000
                         }
-                    }
-                });
+                    });
 
-                // Re-render chart on window resize
-                window.addEventListener('resize', function() {
-                    my3DBarChart.resize();
+                    window.addEventListener('resize', function() {
+                        my3DBarChart.resize();
+                    });
                 });
-            });
         </script>
 
         <script>
