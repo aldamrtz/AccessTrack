@@ -12,12 +12,13 @@
     <title>Pengajuan Email</title>
 
     <!-- Custom fonts for this template-->
-    <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
-
+    <link href="assets/js/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <!-- Menambahkan favicon -->
     <link rel="icon" href="assets/img/Unjani.png" type="img/png">
 
@@ -30,7 +31,6 @@
             <span class="sr-only">Loading...</span>
         </div>
     </div>
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -343,7 +343,6 @@
                                                     <th>Prodi</th>
                                                     <th>E-mail Pengguna</th>
                                                     <th>E-mail Diajukan</th>
-                                                    <th>ktm</th>
                                                     <th>Tanggal Pengajuan</th>
                                                     <th>Status Pengajuan</th>
                                                 </tr>
@@ -352,12 +351,11 @@
                                                 <?php foreach ($pengajuan_email as $data) : ?>
                                                     <tr>
                                                         <td><?php echo $data['no']; ?></td>
-                                                        <td><?php echo $data['nama_depan' + 'nama_belakang']; ?></td>
+                                                        <td><?php echo $data['nama_depan'] . ' ' . $data['nama_belakang']; ?></td>
                                                         <td><?php echo $data['nim']; ?></td>
                                                         <td><?php echo $data['prodi']; ?></td>
                                                         <td><?php echo $data['email_pengguna']; ?></td>
                                                         <td><?php echo $data['email_diajukan']; ?></td>
-                                                        <td><?php echo $data['ktm']; ?></td>
                                                         <td><?php echo $data['tgl_pengajuan']; ?></td>
                                                         <td><?php echo $data['status_pengajuan']; ?></td>
                                                     </tr>
@@ -412,6 +410,84 @@
 
             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 
+            <!-- Script berfungsi pada searchbar untuk menghighlight huruf yang dicar-->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const table = $('#dataTable').DataTable({
+                        dom: '<"top">rt<"bottom"ilp><"clear">', // Menghilangkan search bar default
+                        ordering: true, // Aktifkan sorting
+                        order: [
+                            [0, 'asc']
+                        ], // Mengurutkan berdasarkan kolom pertama (ID KA)
+                        language: {
+                            search: "Search:"
+                        }
+                    });
+
+                    // Fungsi untuk menghapus semua highlight
+                    function clearHighlight() {
+                        $('td').each(function() {
+                            let originalText = $(this).data('original-text');
+                            if (originalText) {
+                                $(this).html(originalText); // Kembalikan ke teks asli
+                            }
+                        });
+                    }
+
+                    // Fungsi untuk menyoroti teks
+                    function highlightText(text) {
+                        if (!text) {
+                            clearHighlight(); // Hapus highlight jika tidak ada teks
+                            return;
+                        }
+
+                        try {
+                            // Escape special characters for regex
+                            text = text.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                            const regex = new RegExp(`(${text})`, 'gi');
+
+                            $('td').each(function() {
+                                let originalText = $(this).html();
+                                if (!$(this).data('original-text')) {
+                                    $(this).data('original-text', originalText); // Simpan teks asli jika belum
+                                }
+
+                                // Clear previous highlights
+                                const cleanText = originalText.replace(/<span class="highlight">|<\/span>/g, '');
+                                // Highlight new text
+                                const newText = cleanText.replace(regex, '<span class="highlight">$1</span>');
+                                $(this).html(newText);
+                            });
+                        } catch (e) {
+                            console.error('Error highlighting text:', e);
+                            alert('Gagal menyoroti teks. Silakan coba lagi.');
+                        }
+                    }
+
+                    // Event Listener untuk pencarian
+                    $('#searchInput').on('input', function() {
+                        const searchValue = this.value;
+                        try {
+                            table.search(searchValue).draw();
+                            highlightText(searchValue); // Menyoroti teks setelah pencarian
+                        } catch (e) {
+                            console.error('Error during search:', e);
+                            alert('Gagal melakukan pencarian. Silakan coba lagi.');
+                        }
+                    });
+
+                    // Event Listener untuk menyoroti teks ketika DataTable diupdate
+                    table.on('draw', function() {
+                        const searchValue = $('#searchInput').val();
+                        try {
+                            highlightText(searchValue);
+                        } catch (e) {
+                            console.error('Error during DataTable draw:', e);
+                            alert('Gagal memperbarui highlight teks. Silakan coba lagi.');
+                        }
+                    });
+                });
+            </script>
 
             <script>
                 // JavaScript untuk toggle sidebar
@@ -424,7 +500,8 @@
                     });
                 });
             </script>
-            <!-- Loading -->
+
+            <!-- Loading-->
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     // Fungsi untuk menghapus spinner setelah halaman selesai dimuat
@@ -436,7 +513,7 @@
                     var dashboardDataLoad = new Promise((resolve, reject) => {
                         setTimeout(() => {
                             resolve();
-                        }, 2000);
+                        }, 500);
                     });
 
                     dashboardDataLoad.then(() => {
@@ -448,7 +525,10 @@
                     });
                 });
             </script>
+            <!-- DataTables JS -->
+            <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
-</body>
+
+    </body>
 
 </html>
