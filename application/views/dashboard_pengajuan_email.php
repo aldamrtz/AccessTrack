@@ -237,21 +237,43 @@
                     <!-- Content row -->
                     <div class="row">
 
-                        <!-- Email Dikirimkan -->
+                        <!-- Email Diajukan -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card shadow h-100 py-2 border-left-primary"
+                            <div class="card shadow h-100 py-2 border-left-info"
+                                style="border-left: 5px solid #f48fb1;">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Email Diajukan
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                                            <div class="text-xs">Total
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa fa-envelope fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email diproses -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card shadow h-100 py-2 border-left-warning"
                                 style="border-left: 5px solid #f8bbd0;">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Email Dikirimkan
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Email Diproses
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">120</div>
                                             <div class="text-xs">Total</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fa fa-paper-plane fa-2x text-gray-300"></i>
+                                            <i class="fa fa-cogs fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -280,43 +302,21 @@
                             </div>
                         </div>
 
-                        <!-- Email diproses -->
+                        <!-- Email Dikirimkan -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card shadow h-100 py-2 border-left-warning"
+                            <div class="card shadow h-100 py-2 border-left-primary"
                                 style="border-left: 5px solid #f8bbd0;">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Email Diproses
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Email Dikirimkan
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">120</div>
                                             <div class="text-xs">Total</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fa fa-cogs fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Email Diajukan -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card shadow h-100 py-2 border-left-info"
-                                style="border-left: 5px solid #f48fb1;">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                Email Diajukan
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
-                                            <div class="text-xs">Total
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fa fa-envelope fa-2x text-gray-300"></i>
+                                            <i class="fa fa-paper-plane fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -415,7 +415,7 @@
                 document.addEventListener('DOMContentLoaded', function() {
                     const table = $('#dataTable').DataTable({
                         dom: '<"top">rt<"bottom"ilp><"clear">', // Menghilangkan search bar default
-                        ordering: true, // Aktifkan sorting
+                        ordering: false, // Aktifkan sorting
                         order: [
                             [0, 'asc']
                         ], // Mengurutkan berdasarkan kolom pertama (ID KA)
@@ -529,6 +529,6 @@
             <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
 
-    </body>
+</body>
 
 </html>

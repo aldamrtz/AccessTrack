@@ -74,7 +74,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo site_url('Dashboard_akses'); ?>">
+                <a class="nav-link" href="<?php echo site_url('Dashboard_CSIRT'); ?>">
                     <i class="fas fa-exclamation-circle"></i>
                     <span>Laporan Keluhan</span>
                 </a>
@@ -231,43 +231,22 @@
                     <!-- Content row -->
                     <div class="row">
 
-                        <!-- Domain Terkirim -->
+                        <!-- Domain Diajukan -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card shadow h-100 py-2 border-left-primary"
-                                style="border-left: 5px solid #f8bbd0;">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Domain Terkirim
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">120</div>
-                                            <div class="text-xs">Total</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-paper-plane fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Domain Terverifikasi -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card shadow h-100 py-2 border-left-success"
+                            <div class="card shadow h-100 py-2 border-left-info"
                                 style="border-left: 5px solid #f48fb1;">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Domain Terverifikasi
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Domain Diajukan
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
                                             <div class="text-xs">Total
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                                            <i class="fas fa-globe fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -296,22 +275,43 @@
                             </div>
                         </div>
 
-                        <!-- Domain Diajukan -->
+                        <!-- Domain Terverifikasi -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card shadow h-100 py-2 border-left-info"
+                            <div class="card shadow h-100 py-2 border-left-success"
                                 style="border-left: 5px solid #f48fb1;">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                Domain Diajukan
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Domain Terverifikasi
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
                                             <div class="text-xs">Total
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-globe fa-2x text-gray-300"></i>
+                                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Domain Terkirim -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card shadow h-100 py-2 border-left-primary"
+                                style="border-left: 5px solid #f8bbd0;">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Domain Terkirim
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">120</div>
+                                            <div class="text-xs">Total</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-paper-plane fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -434,7 +434,7 @@
                         hideLoadingSpinner();
                     }).catch((error) => {
                         console.error('Error loading dashboard data:', error);
-                        hideLoadingSpinner(); 
+                        hideLoadingSpinner();
                     });
                 });
             </script>
