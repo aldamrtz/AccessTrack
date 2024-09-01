@@ -7,7 +7,7 @@ class DashboardPengajuanEmail extends CI_Controller
     {
         parent::__construct();
         // Load model
-        $this->load->model('');
+        $this->load->model('Dashboard_pengajuan_email');
 
         // Load the cookie helper to use delete_cookie function
         $this->load->helper('cookie');
@@ -23,6 +23,9 @@ class DashboardPengajuanEmail extends CI_Controller
 
     public function index()
     {
+        // Mengambil data dari model
+        $data['pengajuan_email'] = $this->Dashboard_pengajuan_email->get_pengajuan_email();
+
         // Ambil username atau email dari session
         $data['username'] = $this->session->userdata('username') ? $this->session->userdata('username') : $this->session->userdata('email');
 

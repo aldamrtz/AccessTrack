@@ -343,12 +343,25 @@
                                                     <th>Prodi</th>
                                                     <th>E-mail Pengguna</th>
                                                     <th>E-mail Diajukan</th>
+                                                    <th>ktm</th>
                                                     <th>Tanggal Pengajuan</th>
                                                     <th>Status Pengajuan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Data tabel akan dimuat di sini -->
+                                                <?php foreach ($pengajuan_email as $data) : ?>
+                                                    <tr>
+                                                        <td><?php echo $data['no']; ?></td>
+                                                        <td><?php echo $data['nama_depan' + 'nama_belakang']; ?></td>
+                                                        <td><?php echo $data['nim']; ?></td>
+                                                        <td><?php echo $data['prodi']; ?></td>
+                                                        <td><?php echo $data['email_pengguna']; ?></td>
+                                                        <td><?php echo $data['email_diajukan']; ?></td>
+                                                        <td><?php echo $data['ktm']; ?></td>
+                                                        <td><?php echo $data['tgl_pengajuan']; ?></td>
+                                                        <td><?php echo $data['status_pengajuan']; ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
                                             </tbody>
                                         </table>
                                     </div>
