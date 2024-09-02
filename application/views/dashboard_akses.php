@@ -292,9 +292,10 @@
                                     <div class="header-buttons-container">
                                         <div class="header-buttons">
                                             <div class="header-buttons">
-                                                <button class="btn btn-success" id="showDosen">Tampilkan Dosen</button>
-                                                <button class="btn btn-success" id="showMahasiswa">Tampilkan Mahasiswa</button>
-                                                <button class="btn btn-success" id="showAll">Tampilkan Semua Data</button>
+                                                <button class="btn btn-success" id="showDosen">Dosen</button>
+                                                <button class="btn btn-success" id="showStaff">Staff</button>
+                                                <button class="btn btn-success" id="showMahasiswa">Mahasiswa</button>
+                                                <button class="btn btn-success" id="showAll">Semua Data</button>
                                             </div>
                                         </div>
                                     </div>
@@ -372,11 +373,11 @@
                     </div>
                 </div>
             </div>
-            <!-- Script berfungsi pada searchbar untuk menghighlight huruf yang dicari-->
+
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const table = $('#dataTable').DataTable({
-                        ordering: false, // Aktifkan sorting
+                        ordering: false, // Nonaktifkan sorting jika tidak diperlukan
                         order: [
                             [0, 'asc']
                         ], // Mengurutkan berdasarkan kolom pertama (ID KA)
@@ -385,12 +386,15 @@
                         }
                     });
 
+                    let currentRole = ''; // Untuk menyimpan role yang sedang diterapkan
+
                     // Fungsi untuk menghapus semua highlight
                     function clearHighlight() {
                         $('td').each(function() {
                             let originalText = $(this).data('original-text');
                             if (originalText) {
                                 $(this).html(originalText); // Kembalikan ke teks asli
+                                $(this).removeData('original-text'); // Hapus data original-text
                             }
                         });
                     }
@@ -425,6 +429,37 @@
                         }
                     }
 
+                    // Fungsi untuk memperbarui jumlah card berdasarkan status dan role
+                    function updateCardCounts() {
+                        let verifiedCount = 0;
+                        let processCount = 0;
+                        let submitCount = 0;
+
+                        // Iterasi melalui setiap baris di tabel
+                        table.rows().nodes().to$().each(function(index, tr) {
+                            const status = $(tr).find('td').eq(8).text().trim(); // Status ada di kolom ke-9
+                            const role = $(tr).find('td').eq(7).text().trim(); // Role ada di kolom ke-8
+
+                            // Periksa role sesuai dengan filter
+                            if (currentRole && role !== currentRole) {
+                                return; // Lewati baris yang tidak sesuai dengan role yang difilter
+                            }
+
+                            if (status === 'approved') {
+                                verifiedCount++;
+                            } else if (status === 'pending') {
+                                processCount++;
+                            } else if (status === 'rejected') {
+                                submitCount++;
+                            }
+                        });
+
+                        // Perbarui jumlah card
+                        $('#VerifiedCount').text(verifiedCount);
+                        $('#ProcessCount').text(processCount);
+                        $('#SubmitCount').text(submitCount);
+                    }
+
                     // Event Listener untuk pencarian
                     $('#dataTable_filter input').on('input', function() {
                         const searchValue = this.value;
@@ -442,75 +477,63 @@
                         const searchValue = $('#dataTable_filter input').val();
                         try {
                             highlightText(searchValue);
+                            updateCardCounts(); // Perbarui card counts setelah DataTable di-render ulang
                         } catch (e) {
                             console.error('Error during DataTable draw:', e);
                             alert('Gagal memperbarui highlight teks. Silakan coba lagi.');
                         }
                     });
-                    // Function to update card counts based on status
-                    function updateCardCounts() {
-                        let VerifiedCount = 0;
-                        let ProcessCount = 0;
-                        let SubmitCount = 0;
 
-                        // Iterate through each row in the table
-                        table.rows().nodes().to$().each(function(index, tr) {
-                            const status = $(tr).find('td').eq(8).text().trim(); // Status is in the 9th column
-
-                            if (status === 'approved') {
-                                VerifiedCount++;
-                            } else if (status === 'pending') {
-                                ProcessCount++;
-                            } else if (status === 'rejected') {
-                                SubmitCount++;
-                            }
-                        });
-
-                        // Update card counts
-                        $('#VerifiedCount').text(VerifiedCount);
-                        $('#ProcessCount').text(ProcessCount);
-                        $('#SubmitCount').text(SubmitCount);
-                    }
-
-                    // Update card counts on page load
-                    updateCardCounts();
-
-                    // Update card counts on DataTable draw
-                    table.on('draw', function() {
-                        updateCardCounts();
-                    });
-
-                    // Button functionality
+                    // Fungsionalitas tombol
                     $('#showDosen').on('click', function() {
-                        // Remove 'active' class from all buttons
+                        // Hapus kelas 'active' dari semua tombol
                         $('#showDosen').addClass('active');
+                        $('#showStaff').removeClass('active');
                         $('#showMahasiswa').removeClass('active');
                         $('#showAll').removeClass('active');
 
-                        table.columns().search('').draw(); // Clear all previous searches
-                        table.column(7).search('dosen').draw(); // Filter by Dosen
+                        currentRole = 'Dosen'; // Set role yang difilter
+                        table.column(7).search('Dosen').draw(); // Filter berdasarkan Dosen
+                    });
+
+                    $('#showStaff').on('click', function() {
+                        // Hapus kelas 'active' dari semua tombol
+                        $('#showDosen').removeClass('active');
+                        $('#showStaff').addClass('active');
+                        $('#showMahasiswa').removeClass('active');
+                        $('#showAll').removeClass('active');
+
+                        currentRole = 'Staff'; // Set role yang difilter
+                        table.column(7).search('Staff').draw(); // Filter berdasarkan Dosen
                     });
 
                     $('#showMahasiswa').on('click', function() {
-                        // Remove 'active' class from all buttons
-                        $('#showMahasiswa').addClass('active');
+                        // Hapus kelas 'active' dari semua tombol
                         $('#showDosen').removeClass('active');
+                        $('#showStaff').removeClass('active');
+                        $('#showMahasiswa').addClass('active');
                         $('#showAll').removeClass('active');
 
-                        table.columns().search('').draw(); // Clear all previous searches
-                        table.column(7).search('mahasiswa').draw(); // Filter by Mahasiswa
+                        currentRole = 'Mahasiswa'; // Set role yang difilter
+                        table.column(7).search('Mahasiswa').draw(); // Filter berdasarkan Mahasiswa
                     });
 
                     $('#showAll').on('click', function() {
-                        // Remove 'active' class from all buttons
-                        $('#showAll').addClass('active');
+                        // Hapus kelas 'active' dari semua tombol
                         $('#showDosen').removeClass('active');
+                        $('#showStaff').removeClass('active');
                         $('#showMahasiswa').removeClass('active');
+                        $('#showAll').addClass('active');
 
-                        table.columns().search('').draw(); // Show all data
+                        currentRole = ''; // Hapus filter role
+                        table.column(7).search('').draw(); // Tampilkan semua data
                     });
+
+                    // Perbarui card counts pada saat halaman dimuat
+                    updateCardCounts();
                 });
             </script>
+
 
             <script>
                 // JavaScript untuk toggle sidebar
