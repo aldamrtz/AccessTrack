@@ -7,7 +7,7 @@ class DashboardPengajuanDomain extends CI_Controller
     {
         parent::__construct();
         // Load model
-        $this->load->model('');
+        $this->load->model('Dashboard_pengajuan_domain');
 
         // Load the cookie helper to use delete_cookie function
         $this->load->helper('cookie');
@@ -23,6 +23,8 @@ class DashboardPengajuanDomain extends CI_Controller
 
     public function index()
     {
+        // Mengambil data dari model
+        $data['pengajuan_domain'] = $this->Dashboard_pengajuan_domain->get_pengajuan_domain();
         // Ambil username atau email dari session
         $data['username'] = $this->session->userdata('username') ? $this->session->userdata('username') : $this->session->userdata('email');
 
