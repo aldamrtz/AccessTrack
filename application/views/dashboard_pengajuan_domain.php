@@ -17,9 +17,10 @@
     <!-- Custom styles for this template-->
     <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
 
+    <link href="assets/js/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <!-- Menambahkan favicon -->
     <link rel="icon" href="assets/img/Unjani.png" type="image/png">
 
@@ -324,7 +325,7 @@
                             <!-- DataTales -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                                    <h6 class="m-0 font-weight-bold text-success">Tabel Pengajuan Email</h6>
+                                    <h6 class="m-0 font-weight-bold text-success">Tabel Pengajuan Domain</h6>
                                     <input type="text" id="searchInput" class="form-control" placeholder="Search for..." style="max-width: 300px;">
                                 </div>
                                 <div class="card-body">
@@ -333,15 +334,35 @@
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
+                                                    <th>Nomor Induk</th>
                                                     <th>Unit Kerja</th>
-                                                    <th>Pemohon</th>
-                                                    <th>Email Pemohon</th>
+                                                    <th>Penanggung Jawab</th>
+                                                    <th>Email Penanggung Jawab</th>
+                                                    <th>Kontak Penanggung Jawab</th>
                                                     <th>Sub Domain</th>
+                                                    <th>Keterangan</th>
                                                     <th>IP Address</th>
+                                                    <th>Date</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <?php foreach ($pengajuan_domain as $data) : ?>
+                                                    <tr>
+                                                        <td><?php echo $data['id_domain']; ?></td>
+                                                        <td><?php echo $data['nomor_induk']; ?></td>
+                                                        <td><?php echo $data['unit_kerja']; ?></td>
+                                                        <td><?php echo $data['penanggung_jawab']; ?></td>
+                                                        <td><?php echo $data['email_penanggung_jawab']; ?></td>
+                                                        <td><?php echo $data['kontak_penanggung_jawab']; ?></td>
+                                                        <td><?php echo $data['sub_domain']; ?></td>
+                                                        <td><?php echo $data['keterangan']; ?></td>
+                                                        <td><?php echo $data['ip_pointing']; ?></td>
+                                                        <td><?php echo $data['tgl_pengajuan']; ?></td>
+                                                        <td><?php echo $data['status_pengajuan']; ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -445,6 +466,123 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+                        <!-- Script berfungsi pada searchbar untuk menghighlight huruf yang dicar-->
+                        <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const table = $('#dataTable').DataTable({
+                        dom: '<"top">rt<"bottom"ilp><"clear">', // Menghilangkan search bar default
+                        ordering: false, // Aktifkan sorting
+                        order: [
+                            [0, 'asc']
+                        ], // Mengurutkan berdasarkan kolom pertama (ID KA)
+                        language: {
+                            search: "Search:"
+                        }
+                    });
+
+                    // Fungsi untuk menghapus semua highlight
+                    function clearHighlight() {
+                        $('td').each(function() {
+                            let originalText = $(this).data('original-text');
+                            if (originalText) {
+                                $(this).html(originalText); // Kembalikan ke teks asli
+                            }
+                        });
+                    }
+
+                    // Fungsi untuk menyoroti teks
+                    function highlightText(text) {
+                        if (!text) {
+                            clearHighlight(); // Hapus highlight jika tidak ada teks
+                            return;
+                        }
+
+                        try {
+                            // Escape special characters for regex
+                            text = text.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                            const regex = new RegExp(`(${text})`, 'gi');
+
+                            $('td').each(function() {
+                                let originalText = $(this).html();
+                                if (!$(this).data('original-text')) {
+                                    $(this).data('original-text', originalText); // Simpan teks asli jika belum
+                                }
+
+                                // Clear previous highlights
+                                const cleanText = originalText.replace(/<span class="highlight">|<\/span>/g, '');
+                                // Highlight new text
+                                const newText = cleanText.replace(regex, '<span class="highlight">$1</span>');
+                                $(this).html(newText);
+                            });
+                        } catch (e) {
+                            console.error('Error highlighting text:', e);
+                            alert('Gagal menyoroti teks. Silakan coba lagi.');
+                        }
+                    }
+
+                    // Event Listener untuk pencarian
+                    $('#searchInput').on('input', function() {
+                        const searchValue = this.value;
+                        try {
+                            table.search(searchValue).draw();
+                            highlightText(searchValue); // Menyoroti teks setelah pencarian
+                        } catch (e) {
+                            console.error('Error during search:', e);
+                            alert('Gagal melakukan pencarian. Silakan coba lagi.');
+                        }
+                    });
+
+                    // Event Listener untuk menyoroti teks ketika DataTable diupdate
+                    table.on('draw', function() {
+                        const searchValue = $('#searchInput').val();
+                        try {
+                            highlightText(searchValue);
+                        } catch (e) {
+                            console.error('Error during DataTable draw:', e);
+                            alert('Gagal memperbarui highlight teks. Silakan coba lagi.');
+                        }
+                    });
+                });
+            </script>
+
+            <script>
+                // JavaScript untuk toggle sidebar
+                document.addEventListener('DOMContentLoaded', function() {
+                    var sidebarToggle = document.getElementById('sidebarToggle');
+                    var sidebar = document.getElementById('accordionSidebar');
+
+                    sidebarToggle.addEventListener('click', function() {
+                        sidebar.classList.toggle('toggled');
+                    });
+                });
+            </script>
+
+            <!-- Loading-->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Fungsi untuk menghapus spinner setelah halaman selesai dimuat
+                    function hideLoadingSpinner() {
+                        document.getElementById('loading-spinner').style.display = 'none';
+                    }
+
+                    // Menunggu hingga semua data selesai dimuat
+                    var dashboardDataLoad = new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                            resolve();
+                        }, 500);
+                    });
+
+                    dashboardDataLoad.then(() => {
+                        // Menghilangkan spinner setelah data selesai dimuat
+                        hideLoadingSpinner();
+                    }).catch((error) => {
+                        console.error('Error loading dashboard data:', error);
+                        hideLoadingSpinner();
+                    });
+                });
+            </script>
+            <!-- DataTables JS -->
+            <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
 
 </body>
