@@ -247,7 +247,7 @@
                                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                                 Email Diajukan
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="SubmitCount">0</div>
                                             <div class="text-xs">Total
                                             </div>
                                         </div>
@@ -269,7 +269,7 @@
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Email Diproses
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">120</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="ProcessCount">0</div>
                                             <div class="text-xs">Total</div>
                                         </div>
                                         <div class="col-auto">
@@ -290,7 +290,7 @@
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Email Terverifikasi
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="ApprovedCount">0</div>
                                             <div class="text-xs">Total Pengajuan
                                             </div>
                                         </div>
@@ -312,7 +312,7 @@
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Email Dikirimkan
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">120</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="SendCount">0</div>
                                             <div class="text-xs">Total</div>
                                         </div>
                                         <div class="col-auto">
@@ -485,6 +485,42 @@
                             console.error('Error during DataTable draw:', e);
                             alert('Gagal memperbarui highlight teks. Silakan coba lagi.');
                         }
+                    });
+                    // Function to update card counts based on status
+                    function updateCardCounts() {
+                        let SubmitCount = 0;
+                        let ProcessCount = 0;
+                        let ApprovedCount = 0;
+                        let SendCount = 0;
+
+                        // Iterate through each row in the table
+                        table.rows().nodes().to$().each(function(index, tr) {
+                            const status = $(tr).find('td').eq(7).text().trim();
+
+                            if (status === 'Email Diajukan') {
+                                SubmitCount++;
+                            } else if (status === 'Email Diproses') {
+                                ProcessCount++;
+                            } else if (status === 'Email Diverifikasi') {
+                                ApprovedCount++;
+                            } else if (status === 'Email Dikirim') {
+                                SendCount++;
+                            }
+                        });
+
+                        // Update card counts
+                        $('#SubmitCount').text(SubmitCount);
+                        $('#ProcessCount').text(ProcessCount);
+                        $('#ApprovedCount').text(ApprovedCount);
+                        $('#SendCount').text(SendCount);
+                    }
+
+                    // Update card counts on page load
+                    updateCardCounts();
+
+                    // Update card counts on DataTable draw
+                    table.on('draw', function() {
+                        updateCardCounts();
                     });
                 });
             </script>

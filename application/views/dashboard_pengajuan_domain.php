@@ -75,7 +75,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo site_url('Dashboard_CSIRT'); ?>">
+                <a class="nav-link" href="<?php echo site_url('DashboardCSIRT'); ?>">
                     <i class="fas fa-exclamation-circle"></i>
                     <span>Laporan Keluhan</span>
                 </a>
@@ -242,7 +242,7 @@
                                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                                 Domain Diajukan
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="SubmitCount">0</div>
                                             <div class="text-xs">Total
                                             </div>
                                         </div>
@@ -264,7 +264,7 @@
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Domain Diproses
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="ProcessCount">0</div>
                                             <div class="text-xs">Total
                                             </div>
                                         </div>
@@ -286,7 +286,7 @@
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Domain Terverifikasi
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="ApprovedCount">0</div>
                                             <div class="text-xs">Total
                                             </div>
                                         </div>
@@ -308,7 +308,7 @@
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Domain Terkirim
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">120</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="SendCount">0</div>
                                             <div class="text-xs">Total</div>
                                         </div>
                                         <div class="col-auto">
@@ -466,8 +466,8 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-                        <!-- Script berfungsi pada searchbar untuk menghighlight huruf yang dicar-->
-                        <script>
+            <!-- Script berfungsi pada searchbar untuk menghighlight huruf yang dicar-->
+            <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const table = $('#dataTable').DataTable({
                         dom: '<"top">rt<"bottom"ilp><"clear">', // Menghilangkan search bar default
@@ -542,6 +542,42 @@
                             alert('Gagal memperbarui highlight teks. Silakan coba lagi.');
                         }
                     });
+                    // Function to update card counts based on status
+                    function updateCardCounts() {
+                        let SubmitCount = 0;
+                        let ProcessCount = 0;
+                        let ApprovedCount = 0;
+                        let SendCount = 0;
+
+                        // Iterate through each row in the table
+                        table.rows().nodes().to$().each(function(index, tr) {
+                            const status = $(tr).find('td').eq(10).text().trim();
+
+                            if (status === 'Domain Diajukan') {
+                                SubmitCount++;
+                            } else if (status === 'Domain Diproses') {
+                                ProcessCount++;
+                            } else if (status === 'Domain Diverifikasi') {
+                                ApprovedCount++;
+                            } else if (status === 'Domain Dikirim') {
+                                SendCount++;
+                            }
+                        });
+
+                        // Update card counts
+                        $('#SubmitCount').text(SubmitCount);
+                        $('#ProcessCount').text(ProcessCount);
+                        $('#ApprovedCount').text(ApprovedCount);
+                        $('#SendCount').text(SendCount);
+                    }
+
+                    // Update card counts on page load
+                    updateCardCounts();
+
+                    // Update card counts on DataTable draw
+                    table.on('draw', function() {
+                        updateCardCounts();
+                    });
                 });
             </script>
 
@@ -553,31 +589,6 @@
 
                     sidebarToggle.addEventListener('click', function() {
                         sidebar.classList.toggle('toggled');
-                    });
-                });
-            </script>
-
-            <!-- Loading-->
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    // Fungsi untuk menghapus spinner setelah halaman selesai dimuat
-                    function hideLoadingSpinner() {
-                        document.getElementById('loading-spinner').style.display = 'none';
-                    }
-
-                    // Menunggu hingga semua data selesai dimuat
-                    var dashboardDataLoad = new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                            resolve();
-                        }, 500);
-                    });
-
-                    dashboardDataLoad.then(() => {
-                        // Menghilangkan spinner setelah data selesai dimuat
-                        hideLoadingSpinner();
-                    }).catch((error) => {
-                        console.error('Error loading dashboard data:', error);
-                        hideLoadingSpinner();
                     });
                 });
             </script>
