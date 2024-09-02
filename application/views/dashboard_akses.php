@@ -126,30 +126,6 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
@@ -290,7 +266,7 @@
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Kartu
                                                 Terverifikasi
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="verifiedCount">0</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="VerifiedCount">0</div>
                                             <div class="text-xs">Total
                                             </div>
                                         </div>
@@ -306,14 +282,22 @@
 
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
-
                             <!-- DataTales -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                                     <h6 class="m-0 font-weight-bold text-success">Tabel Pengajuan Email</h6>
-                                    <input type="text" id="searchInput" class="form-control" placeholder="Search for..." style="max-width: 300px;">
                                 </div>
                                 <div class="card-body">
+                                    <!-- Buttons Container -->
+                                    <div class="header-buttons-container">
+                                        <div class="header-buttons">
+                                            <div class="header-buttons">
+                                                <button class="btn btn-success" id="showDosen">Tampilkan Dosen</button>
+                                                <button class="btn btn-success" id="showMahasiswa">Tampilkan Mahasiswa</button>
+                                                <button class="btn btn-success" id="showAll">Tampilkan Semua Data</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
@@ -331,7 +315,7 @@
                                             </thead>
                                             <tbody>
                                                 <?php foreach ($kartu_akses as $data) : ?>
-                                                    <tr>
+                                                    <tr class="<?php echo strtolower($data['applicant_type']); ?>">
                                                         <td><?php echo $data['id_KA']; ?></td>
                                                         <td><?php echo $data['nama_lengkap']; ?></td>
                                                         <td><?php echo $data['identity_number']; ?></td>
@@ -348,17 +332,20 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
+
                         <!-- /.container-fluid -->
 
                     </div>
+
                     <!-- End of Main Content -->
 
                 </div>
+
                 <!-- End of Content Wrapper -->
 
             </div>
+
             <!-- End of Page Wrapper -->
 
             <!-- Scroll to Top Button-->
@@ -389,7 +376,6 @@
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const table = $('#dataTable').DataTable({
-                        dom: '<"top">rt<"bottom"ilp><"clear">', // Menghilangkan search bar default
                         ordering: false, // Aktifkan sorting
                         order: [
                             [0, 'asc']
@@ -440,7 +426,7 @@
                     }
 
                     // Event Listener untuk pencarian
-                    $('#searchInput').on('input', function() {
+                    $('#dataTable_filter input').on('input', function() {
                         const searchValue = this.value;
                         try {
                             table.search(searchValue).draw();
@@ -453,7 +439,7 @@
 
                     // Event Listener untuk menyoroti teks ketika DataTable diupdate
                     table.on('draw', function() {
-                        const searchValue = $('#searchInput').val();
+                        const searchValue = $('#dataTable_filter input').val();
                         try {
                             highlightText(searchValue);
                         } catch (e) {
@@ -463,7 +449,7 @@
                     });
                     // Function to update card counts based on status
                     function updateCardCounts() {
-                        let verifiedCount = 0;
+                        let VerifiedCount = 0;
                         let ProcessCount = 0;
                         let SubmitCount = 0;
 
@@ -472,7 +458,7 @@
                             const status = $(tr).find('td').eq(8).text().trim(); // Status is in the 9th column
 
                             if (status === 'approved') {
-                                verifiedCount++;
+                                VerifiedCount++;
                             } else if (status === 'pending') {
                                 ProcessCount++;
                             } else if (status === 'rejected') {
@@ -481,7 +467,7 @@
                         });
 
                         // Update card counts
-                        $('#verifiedCount').text(verifiedCount);
+                        $('#VerifiedCount').text(VerifiedCount);
                         $('#ProcessCount').text(ProcessCount);
                         $('#SubmitCount').text(SubmitCount);
                     }
@@ -492,6 +478,36 @@
                     // Update card counts on DataTable draw
                     table.on('draw', function() {
                         updateCardCounts();
+                    });
+
+                    // Button functionality
+                    $('#showDosen').on('click', function() {
+                        // Remove 'active' class from all buttons
+                        $('#showDosen').addClass('active');
+                        $('#showMahasiswa').removeClass('active');
+                        $('#showAll').removeClass('active');
+
+                        table.columns().search('').draw(); // Clear all previous searches
+                        table.column(7).search('dosen').draw(); // Filter by Dosen
+                    });
+
+                    $('#showMahasiswa').on('click', function() {
+                        // Remove 'active' class from all buttons
+                        $('#showMahasiswa').addClass('active');
+                        $('#showDosen').removeClass('active');
+                        $('#showAll').removeClass('active');
+
+                        table.columns().search('').draw(); // Clear all previous searches
+                        table.column(7).search('mahasiswa').draw(); // Filter by Mahasiswa
+                    });
+
+                    $('#showAll').on('click', function() {
+                        // Remove 'active' class from all buttons
+                        $('#showAll').addClass('active');
+                        $('#showDosen').removeClass('active');
+                        $('#showMahasiswa').removeClass('active');
+
+                        table.columns().search('').draw(); // Show all data
                     });
                 });
             </script>
