@@ -315,9 +315,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($kartu_akses as $data) : ?>
+                                                <?php $no = 1; foreach ($kartu_akses as $data) : ?>
                                                     <tr class="<?php echo strtolower($data['applicant_type']); ?>">
-                                                        <td><?php echo $data['id_KA']; ?></td>
+                                                        <td><?= $no++; ?></td>
                                                         <td><?php echo $data['nama_lengkap']; ?></td>
                                                         <td><?php echo $data['identity_number']; ?></td>
                                                         <td><?php echo $data['faculty_department']; ?></td>

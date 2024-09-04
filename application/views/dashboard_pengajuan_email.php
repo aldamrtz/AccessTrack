@@ -330,7 +330,6 @@
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                                     <h6 class="m-0 font-weight-bold text-success">Tabel Pengajuan Email</h6>
-                                    <input type="text" id="searchInput" class="form-control" placeholder="Search for..." style="max-width: 300px;">
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -348,9 +347,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($pengajuan_email as $data) : ?>
+                                                <?php $no=1; foreach ($pengajuan_email as $data) : ?>
                                                     <tr>
-                                                        <td><?php echo $data['no']; ?></td>
+                                                        <td><?= $no++; ?></td>
                                                         <td><?php echo $data['nama_depan'] . ' ' . $data['nama_belakang']; ?></td>
                                                         <td><?php echo $data['nim']; ?></td>
                                                         <td><?php echo $data['prodi']; ?></td>
@@ -414,7 +413,6 @@
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const table = $('#dataTable').DataTable({
-                        dom: '<"top">rt<"bottom"ilp><"clear">', // Menghilangkan search bar default
                         ordering: false, // Aktifkan sorting
                         order: [
                             [0, 'asc']
@@ -464,8 +462,8 @@
                         }
                     }
 
-                    // Event Listener untuk pencarian
-                    $('#searchInput').on('input', function() {
+                     // Event Listener untuk pencarian
+                     $('#dataTable_filter input').on('input', function() {
                         const searchValue = this.value;
                         try {
                             table.search(searchValue).draw();
@@ -478,9 +476,10 @@
 
                     // Event Listener untuk menyoroti teks ketika DataTable diupdate
                     table.on('draw', function() {
-                        const searchValue = $('#searchInput').val();
+                        const searchValue = $('#dataTable_filter input').val();
                         try {
                             highlightText(searchValue);
+                            updateCardCounts(); // Perbarui card counts setelah DataTable di-render ulang
                         } catch (e) {
                             console.error('Error during DataTable draw:', e);
                             alert('Gagal memperbarui highlight teks. Silakan coba lagi.');

@@ -24,12 +24,12 @@ class DashboardCSIRT extends CI_Controller
     public function index()
     {
         // Mengambil data dari model
-        $data['dashboard_data'] = $this->Dashboard_modelCSIRT->get_dashboard_data();
+        $data['laporan_csirt'] = $this->Dashboard_modelCSIRT->get_laporan_csirt();
         // Ambil username atau email dari session
         $data['username'] = $this->session->userdata('username') ? $this->session->userdata('username') : $this->session->userdata('email');
 
         // Mengirim data ke view
-        $this->load->view('dashboard_CSIRT', $data);
+        $this->load->view('Dashboard_CSIRT', $data);
     }
 
     public function logout()

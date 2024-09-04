@@ -326,7 +326,6 @@
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                                     <h6 class="m-0 font-weight-bold text-success">Tabel Pengajuan Domain</h6>
-                                    <input type="text" id="searchInput" class="form-control" placeholder="Search for..." style="max-width: 300px;">
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -347,9 +346,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($pengajuan_domain as $data) : ?>
+                                                <?php $no=1; foreach ($pengajuan_domain as $data) : ?>
                                                     <tr>
-                                                        <td><?php echo $data['id_domain']; ?></td>
+                                                        <td><?= $no++; ?></td>
                                                         <td><?php echo $data['nomor_induk']; ?></td>
                                                         <td><?php echo $data['unit_kerja']; ?></td>
                                                         <td><?php echo $data['penanggung_jawab']; ?></td>
@@ -406,23 +405,6 @@
                 </div>
             </div>
 
-            <!-- Bootstrap core JavaScript-->
-            <script src="vendor/jquery/jquery.min.js"></script>
-            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-            <!-- Core plugin JavaScript-->
-            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-            <!-- Custom scripts for all pages-->
-            <script src="js/sb-admin-2.min.js"></script>
-
-            <!-- Page level plugins -->
-            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-            <!-- Page level custom scripts -->
-            <script src="js/demo/datatables-demo.js"></script>
-
             <script>
                 // JavaScript untuk toggle sidebar
                 document.addEventListener('DOMContentLoaded', function() {
@@ -470,7 +452,6 @@
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const table = $('#dataTable').DataTable({
-                        dom: '<"top">rt<"bottom"ilp><"clear">', // Menghilangkan search bar default
                         ordering: false, // Aktifkan sorting
                         order: [
                             [0, 'asc']
@@ -521,7 +502,7 @@
                     }
 
                     // Event Listener untuk pencarian
-                    $('#searchInput').on('input', function() {
+                    $('#dataTable_filter input').on('input', function() {
                         const searchValue = this.value;
                         try {
                             table.search(searchValue).draw();
@@ -534,9 +515,10 @@
 
                     // Event Listener untuk menyoroti teks ketika DataTable diupdate
                     table.on('draw', function() {
-                        const searchValue = $('#searchInput').val();
+                        const searchValue = $('#dataTable_filter input').val();
                         try {
                             highlightText(searchValue);
+                            updateCardCounts(); // Perbarui card counts setelah DataTable di-render ulang
                         } catch (e) {
                             console.error('Error during DataTable draw:', e);
                             alert('Gagal memperbarui highlight teks. Silakan coba lagi.');

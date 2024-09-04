@@ -3,23 +3,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Dashboard_modelCSIRT extends CI_Model
 {
-
     public function __construct()
     {
         parent::__construct();
-        // Load database library if needed
+        // Load database library
         $this->load->database();
     }
 
-    // Contoh method untuk mengambil data dari database
-    public function get_dashboard_data()
+    // Method untuk mengambil data dari tabel CSIRT
+    public function get_laporan_csirt()
     {
-        // Data dummy untuk contoh
-        return array(
-            'kartu_akses' => 120,
-            'laporan_keluhan' => 10,
-            'pengajuan_email' => 50,
-            'pengajuan_domain' => 15
-        );
+        // Mengambil semua data dari tabel CSIRT
+        $query = $this->db->get('pelaporan_csirt'); 
+        return $query->result_array();
     }
 }
