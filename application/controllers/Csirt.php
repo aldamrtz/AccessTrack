@@ -39,18 +39,18 @@ class Csirt extends CI_Controller {
     
     private function _uploadFile() {
         $config['upload_path'] = './uploads/';
-        $config['allowed_types'] = 'jpg|png|pdf|jpeg';
+        $config['allowed_types'] = 'jpg|jpeg|png|pdf';
         $config['file_name'] = time() . '_' . $_FILES['bukti_file']['name'];
         $config['max_size'] = 2048; // 2MB
     
         $this->load->library('upload', $config);
     
         if ($this->upload->do_upload('bukti_file')) {
-            // Pastikan tidak ada print_r atau var_dump di sini
-            // return $this->upload->data("file_name");
-            return $this->upload->data("file_name"); // Jangan echo atau print array data di sini
+            return $this->upload->data("file_name");
+        } else {
+            // Tampilkan error jika ada masalah dalam upload
+            echo $this->upload->display_errors();
+            return null;
         }
-    
-        return null; // atau Anda bisa menangani error di sini
     }
 }

@@ -47,12 +47,12 @@
                                     <?php endif; ?>
                                 </td>
                                 <td>
-    <?php if (!empty($report['bukti_file'])): ?>
-        <a href="<?php echo base_url('uploads/' . $report['bukti_file']); ?>" target="_blank">Lihat</a>
-    <?php else: ?>
-        Tidak Ada Bukti
-    <?php endif; ?>
-</td>
+                                    <?php if (!empty($report['bukti_file'])): ?>
+                                        <a href="#" onclick="showModal('<?php echo base_url('uploads/' . $report['bukti_file']); ?>', '<?php echo pathinfo($report['bukti_file'], PATHINFO_EXTENSION); ?>')">Lihat</a>
+                                    <?php else: ?>
+                                        Tidak Ada Bukti
+                                    <?php endif; ?>
+                                </td>
                                 <td><?php echo ucfirst($report['status']); ?></td>
                                 <td>
                                     <div class="btn-container">
@@ -68,7 +68,59 @@
         <?php endif; ?>
     </div>
 
-    <!-- JavaScript untuk toggle teks "Selanjutnya" -->
+    <!-- Modal untuk menampilkan file -->
+    <div id="fileModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <img id="fileImage" src="" alt="Bukti File" style="display:none; max-width: 100%;">
+            <iframe id="filePDF" src="" style="display:none; width: 100%; height: 500px;"></iframe>
+            <a id="downloadLink" href="" download style="display: none;">Unduh File</a>
+        </div>
+    </div>
+
+    <!-- JavaScript untuk modal -->
     <script src="<?php echo base_url('assets/js/admin_csirt.js'); ?>"></script>
+    <script>
+        function showModal(filePath, fileType) {
+            var fileImage = document.getElementById('fileImage');
+            var filePDF = document.getElementById('filePDF');
+            var downloadLink = document.getElementById('downloadLink');
+            
+            // Reset tampilannya
+            fileImage.style.display = 'none';
+            filePDF.style.display = 'none';
+            downloadLink.style.display = 'none';
+
+            // Jika file adalah PDF, tampilkan dalam iframe
+            if (fileType === 'pdf') {
+                filePDF.src = filePath;
+                filePDF.style.display = 'block';
+            } else {
+                // Jika file adalah gambar, tampilkan dalam tag img
+                fileImage.src = filePath;
+                fileImage.style.display = 'block';
+            }
+
+            // Tampilkan tombol unduh
+            downloadLink.href = filePath;
+            downloadLink.style.display = 'block';
+
+            // Tampilkan modal
+            document.getElementById('fileModal').style.display = 'block';
+        }
+
+        // Fungsi untuk menutup modal
+        function closeModal() {
+            document.getElementById('fileModal').style.display = 'none';
+        }
+
+        // Tutup modal ketika mengklik di luar modal
+        window.onclick = function(event) {
+            var modal = document.getElementById('fileModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
