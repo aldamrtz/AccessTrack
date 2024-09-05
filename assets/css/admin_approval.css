@@ -1,10 +1,10 @@
 /* Body style */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #eaf4ea;
-    /* Warna hijau sage sebagai latar belakang */
+    background-color: #f5f7f6;
     margin: 0;
     padding: 0;
+    color: #333;
 }
 
 /* Container utama */
@@ -15,93 +15,76 @@ body {
     background: #ffffff;
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    /* Pastikan konten tidak melampaui kontainer */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 /* Heading */
 h2 {
     text-align: center;
-    color: #4b9164;
-    /* Warna hijau sage tua untuk judul */
+    color: #2f6e4c;
     margin-bottom: 20px;
-    font-size: 28px;
-    font-weight: 600;
+    font-size: 32px;
+    font-weight: 700;
 }
 
 /* Table responsive container */
 .table-responsive {
     overflow-x: auto;
-    /* Memastikan tabel bisa di-scroll secara horizontal jika terlalu besar */
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 /* Table styling */
 table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: auto;
-    /* Mengubah layout tabel menjadi auto untuk menyesuaikan lebar kolom */
+    background: #f9fafb;
 }
 
 /* Table headers and cells */
 table th,
 table td {
-    padding: 14px 18px;
-    /* Perbesar padding */
-    border: 1px solid #ddd;
+    padding: 14px 20px;
+    border: 1px solid #e0e4e2;
     text-align: left;
     vertical-align: top;
-    /* Menjaga konten vertikal */
+    color: #555;
+    transition: all 0.3s ease;
 }
 
-/* Table header styling */
 table th {
-    background-color: #4b9164;
-    /* Warna hijau sage tua */
+    background-color: #2f6e4c;
     color: white;
-    font-weight: 595;
-    font-size: 17px;
-    /* Perbesar ukuran font header tabel */
-    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 16px;
     text-align: center;
-    /* Menyelaraskan teks header tabel ke tengah */
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* Even row background color */
 table tr:nth-child(even) {
     background-color: #f1f8f4;
-    /* Warna hijau sage yang sangat terang */
 }
 
-/* Hover effect on rows */
 table tr:hover {
-    background-color: #dceee5;
-    /* Warna hijau sage yang sedikit lebih gelap saat hover */
+    background-color: #e0f2e9;
+    transform: scale(1.02);
 }
 
 /* Column for ID */
 table th.column-id,
 table td.column-id {
-    width: 100px;
-    /* Perbesar lebar kolom ID */
+    width: 80px;
 }
 
 /* Column for Deskripsi Masalah */
 table th.column-deskripsi,
 table td.column-deskripsi {
     width: 30%;
-    /* Perbesar lebar kolom Deskripsi Masalah */
     word-wrap: break-word;
-    /* Membungkus kata-kata panjang */
     white-space: normal;
-    /* Izinkan teks untuk membungkus */
     overflow: hidden;
-    /* Sembunyikan teks yang melebihi batas */
     position: relative;
     vertical-align: top;
-    /* Menjaga teks tetap di atas */
 }
 
 /* More text functionality for Deskripsi Masalah */
@@ -111,30 +94,17 @@ table td.column-deskripsi {
 
 .column-deskripsi .more-text {
     display: none;
-    white-space: normal;
-    /* Izinkan teks tambahan untuk membungkus */
 }
 
 .column-deskripsi .toggle-more {
     display: inline-block;
-    color: #4b9164;
+    color: #2f6e4c;
     text-decoration: none;
     cursor: pointer;
-    margin-left: 5px;
+    font-weight: 500;
 }
 
 .column-deskripsi .toggle-more:hover {
-    text-decoration: underline;
-}
-
-/* Styling for links */
-td a {
-    color: #4b9164;
-    /* Warna hijau sage untuk link */
-    text-decoration: none;
-}
-
-td a:hover {
     text-decoration: underline;
 }
 
@@ -142,105 +112,171 @@ td a:hover {
 .btn-container {
     display: flex;
     justify-content: center;
-    /* Menyelaraskan tombol di tengah */
     gap: 15px;
-    /* Perbesar jarak antara tombol */
 }
 
 /* Button styling */
 .btn {
-    padding: 12px 20px;
-    /* Perbesar padding tombol */
+    padding: 12px 24px;
     border: none;
     border-radius: 5px;
     color: white;
     text-decoration: none;
-    font-size: 14px;
-    /* Perbesar ukuran font tombol */
-    margin: 0;
-    display: inline-block;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    display: inline-block;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Approve button styling */
+.btn::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.3);
+    z-index: 1;
+    transform: scale(0);
+    transition: transform 0.3s ease;
+    border-radius: inherit;
+}
+
+.btn:active::after {
+    transform: scale(1);
+    transition: transform 0.1s ease;
+}
+
 .btn-approve {
     background-color: #5aaf76;
-    /* Warna hijau sage yang lebih dalam */
+    box-shadow: 0 4px 8px rgba(90, 175, 118, 0.3);
 }
 
 .btn-approve:hover {
     background-color: #4b9164;
-    /* Warna hijau sage lebih gelap saat hover */
+    box-shadow: 0 6px 12px rgba(90, 175, 118, 0.4);
 }
 
-/* Reject button styling */
 .btn-reject {
     background-color: #dc3545;
-    /* Warna merah */
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
 }
 
 .btn-reject:hover {
     background-color: #c82333;
-    /* Warna merah lebih gelap saat hover */
+    box-shadow: 0 6px 12px rgba(220, 53, 69, 0.4);
 }
 
-/* Modal container */
-.modal {
+/* Style untuk overlay dan ikon */
+.overlay {
     display: none;
     position: fixed;
-    z-index: 1;
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
-    /* Overlay yang gelap */
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-/* Modal content */
-.modal-content {
-    background-color: #fefefe;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 700px;
-    border-radius: 8px;
+.overlay-header {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
 }
 
-/* Close button */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
+.overlay-icon {
+    color: white;
+    font-size: 24px;
+    /* Ukuran ikon diperhalus */
+    padding: 8px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    /* Membuat ikon berbentuk bulat */
+    transition: background-color 0.3s, transform 0.3s ease;
+}
+
+.overlay-icon:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    /* Warna hover lebih lembut */
+    transform: scale(1.1);
+    /* Efek pembesaran saat hover */
+}
+
+.overlay .close {
+    font-size: 26px;
+    /* Perkecil ukuran ikon tutup */
     font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s;
 }
 
-.close:hover,
-.close:focus {
-    color: black;
+.overlay .close:hover {
+    color: #ff6666;
+    /* Warna ikon tutup menjadi merah saat hover */
+}
+
+/* Konten modal */
+.overlay-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.overlay img,
+.overlay iframe {
+    max-width: 100%;
+    max-height: 100%;
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+
+.overlay img:hover,
+.overlay iframe:hover {
+    transform: scale(1.05);
+}
+
+/* Tombol download */
+.overlay .download-btn {
+    color: white;
+    background-color: #5aaf76;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 6px;
     text-decoration: none;
+    font-size: 18px;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.overlay .download-btn:hover {
+    background-color: #4b9164;
+}
+
+/* Tombol close */
+.overlay .close {
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    position: absolute;
+    top: 20px;
+    right: 40px;
     cursor: pointer;
 }
 
-/* Tombol Unduh */
-#downloadLink {
-    display: block;
-    margin-top: 20px;
-    text-align: center;
-    font-size: 16px;
-    background-color: #4b9164;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    text-decoration: none;
-}
-
-#downloadLink:hover {
-    background-color: #397750;
-}
 
 /* Responsive design adjustments */
 @media (max-width: 768px) {
@@ -257,5 +293,9 @@ td a:hover {
     .btn {
         font-size: 12px;
         padding: 8px 15px;
+    }
+
+    .overlay-content {
+        max-width: 100%;
     }
 }
