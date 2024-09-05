@@ -57,6 +57,46 @@ form textarea {
     font-size: 14px;
 }
 
+/* Style untuk daftar file */
+.file-list {
+    margin-top: 30px;
+    margin-bottom: 50px;
+    /* Menambahkan gap sebelum tombol Kirim Laporan */
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    padding: 8px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    border: 1px solid #c3d0c5;
+}
+
+.file-item span {
+    font-size: 14px;
+}
+
+.remove-file {
+    color: #aaa;
+    /* Warna abu-abu untuk tombol X */
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.remove-file i {
+    font-size: 14px;
+    /* Ukuran kecil untuk ikon X */
+}
+
+.remove-file:hover {
+    color: #ff4d4d;
+    /* Warna merah saat hover */
+}
+
 button {
     display: block;
     width: 100%;
@@ -93,56 +133,6 @@ button:hover {
     cursor: pointer;
 }
 
-/* Tambahkan styling khusus untuk halaman sukses */
-.success-container {
-    text-align: center;
-    background-color: #eaf4ea;
-    border: 1px solid #d0e9c6;
-    color: #3c763d;
-    padding: 40px;
-    border-radius: 12px;
-    max-width: 600px;
-    margin: 50px auto;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.success-icon svg {
-    width: 120px;
-    height: 120px;
-    margin-bottom: 20px;
-    fill: #28a745;
-}
-
-.success-container h2 {
-    color: #3c763d;
-    font-size: 32px;
-    margin-bottom: 20px;
-    font-weight: 600;
-}
-
-.success-container p {
-    font-size: 18px;
-    color: #6c757d;
-    margin-bottom: 30px;
-}
-
-.success-container .btn {
-    display: inline-block;
-    padding: 14px 28px;
-    background-color: #28a745;
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: 500;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.success-container .btn:hover {
-    background-color: #218838;
-    transform: scale(1.05);
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
@@ -157,18 +147,5 @@ button:hover {
     button {
         font-size: 16px;
         padding: 12px;
-    }
-
-    .success-container h2 {
-        font-size: 26px;
-    }
-
-    .success-container p {
-        font-size: 16px;
-    }
-
-    .success-container .btn {
-        font-size: 16px;
-        padding: 12px 24px;
     }
 }

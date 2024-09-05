@@ -1,41 +1,72 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const nipField = document.getElementById('nip');
-    const emailField = document.getElementById('email_pelapor');
-    const fileField = document.getElementById('bukti_file');
+    const fileInput = document.getElementById('bukti_file');
+    const fileList = document.getElementById('fileList');
     const submitButton = document.getElementById('submit_button');
-    const nipError = document.getElementById('nip_error');
-    const emailError = document.getElementById('email_error');
     const fileError = document.getElementById('file_error');
 
+    // Fungsi untuk menampilkan file dan opsi untuk menghapus
+    function updateFileList() {
+        fileList.innerHTML = ''; // Kosongkan daftar file sebelumnya
+        const files = Array.from(fileInput.files);
+
+        files.forEach((file, index) => {
+            const fileItem = document.createElement('div');
+            fileItem.classList.add('file-item');
+
+            // Icon gambar untuk file tipe gambar
+            const fileIcon = document.createElement('img');
+            if (file.type.startsWith('image/')) {
+                fileIcon.src = URL.createObjectURL(file);
+            } else {
+                fileIcon.src = 'path_to_default_file_icon.png'; // Path ke icon default untuk file non-gambar
+            }
+
+            const fileName = document.createElement('span');
+            fileName.textContent = file.name;
+
+            const removeBtn = document.createElement('span');
+            removeBtn.classList.add('remove-file');
+            removeBtn.textContent = 'X';
+            removeBtn.addEventListener('click', function () {
+                removeFile(index);
+            });
+
+            fileItem.appendChild(fileIcon);
+            fileItem.appendChild(fileName);
+            fileItem.appendChild(removeBtn);
+            fileList.appendChild(fileItem);
+        });
+
+        checkValidity(); // Validasi saat daftar file diperbarui
+    }
+
+    // Fungsi untuk menghapus file dari input
+    function removeFile(index) {
+        const dataTransfer = new DataTransfer();
+        const files = Array.from(fileInput.files);
+
+        files.splice(index, 1); // Hapus file dari array
+        files.forEach(file => dataTransfer.items.add(file)); // Masukkan ulang file selain yang dihapus
+
+        fileInput.files = dataTransfer.files; // Set ulang input files
+        updateFileList(); // Update tampilan daftar file
+    }
+
+    // Fungsi validasi file dan aktivasi tombol submit
     function checkValidity() {
+        const files = fileInput.files;
         let isValid = true;
 
-        // Validasi NIP harus angka
-        if (!/^\d+$/.test(nipField.value)) {
-            nipError.textContent = "* Harus diisi dengan angka";
-            isValid = false;
-        } else {
-            nipError.textContent = "";
-        }
-
-        // Validasi Email harus mencantumkan '@'
-        if (!/@/.test(emailField.value)) {
-            emailError.textContent = "* Email harus mencantumkan '@'";
-            isValid = false;
-        } else {
-            emailError.textContent = "";
-        }
-
-        // Validasi file harus diunggah
-        if (fileField.files.length === 0) {
-            fileError.textContent = "* Harus menyertakan bukti file";
+        // Validasi jumlah file
+        if (files.length > 5) {
+            fileError.textContent = "* Maksimal 5 file.";
             isValid = false;
         } else {
             fileError.textContent = "";
         }
 
-        // Aktifkan atau nonaktifkan tombol submit
-        if (isValid) {
+        // Aktifkan tombol submit jika validasi lolos
+        if (isValid && files.length > 0) {
             submitButton.disabled = false;
             submitButton.classList.remove('disabled-button');
             submitButton.classList.add('enabled-button');
@@ -46,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    nipField.addEventListener('input', checkValidity);
-    emailField.addEventListener('input', checkValidity);
-    fileField.addEventListener('change', checkValidity);
+    // Event listeners
+    fileInput.addEventListener('change', updateFileList);
 });

@@ -49,12 +49,16 @@
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <?php if (!empty($report['bukti_file'])): ?>
-                                        <a href="#" onclick="handleFile('<?php echo base_url('uploads/' . $report['bukti_file']); ?>', '<?php echo pathinfo($report['bukti_file'], PATHINFO_EXTENSION); ?>')">Lihat</a>
-                                    <?php else: ?>
-                                        Tidak Ada Bukti
-                                    <?php endif; ?>
-                                </td>
+    <?php if (!empty($report['bukti_file'])): ?>
+        <?php 
+        $fileArray = explode(',', $report['bukti_file']);
+        foreach ($fileArray as $file): ?>
+            <a href="<?php echo base_url('uploads/' . $file); ?>" target="_blank">Lihat <?php echo pathinfo($file, PATHINFO_EXTENSION); ?></a><br>
+        <?php endforeach; ?>
+    <?php else: ?>
+        Tidak Ada Bukti
+    <?php endif; ?>
+</td>
                                 <td><?php echo ucfirst($report['status']); ?></td>
                                 <td>
                                     <div class="btn-container">
