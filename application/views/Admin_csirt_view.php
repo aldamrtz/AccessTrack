@@ -49,16 +49,15 @@
                                     <?php endif; ?>
                                 </td>
                                 <td>
-    <?php if (!empty($report['bukti_file'])): ?>
-        <?php 
-        $fileArray = explode(',', $report['bukti_file']);
-        foreach ($fileArray as $file): ?>
-            <a href="<?php echo base_url('uploads/' . $file); ?>" target="_blank">Lihat <?php echo pathinfo($file, PATHINFO_EXTENSION); ?></a><br>
-        <?php endforeach; ?>
-    <?php else: ?>
-        Tidak Ada Bukti
-    <?php endif; ?>
-</td>
+                                    <?php if (!empty($report['bukti_file'])): ?>
+                                        <?php 
+                                        $fileArray = explode(',', $report['bukti_file']); 
+                                        ?>
+                                        <a href="#" onclick="handleFileArray(<?php echo htmlspecialchars(json_encode($fileArray)); ?>)">Lihat Bukti</a>
+                                    <?php else: ?>
+                                        Tidak Ada Bukti
+                                    <?php endif; ?>
+                                </td>
                                 <td><?php echo ucfirst($report['status']); ?></td>
                                 <td>
                                     <div class="btn-container">
@@ -74,12 +73,14 @@
         <?php endif; ?>
     </div>
 
-    <!-- Overlay untuk menampilkan file gambar -->
+    <!-- Overlay untuk menampilkan file -->
     <div id="fileOverlay" class="overlay">
         <div class="overlay-header">
+            <button id="prevBtn" class="overlay-icon" onclick="prevFile()" style="display:none;"><i class="fas fa-chevron-left"></i></button>
             <a id="downloadLink" href="#" download class="overlay-icon"><i class="fas fa-download"></i></a>
             <button onclick="zoomIn()" class="overlay-icon"><i class="fas fa-search-plus"></i></button>
             <button onclick="zoomOut()" class="overlay-icon"><i class="fas fa-search-minus"></i></button>
+            <button id="nextBtn" class="overlay-icon" onclick="nextFile()" style="display:none;"><i class="fas fa-chevron-right"></i></button>
             <span class="close" onclick="closeOverlay()">&times;</span>
         </div>
         <div class="overlay-content">
@@ -87,18 +88,29 @@
         </div>
     </div>
 
-    <!-- JavaScript untuk overlay -->
     <script src="<?php echo base_url('assets/js/admin_csirt.js'); ?>"></script>
     <script>
         let zoomLevel = 1;
+        let currentFileIndex = 0;
+        let filesArray = [];
 
-        // Fungsi untuk menangani file PDF atau gambar
-        function handleFile(filePath, fileType) {
+        function handleFileArray(fileArray) {
+            filesArray = fileArray;
+            currentFileIndex = 0; // Reset index
+            showFile(currentFileIndex);
+            if (filesArray.length > 1) {
+                document.getElementById('prevBtn').style.display = 'inline-block';
+                document.getElementById('nextBtn').style.display = 'inline-block';
+            }
+        }
+
+        function showFile(index) {
+            var filePath = "<?php echo base_url('uploads/'); ?>" + filesArray[index];
+            var fileType = filesArray[index].split('.').pop();
+
             if (fileType === 'pdf') {
-                // Jika file PDF, buka di tab baru
                 window.open(filePath, '_blank');
             } else {
-                // Jika file gambar, tampilkan di overlay
                 showOverlay(filePath);
             }
         }
@@ -113,7 +125,6 @@
             fileImage.src = filePath;
             fileImage.style.display = 'block';
 
-            // Set the download link
             downloadLink.href = filePath;
             downloadLink.download = filePath.split('/').pop();
 
@@ -131,14 +142,26 @@
 
         function zoomOut() {
             zoomLevel -= 0.1;
-            if (zoomLevel < 0.1) zoomLevel = 0.1; // Prevent zooming out too much
+            if (zoomLevel < 0.1) zoomLevel = 0.1;
             applyZoom();
         }
 
         function applyZoom() {
             var fileImage = document.getElementById('fileImage');
-            if (fileImage.style.display === 'block') {
-                fileImage.style.transform = 'scale(' + zoomLevel + ')';
+            fileImage.style.transform = 'scale(' + zoomLevel + ')';
+        }
+
+        function nextFile() {
+            if (currentFileIndex < filesArray.length - 1) {
+                currentFileIndex++;
+                showFile(currentFileIndex);
+            }
+        }
+
+        function prevFile() {
+            if (currentFileIndex > 0) {
+                currentFileIndex--;
+                showFile(currentFileIndex);
             }
         }
 
