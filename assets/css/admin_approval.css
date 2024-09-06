@@ -38,6 +38,8 @@ table {
     width: 100%;
     border-collapse: collapse;
     background: #f9fafb;
+    table-layout: fixed;
+    /* Tambahan untuk memastikan kolom tetap */
 }
 
 /* Table headers and cells */
@@ -48,7 +50,8 @@ table td {
     text-align: left;
     vertical-align: top;
     color: #555;
-    transition: all 0.3s ease;
+    word-wrap: break-word;
+    /* Supaya teks membungkus */
 }
 
 table th {
@@ -61,13 +64,9 @@ table th {
     letter-spacing: 1px;
 }
 
-table tr:nth-child(even) {
-    background-color: #f1f8f4;
-}
-
+/* Hilangkan efek hover yang membesarkan tabel */
 table tr:hover {
     background-color: #e0f2e9;
-    transform: scale(1.02);
 }
 
 /* Column for ID */
@@ -196,26 +195,21 @@ table td.column-deskripsi {
 .overlay-icon {
     color: white;
     font-size: 24px;
-    /* Ukuran ikon diperhalus */
     padding: 8px;
     cursor: pointer;
     background: none;
     border: none;
     border-radius: 50%;
-    /* Membuat ikon berbentuk bulat */
     transition: background-color 0.3s, transform 0.3s ease;
 }
 
 .overlay-icon:hover {
     background-color: rgba(255, 255, 255, 0.2);
-    /* Warna hover lebih lembut */
     transform: scale(1.1);
-    /* Efek pembesaran saat hover */
 }
 
 .overlay .close {
     font-size: 26px;
-    /* Perkecil ukuran ikon tutup */
     font-weight: bold;
     color: white;
     cursor: pointer;
@@ -224,7 +218,6 @@ table td.column-deskripsi {
 
 .overlay .close:hover {
     color: #ff6666;
-    /* Warna ikon tutup menjadi merah saat hover */
 }
 
 /* Konten modal */
@@ -276,7 +269,6 @@ table td.column-deskripsi {
     right: 40px;
     cursor: pointer;
 }
-
 
 /* Responsive design adjustments */
 @media (max-width: 768px) {
