@@ -323,13 +323,100 @@
                         </div>
                     </div>
 
-                    <!-- Content Row -->
+                    <!-- Dropdown Button beside "Total Laporan" -->
                     <div class="row">
                         <!-- Bar Chart Card -->
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3">
+                                <div class="card-header py-3 d-flex justify-content-between align-items-center">
                                     <h6 class="m-0 font-weight-bold text-success">Total Laporan</h6>
+                                    <!-- Dropdown Button -->
+                                    <!-- Dropdown Container -->
+                                    <div class="d-flex align-items-center">
+                                        <!-- First Dropdown Button -->
+                                        <div class="dropdown mr-2"> <!-- Add margin-right -->
+                                            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Fakultas
+                                            </button>
+                                            <!-- Dropdown Menu -->
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton1">
+                                                <a class="dropdown-item" href="#">Teknik (FT)</a>
+                                                <a class="dropdown-item" href="#">Teknologi Manufaktur (FTM)</a>
+                                                <a class="dropdown-item" href="#">Ekonomi dan Bisnis (FEB)</a>
+                                                <a class="dropdown-item" href="#">Ilmu Sosial dan Ilmu Politik (FISIP)</a>
+                                                <a class="dropdown-item" href="#">Sains dan Informatika (FSI)</a>
+                                                <a class="dropdown-item" href="#">Psikologi</a>
+                                                <a class="dropdown-item" href="#">Farmasi</a>
+                                                <a class="dropdown-item" href="#">Kedokteran</a>
+                                                <a class="dropdown-item" href="#">Kedokteran Gigi</a>
+                                                <a class="dropdown-item" href="#">FITKES</a>
+                                                <!-- Tambahkan lebih banyak opsi sesuai kebutuhan -->
+                                            </div>
+                                        </div>
+
+                                        <!-- Second Dropdown Button -->
+                                        <div class="dropdown">
+                                            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Jurusan
+                                            </button>
+                                            <!-- Dropdown Menu -->
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton2">
+                                                <a class="dropdown-item" href="#">Teknik Elektro S-1</a>
+                                                <a class="dropdown-item" href="#">Teknik Kimia S-1</a>
+                                                <a class="dropdown-item" href="#">Teknik Sipil S-1</a>
+                                                <a class="dropdown-item" href="#">Magister Teknik Sipil S-2</a>
+                                                <a class="dropdown-item" href="#">Teknik Geomatika S-1</a>
+
+                                                <a class="dropdown-item" href="#">Teknik Mesin S-1</a>
+                                                <a class="dropdown-item" href="#">Teknik Industri S-1</a>
+                                                <a class="dropdown-item" href="#">Teknik Metalurgi S-1</a>
+                                                <a class="dropdown-item" href="#">Magister Manajemen Teknologi S-2</a>
+
+                                                <a class="dropdown-item" href="#">Akuntansi S-1</a>
+                                                <a class="dropdown-item" href="#">Manajemen S-1</a>
+                                                <a class="dropdown-item" href="#">Magister Manajemen S-2</a>
+
+                                                <a class="dropdown-item" href="#">Ilmu Pemerintahan S-1</a>
+                                                <a class="dropdown-item" href="#">Ilmu Hub. Internasional S-1</a>
+                                                <a class="dropdown-item" href="#">Magister Hub. Internasional S-2</a>
+                                                <a class="dropdown-item" href="#">Ilmu Hukum S-1</a>
+                                                <a class="dropdown-item" href="#">Magister Ilmu Pemerintahan S-2</a>
+
+                                                <a class="dropdown-item" href="#">Kimia S-1</a>
+                                                <a class="dropdown-item" href="#">Magister Kimia S-2</a>
+                                                <a class="dropdown-item" href="#">Teknik Informatika S-1</a>
+                                                <a class="dropdown-item" href="#">Sistem Informasi S-1</a>
+
+                                                <a class="dropdown-item" href="#">Psikologi S-1</a>
+
+                                                <a class="dropdown-item" href="#">Farmasi S-1</a>
+                                                <a class="dropdown-item" href="#">Profesi Apoteker</a>
+                                                <a class="dropdown-item" href="#">Magister Farmasi S-2</a>
+
+                                                <a class="dropdown-item" href="#">Pendidikan Dokter S-1</a>
+                                                <a class="dropdown-item" href="#">Profesi Dokter</a>
+                                                <a class="dropdown-item" href="#">Administrasi Rumah Sakit S-1</a>
+                                                <a class="dropdown-item" href="#">Magister Penuaan Kulit dan Estetika S-2</a>
+
+                                                <a class="dropdown-item" href="#">Kedokteran Gigi S-1</a>
+                                                <a class="dropdown-item" href="#">Profesi Dokter Gigi</a>
+
+                                                <a class="dropdown-item" href="#">Magister Keperawatan S-2</a>
+                                                <a class="dropdown-item" href="#">Profesi Ners</a>
+                                                <a class="dropdown-item" href="#">Ilmu Keperawatan S-1</a>
+                                                <a class="dropdown-item" href="#">Keperawatan D-3</a>
+                                                <a class="dropdown-item" href="#">Kesehatan Masyarakat S-1</a>
+                                                <a class="dropdown-item" href="#">Teknologi Laboraturium Medis D-4</a>
+                                                <a class="dropdown-item" href="#">Teknologi Laboraturium Medis D-3</a>
+                                                <a class="dropdown-item" href="#">Kebidanan S-1</a>
+                                                <a class="dropdown-item" href="#">Profesi Bidan</a>
+                                                <a class="dropdown-item" href="#">Kebidanan D-3</a>
+                                                <a class="dropdown-item" href="#">Magister Kesehatan Masyarakat S-2</a>
+                                                <!-- Tambahkan lebih banyak opsi sesuai kebutuhan -->
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="card-body">
                                     <canvas id="my3DBarChart"></canvas>
@@ -500,7 +587,7 @@
                     hideLoadingSpinner();
                 }).catch((error) => {
                     console.error('Error loading dashboard data:', error);
-                    hideLoadingSpinner(); 
+                    hideLoadingSpinner();
                 });
             });
         </script>

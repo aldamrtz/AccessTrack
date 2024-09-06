@@ -234,49 +234,29 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">DATA LAPORAN KELUHAN
-                        </h1>
+                        <h1 class="h3 mb-0 text-gray-800">DATA LAPORAN KELUHAN</h1>
+                        <button id="printButton" class="btn btn-primary"> <i class="fas fa-print"></i> Cetak Laporan</button>
                     </div>
 
                     <!-- Content row -->
                     <div class="row">
 
-                        <!-- Keluhan Diatasi-->
-
+                        <!-- Keluhan Diajukan -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card shadow h-100 py-2 border-left-primary"
-                                style="border-left: 5px solid #f8bbd0;">
+                            <div class="card shadow h-100 py-2 border-left-info"
+                                style="border-left: 5px solid #f48fb1;">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Laporan Dikirimkan
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Keluhan Diajukan
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">120</div>
-                                            <div class="text-xs">Total</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="SubmitCount">0</div>
+                                            <div class="text-xs">Total
+                                            </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fa fa-paper-plane fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card shadow h-100 py-2 border-left-success"
-                                style="border-left: 5px solid #f8bbd0;">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Keluhan Diatasi
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">120</div>
-                                            <div class="text-xs">Total</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fa fa-check-circle fa-2x text-gray-300"></i>
+                                            <i class="fa fa-inbox fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -293,7 +273,7 @@
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Keluhan Diproses
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="ProcessCount">0</div>
                                             <div class="text-xs">Total
                                             </div>
                                         </div>
@@ -304,29 +284,27 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Keluhan Diatasi-->
 
-                        <!-- Keluhan Diajukan -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card shadow h-100 py-2 border-left-info"
-                                style="border-left: 5px solid #f48fb1;">
+                            <div class="card shadow h-100 py-2 border-left-success"
+                                style="border-left: 5px solid #f8bbd0;">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                Keluhan Diajukan
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Keluhan Diatasi
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
-                                            <div class="text-xs">Total
-                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="ApprovedCount">0</div>
+                                            <div class="text-xs">Total</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fa fa-inbox fa-2x text-gray-300"></i>
+                                            <i class="fa fa-check-circle fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
 
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
@@ -343,6 +321,7 @@
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Nama Pelapor</th>
+                                                    <th>Email Pelapor</th>
                                                     <th>NIP</th>
                                                     <th>Fakultas</th>
                                                     <th>Jurusan</th>
@@ -350,13 +329,17 @@
                                                     <th>Nama Website</th>
                                                     <th>Deskripsi Masalah</th>
                                                     <th>Tanggal Pelaporan</th>
+                                                    <th>Status</th>
                                                 </tr>
                                             </thead>
+
                                             <tbody>
-                                                <?php $no=1; foreach ($laporan_csirt as $data) : ?>
+                                                <?php $no = 1;
+                                                foreach ($laporan_csirt as $data) : ?>
                                                     <tr>
-                                                        <td><?= $no++;?></td>
+                                                        <td><?= $no++; ?></td>
                                                         <td><?php echo $data['nama_pelapor']; ?></td>
+                                                        <td><?php echo $data['email_pelapor']; ?></td>
                                                         <td><?php echo $data['nip']; ?></td>
                                                         <td><?php echo $data['fakultas']; ?></td>
                                                         <td><?php echo $data['jurusan']; ?></td>
@@ -364,9 +347,11 @@
                                                         <td><?php echo $data['nama_website']; ?></td>
                                                         <td><?php echo $data['deskripsi_masalah']; ?></td>
                                                         <td><?php echo $data['tanggal_pelaporan']; ?></td>
+                                                        <td><?php echo $data['status']; ?></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
+
                                         </table>
                                     </div>
                                 </div>
@@ -490,20 +475,18 @@
                         let SubmitCount = 0;
                         let ProcessCount = 0;
                         let ApprovedCount = 0;
-                        let SendCount = 0;
+
 
                         // Iterate through each row in the table
                         table.rows().nodes().to$().each(function(index, tr) {
-                            const status = $(tr).find('td').eq(7).text().trim();
+                            const status = $(tr).find('td').eq(10).text().trim();
 
-                            if (status === 'Email Diajukan') {
+                            if (status === 'rejected') {
                                 SubmitCount++;
-                            } else if (status === 'Email Diproses') {
+                            } else if (status === 'pending') {
                                 ProcessCount++;
-                            } else if (status === 'Email Diverifikasi') {
+                            } else if (status === 'approved') {
                                 ApprovedCount++;
-                            } else if (status === 'Email Dikirim') {
-                                SendCount++;
                             }
                         });
 
@@ -560,7 +543,109 @@
                     });
                 });
             </script>
+           <script>
+                document.getElementById('printButton').addEventListener('click', function() {
+                    // Store the content to print
+                    var contentToPrint = document.querySelector('.dataTable').innerHTML;
+                    var originalContent = document.body.innerHTML;
 
+                    // Create the print view
+                    document.body.innerHTML = `
+                <html>
+                <head>
+                    <title>Cetak Laporan CSIRT</title>
+                    <style>
+                        body {
+                            font-family: 'Nunito', sans-serif;
+                            color: #000;
+                            margin: 20px;
+                        }
+                        .header {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin-bottom: 20px;
+                        }
+                        .header img {
+                            max-height: 100px;
+                        }
+                        .header .left {
+                            text-align: left;
+                        }
+                        .header .center {
+                            text-align: center;
+                            flex-grow: 2;
+                        }
+                        .header .center h1 {
+                            margin: 0;
+                            font-size: 24px;
+                            font-weight: bold;
+                        }
+                        .header .center p {
+                            margin: 0;
+                            font-size: 14px;
+                        }
+                        .header .right {
+                            text-align: right;
+                        }
+                         hr.divider {
+                            border: 0;
+                             border-top: 2px solid #000; /* Ketebalan dan warna garis */
+                            margin-top: 20px;
+                        }                            
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-top: 20px;
+                        }
+                        table, th, td {
+                            border: 1px solid black;
+                        }
+                        th, td {
+                            padding: 8px;
+                            text-align: left;
+                        }
+                        th {
+                            background-color: #f2f2f2;
+                        }
+                        h1 {
+                            text-align: center;
+                            margin-bottom: 20px;
+                        }
+                    </style>
+                </head>
+                    <body>
+                    <div class="header">
+                        <div class="left">
+                            <img src="assets/img/undraw_posting_photo.svg" alt="Logo Left">
+                        </div>
+                        <div class="center">
+                            <h1>YAYASAN KARTIKA EKA PAKSI</h1>
+                            <p>UNIVERSITAS JENDERAL ACHMAD YANI (UNJANI)</p>
+                            <p>Kampus Cimahi: Jl. Terusan Jend. Sudirman www.unjani.ac.id Cimahi Telp. (022) 6631861-8656190 Fax. (022) 6652069</p>
+                            <p>Kampus Bandung: Jl. Gatot Subroto www.unjani.ac.id Bandung Telp. (022) 7312741 Fax. (022) 7312741</p>
+                        </div>
+                        <div class="right">
+                            <img src="assets/img/Unjani.png" alt="Logo Right">
+                        </div>
+                    </div>
+                        <hr class="divider"> 
+                        <h1>Laporan CSIRT</h1>
+                        <table>
+                            ${contentToPrint}
+                        </table>
+                    </body>
+                    </html>
+                    `;
+
+                    // Print the page (User can choose "Save as PDF" in the print dialog)
+                    window.print();
+
+                    // Restore the original content after printing
+                    document.body.innerHTML = originalContent;
+                    location.reload(); // Reload the page to restore the event listeners
+                });
+            </script>
             <!-- jQuery pertama -->
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
