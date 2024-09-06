@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulir Pelaporan Insiden CSIRT</title>
+    <title>Pelaporan Insiden CSIRT</title>
     <link rel="stylesheet" href="<?php echo base_url('assets/css/csirt_report.css'); ?>">
     <!-- Link Font Awesome untuk ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="<?php echo base_url('assets/js/validateForm.js'); ?>" defer></script>
+    <link rel="icon" href="<?php echo base_url('assets/img/Unjani.png'); ?>">
 </head>
 <body>
     <div class="container">
         <img src="<?php echo base_url('assets/img/Unjani.png'); ?>" alt="Unjani Logo" class="logo">
-        <h2>Formulir Pelaporan Insiden CSIRT</h2>
-        <form action="<?php echo site_url('csirt/submit_report'); ?>" method="post" enctype="multipart/form-data">
+        <h2>Pelaporan Insiden CSIRT</h2>
+        <form action="<?php echo site_url('csirt/submit_report'); ?>" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
             <label for="email_pelapor">Email Pelapor</label>
             <input type="email" name="email_pelapor" id="email_pelapor" required>
             <div id="email_error" class="error-message"></div>
@@ -122,6 +123,35 @@
             }
 
             fileInput.addEventListener('change', handleFileSelect); // Menangani pemilihan file
+
+            // Validasi Form
+            function validateEmail() {
+                const email = document.getElementById('email_pelapor').value;
+                if (!email.includes('@')) {
+                    document.getElementById('email_error').textContent = "* Email harus mengandung '@'.";
+                    return false;
+                }
+                document.getElementById('email_error').textContent = "";
+                return true;
+            }
+
+            function validateNIP() {
+                const nip = document.getElementById('nip').value;
+                const nipPattern = /^[0-9]+$/; // Hanya angka
+                if (!nipPattern.test(nip)) {
+                    document.getElementById('nip_error').textContent = "* NIP harus berisi angka.";
+                    return false;
+                }
+                document.getElementById('nip_error').textContent = "";
+                return true;
+            }
+
+            // Validasi Form
+            function validateForm() {
+                const isEmailValid = validateEmail();
+                const isNIPValid = validateNIP();
+                return isEmailValid && isNIPValid;
+            }
         });
     </script>
 </body>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laporan CSIRT</title>
     <link rel="stylesheet" href="<?php echo base_url('assets/css/laporan_csirt.css'); ?>">
+    <link rel="icon" href="<?php echo base_url('assets/img/Unjani.png'); ?>">
 </head>
 <body>
     <div class="container">

@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Approval Laporan CSIRT</title>
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/admin_approval.css'); ?>">
+    <link rel="stylesheet" href="assets/css/admin_csirt.css">
     <!-- Tambahkan Font Awesome untuk ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="assets/img/Unjani.png" type="img/png">
 </head>
 <body>
     <div class="container">
