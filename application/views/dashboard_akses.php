@@ -208,6 +208,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">DATA KARTU AKSES</h1>
+                        <button id="printButton" class="btn btn-primary"> <i class="fas fa-print"></i> Cetak Laporan</button>
                     </div>
 
                     <!-- Content row -->
@@ -569,6 +570,139 @@
                         console.error('Error loading dashboard data:', error);
                         hideLoadingSpinner();
                     });
+                });
+            </script>
+                        <script>
+                // JavaScript untuk toggle sidebar
+                document.addEventListener('DOMContentLoaded', function() {
+                    var sidebarToggle = document.getElementById('sidebarToggle');
+                    var sidebar = document.getElementById('accordionSidebar');
+
+                    sidebarToggle.addEventListener('click', function() {
+                        sidebar.classList.toggle('toggled');
+                    });
+                });
+            </script>
+
+            <!-- Loading-->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Fungsi untuk menghapus spinner setelah halaman selesai dimuat
+                    function hideLoadingSpinner() {
+                        document.getElementById('loading-spinner').style.display = 'none';
+                    }
+
+                    // Menunggu hingga semua data selesai dimuat
+                    var dashboardDataLoad = new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                            resolve();
+                        }, 500);
+                    });
+
+                    dashboardDataLoad.then(() => {
+                        // Menghilangkan spinner setelah data selesai dimuat
+                        hideLoadingSpinner();
+                    }).catch((error) => {
+                        console.error('Error loading dashboard data:', error);
+                        hideLoadingSpinner();
+                    });
+                });
+            </script>
+            <script>
+                document.getElementById('printButton').addEventListener('click', function() {
+                    // Store the content to print
+                    var contentToPrint = document.querySelector('.dataTable').innerHTML;
+                    var originalContent = document.body.innerHTML;
+
+                    // Create the print view
+                    document.body.innerHTML = `
+                <html>
+                <head>
+                    <title>Cetak Laporan Kartu Akses</title>
+                    <style>
+                        body {
+                            font-family: 'Nunito', sans-serif;
+                            color: #000;
+                            margin: 20px;
+                        }
+                        .header {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin-bottom: 20px;
+                        }
+                        .header img {
+                            max-height: 100px;
+                        }
+                        .header .left {
+                            text-align: left;
+                        }
+                        .header .center {
+                            text-align: center;
+                            flex-grow: 2;
+                        }
+                        .header .center h1 {
+                            margin: 0;
+                            font-size: 24px;
+                            font-weight: bold;
+                        }
+                        .header .center p {
+                            margin: 0;
+                            font-size: 14px;
+                        }
+                        .header .right {
+                            text-align: right;
+                        }
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-top: 20px;
+                        }
+                        table, th, td {
+                            border: 1px solid black;
+                        }
+                        th, td {
+                            padding: 8px;
+                            text-align: left;
+                        }
+                        th {
+                            background-color: #f2f2f2;
+                        }
+                        h1 {
+                            text-align: center;
+                            margin-bottom: 20px;
+                        }
+                    </style>
+                </head>
+                    <body>
+                    <div class="header">
+                        <div class="left">
+                            <img src="assets/img/undraw_posting_photo.svg" alt="Logo Left">
+                        </div>
+                        <div class="center">
+                            <h1>YAYASAN KARTIKA EKA PAKSI</h1>
+                            <p>UNIVERSITAS JENDERAL ACHMAD YANI (UNJANI)</p>
+                            <p>Kampus Cimahi: Jl. Terusan Jend. Sudirman www.unjani.ac.id Cimahi Telp. (022) 6631861-8656190 Fax. (022) 6652069</p>
+                            <p>Kampus Bandung: Jl. Gatot Subroto www.unjani.ac.id Bandung Telp. (022) 7312741 Fax. (022) 7312741</p>
+                        </div>
+                        <div class="right">
+                            <img src="assets/img/Unjani.png" alt="Logo Right">
+                        </div>
+                    </div>
+                        <h1>Laporan Kartu Akses</h1>
+                        <table>
+                            ${contentToPrint}
+                        </table>
+                    </body>
+                    </html>
+                    `;
+
+                    // Print the page (User can choose "Save as PDF" in the print dialog)
+                    window.print();
+
+                    // Restore the original content after printing
+                    document.body.innerHTML = originalContent;
+                    location.reload(); // Reload the page to restore the event listeners
                 });
             </script>
             <!-- jQuery pertama -->
