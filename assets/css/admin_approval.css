@@ -38,8 +38,6 @@ table {
     width: 100%;
     border-collapse: collapse;
     background: #f9fafb;
-    table-layout: fixed;
-    /* Tambahan untuk memastikan kolom tetap */
 }
 
 /* Table headers and cells */
@@ -50,8 +48,7 @@ table td {
     text-align: left;
     vertical-align: top;
     color: #555;
-    word-wrap: break-word;
-    /* Supaya teks membungkus */
+    transition: all 0.3s ease;
 }
 
 table th {
@@ -64,7 +61,10 @@ table th {
     letter-spacing: 1px;
 }
 
-/* Hilangkan efek hover yang membesarkan tabel */
+table tr:nth-child(even) {
+    background-color: #f1f8f4;
+}
+
 table tr:hover {
     background-color: #e0f2e9;
 }
@@ -122,7 +122,8 @@ table td.column-deskripsi {
     color: white;
     text-decoration: none;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 500;
+    /* Tidak terlalu tebal */
     cursor: pointer;
     display: inline-block;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;

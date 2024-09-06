@@ -51,7 +51,7 @@ class Csirt extends CI_Controller {
                 'bagian' => $this->input->post('bagian'),
                 'nama_website' => $this->input->post('nama_website'),
                 'deskripsi_masalah' => $this->input->post('deskripsi_masalah'),
-                'bukti_file' => implode(',', $uploadedFiles),  // Simpan file sebagai string dipisahkan koma
+                'bukti_file' => $uploadedFiles,  // Simpan file yang sudah digabung
                 'tanggal_pelaporan' => date('Y-m-d H:i:s')
             );
     
