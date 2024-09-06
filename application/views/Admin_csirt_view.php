@@ -49,15 +49,15 @@
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <?php if (!empty($report['bukti_file'])): ?>
-                                        <?php 
-                                        $fileArray = explode(',', $report['bukti_file']); 
-                                        ?>
-                                        <a href="#" onclick="handleFileArray(<?php echo htmlspecialchars(json_encode($fileArray)); ?>)">Lihat Bukti</a>
-                                    <?php else: ?>
-                                        Tidak Ada Bukti
-                                    <?php endif; ?>
-                                </td>
+    <?php if (!empty($report['bukti_file'])): ?>
+        <?php 
+        $fileArray = explode(',', $report['bukti_file']); // Pecah string file
+        ?>
+        <a href="#" onclick="handleFileArray(<?php echo htmlspecialchars(json_encode($fileArray)); ?>)">Lihat Bukti File</a>
+    <?php else: ?>
+        Tidak Ada Bukti
+    <?php endif; ?>
+</td>
                                 <td><?php echo ucfirst($report['status']); ?></td>
                                 <td>
                                     <div class="btn-container">
@@ -86,6 +86,11 @@
         <div class="overlay-content">
             <img id="fileImage" src="" alt="Bukti File" style="display:none; max-width: 90%; max-height: 90%;">
         </div>
+        <!-- Tombol navigasi file -->
+        <div class="overlay-footer">
+            <button id="prevPageBtn" class="btn btn-navigate" onclick="prevFile()" style="display:none;"><< Sebelumnya</button>
+            <button id="nextPageBtn" class="btn btn-navigate" onclick="nextFile()" style="display:none;">Berikutnya >></button>
+        </div>
     </div>
 
     <script src="<?php echo base_url('assets/js/admin_csirt.js'); ?>"></script>
@@ -101,6 +106,13 @@
             if (filesArray.length > 1) {
                 document.getElementById('prevBtn').style.display = 'inline-block';
                 document.getElementById('nextBtn').style.display = 'inline-block';
+                document.getElementById('prevPageBtn').style.display = 'inline-block';
+                document.getElementById('nextPageBtn').style.display = 'inline-block';
+            } else {
+                document.getElementById('prevBtn').style.display = 'none';
+                document.getElementById('nextBtn').style.display = 'none';
+                document.getElementById('prevPageBtn').style.display = 'none';
+                document.getElementById('nextPageBtn').style.display = 'none';
             }
         }
 

@@ -24,7 +24,7 @@
                             <th>Bagian</th>
                             <th>Nama Website</th>
                             <th class="column-deskripsi">Deskripsi Masalah</th>
-                            <th>Bukti File</th>
+                            <th>Tanggal Pelaporan</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -45,13 +45,8 @@
                                         <a href="#" class="toggle-more" onclick="toggleMoreText(event, '<?php echo $report['id']; ?>')">Selanjutnya</a>
                                     <?php endif; ?>
                                 </td>
-                                <td>
-                                    <?php if (!empty($report['bukti_file'])): ?>
-                                        <a href="<?php echo base_url('uploads/' . $report['bukti_file']); ?>" target="_blank">Lihat</a>
-                                    <?php else: ?>
-                                        Tidak Ada Bukti
-                                    <?php endif; ?>
-                                </td>
+                                <!-- Menampilkan Tanggal Pelaporan dengan Zona Waktu Indonesia -->
+                                <td><?php echo date('d M Y', strtotime($report['tanggal_pelaporan'])); ?></td>
                                 <td><?php echo ucfirst($report['status']); ?></td>
                             </tr>
                         <?php endforeach; ?>

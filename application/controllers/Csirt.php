@@ -12,58 +12,57 @@ class Csirt extends CI_Controller {
         $this->load->view('csirt_report');
     }
 
-    private function _uploadFiles() {
-        $config['upload_path'] = './uploads/';
-        $config['allowed_types'] = 'jpg|jpeg|png|pdf';
-        $config['max_size'] = 2048; // 2MB per file
-    
-        $this->load->library('upload', $config);
-    
-        $files = $_FILES;
-        $fileNames = []; // Array untuk menyimpan nama file yang diunggah
-    
-        $count = count($_FILES['bukti_file']['name']); // Hitung jumlah file yang diunggah
+    private function _uploadMultipleFiles() {
+        $files = $_FILES['bukti_file'];
+        $uploadedFiles = [];
         
-        for ($i = 0; $i < $count; $i++) {
-            $_FILES['bukti_file']['name'] = $files['bukti_file']['name'][$i];
-            $_FILES['bukti_file']['type'] = $files['bukti_file']['type'][$i];
-            $_FILES['bukti_file']['tmp_name'] = $files['bukti_file']['tmp_name'][$i];
-            $_FILES['bukti_file']['error'] = $files['bukti_file']['error'][$i];
-            $_FILES['bukti_file']['size'] = $files['bukti_file']['size'][$i];
+        for ($i = 0; $i < count($files['name']); $i++) {
+            $_FILES['file']['name'] = $files['name'][$i];
+            $_FILES['file']['type'] = $files['type'][$i];
+            $_FILES['file']['tmp_name'] = $files['tmp_name'][$i];
+            $_FILES['file']['error'] = $files['error'][$i];
+            $_FILES['file']['size'] = $files['size'][$i];
     
-            $config['file_name'] = time() . '_' . $_FILES['bukti_file']['name'];
+            $config['upload_path'] = './uploads/';
+            $config['allowed_types'] = 'jpg|jpeg|png|pdf';
+            $config['file_name'] = time() . '_' . $files['name'][$i];
     
-            $this->upload->initialize($config);
+            $this->load->library('upload', $config);
     
-            if ($this->upload->do_upload('bukti_file')) {
-                $fileNames[] = $this->upload->data("file_name"); // Tambahkan nama file ke array
-            } else {
-                echo $this->upload->display_errors();
-                return null;
+            if ($this->upload->do_upload('file')) {
+                $uploadedFiles[] = $this->upload->data("file_name");
             }
         }
-    
-        return implode(',', $fileNames); // Gabungkan nama file menjadi string terpisah koma
+        
+        return implode(',', $uploadedFiles);  // Gabungkan file dengan koma
     }
     
     public function submit_report() {
-        $data = array(
-            'nama_pelapor' => $this->input->post('nama_pelapor'),
-            'email_pelapor' => $this->input->post('email_pelapor'),
-            'nip' => $this->input->post('nip'),
-            'fakultas' => $this->input->post('fakultas'),
-            'jurusan' => $this->input->post('jurusan'),
-            'bagian' => $this->input->post('bagian'),
-            'nama_website' => $this->input->post('nama_website'),
-            'deskripsi_masalah' => $this->input->post('deskripsi_masalah'),
-            'bukti_file' => $this->_uploadFiles(), // Ubah sesuai fungsi multi-file
-            'tanggal_pelaporan' => date('Y-m-d H:i:s')
-        );
-        
-        if ($this->Csirt_model->insert_report($data)) {
-            $this->load->view('report_success');
+        $uploadedFiles = $this->_uploadMultipleFiles();
+    
+        if ($uploadedFiles !== false) {
+            // Ambil data dari form
+            $data = array(
+                'nama_pelapor' => $this->input->post('nama_pelapor'),
+                'email_pelapor' => $this->input->post('email_pelapor'),
+                'nip' => $this->input->post('nip'),
+                'fakultas' => $this->input->post('fakultas'),
+                'jurusan' => $this->input->post('jurusan'),
+                'bagian' => $this->input->post('bagian'),
+                'nama_website' => $this->input->post('nama_website'),
+                'deskripsi_masalah' => $this->input->post('deskripsi_masalah'),
+                'bukti_file' => implode(',', $uploadedFiles),  // Simpan file sebagai string dipisahkan koma
+                'tanggal_pelaporan' => date('Y-m-d H:i:s')
+            );
+    
+            // Masukkan data ke dalam database
+            if ($this->Csirt_model->insert_report($data)) {
+                $this->load->view('report_success');
+            } else {
+                echo "Gagal mengirim laporan.";
+            }
         } else {
-            echo "Gagal mengirim laporan.";
+            echo "Gagal mengunggah file.";
         }
     }
 }
