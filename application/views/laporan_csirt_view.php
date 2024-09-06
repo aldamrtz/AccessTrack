@@ -9,29 +9,26 @@
 </head>
 <body>
     <div class="container">
-    <h2>Laporan CSIRT</h2>
+        <h2>Laporan CSIRT</h2>
         <?php if (empty($reports)) : ?>
             <p>Tidak ada laporan yang ditemukan saat ini.</p>
         <?php else : ?>
             <div class="table-responsive">
                 <table>
-                <thead>
-    <tr>
-        <th class="column-id">ID</th>
-        <th class="column-nama">Nama Pelapor</th>
-        <th class="column-nip">NIP</th>
-        <th class="column-fakultas">Fakultas</th>
-        <th class="column-jurusan">Jurusan</th>
-        <th class="column-bagian">Bagian</th>
-        <th class="column-website">Nama Website</th>
-        <th class="column-deskripsi">Deskripsi Masalah</th>
-        <th class="column-tanggal">Tanggal Pelaporan</th>
-        <th class="column-status">Status</th>
-    </tr>
-</thead>
-<tbody>
-    <!-- Data Baris -->
-</tbody>
+                    <thead>
+                        <tr>
+                            <th class="column-id">ID</th>
+                            <th class="column-nama">Nama Pelapor</th>
+                            <th class="column-nip">NIP</th>
+                            <th class="column-fakultas">Fakultas</th>
+                            <th class="column-jurusan">Jurusan</th>
+                            <th class="column-bagian">Bagian</th>
+                            <th class="column-website">Nama Website</th>
+                            <th class="column-deskripsi">Deskripsi Masalah</th>
+                            <th class="column-tanggal">Tanggal Pelaporan</th>
+                            <th class="column-status">Status</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <?php foreach ($reports as $report) : ?>
                             <tr>
@@ -49,7 +46,6 @@
                                         <a href="#" class="toggle-more" onclick="toggleMoreText(event, '<?php echo $report['id']; ?>')">Selanjutnya</a>
                                     <?php endif; ?>
                                 </td>
-                                <!-- Menampilkan Tanggal Pelaporan dengan Zona Waktu Indonesia -->
                                 <td><?php echo date('d M Y', strtotime($report['tanggal_pelaporan'])); ?></td>
                                 <td><?php echo ucfirst($report['status']); ?></td>
                             </tr>
@@ -61,7 +57,6 @@
         <?php endif; ?>
     </div>
 
-    <!-- JavaScript untuk toggle teks "Selanjutnya" -->
     <script src="<?php echo base_url('assets/js/laporan_csirt.js'); ?>"></script>
     <script>
     document.getElementById('printButton').addEventListener('click', function() {
@@ -69,7 +64,7 @@
         var contentToPrint = document.querySelector('table').innerHTML;
         var originalContent = document.body.innerHTML;
 
-        // Create the print view
+        // Create the print view with absolute paths for images
         document.body.innerHTML = `
         <html>
         <head>
@@ -135,7 +130,7 @@
         <body>
             <div class="header">
                 <div class="left">
-                    <img src="assets/img/undraw_posting_photo.svg" alt="Logo Left">
+                    <img src="<?php echo base_url('assets/img/undraw_posting_photo.svg'); ?>" alt="Logo Left">
                 </div>
                 <div class="center">
                     <h1>YAYASAN KARTIKA EKA PAKSI</h1>
@@ -144,7 +139,7 @@
                     <p>Kampus Bandung: Jl. Gatot Subroto www.unjani.ac.id Bandung Telp. (022) 7312741 Fax. (022) 7312741</p>
                 </div>
                 <div class="right">
-                    <img src="assets/img/Unjani.png" alt="Logo Right">
+                    <img src="<?php echo base_url('assets/img/Unjani.png'); ?>" alt="Logo Right" type="img/png">
                 </div>
             </div>
             <h1>Laporan Insiden CSIRT</h1>
@@ -162,6 +157,6 @@
         document.body.innerHTML = originalContent;
         location.reload(); // Reload the page to restore the event listeners
     });
-</script>
+    </script>
 </body>
 </html>
