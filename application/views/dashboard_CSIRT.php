@@ -588,6 +588,11 @@
                         .header .right {
                             text-align: right;
                         }
+                         hr.divider {
+                            border: 0;
+                             border-top: 2px solid #000; /* Ketebalan dan warna garis */
+                            margin-top: 20px;
+                        }                            
                         table {
                             width: 100%;
                             border-collapse: collapse;
@@ -624,6 +629,7 @@
                             <img src="assets/img/Unjani.png" alt="Logo Right">
                         </div>
                     </div>
+                        <hr class="divider"> 
                         <h1>Laporan CSIRT</h1>
                         <table>
                             ${contentToPrint}

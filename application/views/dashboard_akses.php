@@ -316,7 +316,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php $no = 1; foreach ($kartu_akses as $data) : ?>
+                                                <?php $no = 1;
+                                                foreach ($kartu_akses as $data) : ?>
                                                     <tr class="<?php echo strtolower($data['applicant_type']); ?>">
                                                         <td><?= $no++; ?></td>
                                                         <td><?php echo $data['nama_lengkap']; ?></td>
@@ -572,7 +573,7 @@
                     });
                 });
             </script>
-                        <script>
+            <script>
                 // JavaScript untuk toggle sidebar
                 document.addEventListener('DOMContentLoaded', function() {
                     var sidebarToggle = document.getElementById('sidebarToggle');
@@ -616,79 +617,85 @@
 
                     // Create the print view
                     document.body.innerHTML = `
-                <html>
-                <head>
-                    <title>Cetak Laporan Kartu Akses</title>
-                    <style>
-                        body {
-                            font-family: 'Nunito', sans-serif;
-                            color: #000;
-                            margin: 20px;
-                        }
-                        .header {
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            margin-bottom: 20px;
-                        }
-                        .header img {
-                            max-height: 100px;
-                        }
-                        .header .left {
-                            text-align: left;
-                        }
-                        .header .center {
-                            text-align: center;
-                            flex-grow: 2;
-                        }
-                        .header .center h1 {
-                            margin: 0;
-                            font-size: 24px;
-                            font-weight: bold;
-                        }
-                        .header .center p {
-                            margin: 0;
-                            font-size: 14px;
-                        }
-                        .header .right {
-                            text-align: right;
-                        }
-                        table {
-                            width: 100%;
-                            border-collapse: collapse;
-                            margin-top: 20px;
-                        }
-                        table, th, td {
-                            border: 1px solid black;
-                        }
-                        th, td {
-                            padding: 8px;
-                            text-align: left;
-                        }
-                        th {
-                            background-color: #f2f2f2;
-                        }
-                        h1 {
-                            text-align: center;
-                            margin-bottom: 20px;
-                        }
-                    </style>
-                </head>
+                    <html>
+                    <head>
+                        <title>Cetak Laporan Kartu Akses</title>
+                        <style>
+                            body {
+                                font-family: 'Nunito', sans-serif;
+                                color: #000;
+                                margin: 20px;
+                            }
+                            .header {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                margin-bottom: 20px;
+                            }
+                            .header img {
+                                max-height: 100px;
+                            }
+                            .header .left {
+                                text-align: left;
+                            }
+                            .header .center {
+                                text-align: center;
+                                flex-grow: 2;
+                            }
+                            .header .center h1 {
+                                margin: 0;
+                                font-size: 24px;
+                                font-weight: bold;
+                            }
+                            .header .center p {
+                                margin: 0;
+                                font-size: 14px;
+                            }
+                            .header .right {
+                                text-align: right;
+                            }
+                            hr.divider {
+                                border: 0;
+                                border-top: 2px solid #000; /* Ketebalan dan warna garis */
+                                margin-top: 20px;
+                            }
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin-top: 20px;
+                            }
+                            table, th, td {
+                                border: 1px solid black;
+                            }
+                            th, td {
+                                padding: 8px;
+                                text-align: left;
+                            }
+                            th {
+                                background-color: #f2f2f2;
+                            }
+                            h1 {
+                                text-align: center;
+                                margin-bottom: 20px;
+                            }
+                        </style>
+                    </head>
                     <body>
-                    <div class="header">
-                        <div class="left">
-                            <img src="assets/img/undraw_posting_photo.svg" alt="Logo Left">
+                        <div class="header">
+                            <div class="left">
+                                <img src="assets/img/undraw_posting_photo.svg" alt="Logo Left">
+                            </div>
+                            <div class="center">
+                                <h1>YAYASAN KARTIKA EKA PAKSI</h1>
+                                <p>UNIVERSITAS JENDERAL ACHMAD YANI (UNJANI)</p>
+                                <p>Kampus Cimahi: Jl. Terusan Jend. Sudirman www.unjani.ac.id Cimahi Telp. (022) 6631861-8656190 Fax. (022) 6652069</p>
+                                <p>Kampus Bandung: Jl. Gatot Subroto www.unjani.ac.id Bandung Telp. (022) 7312741 Fax. (022) 7312741</p>
+                            </div>
+                            <div class="right">
+                                <img src="assets/img/Unjani.png" alt="Logo Right">
+                            </div>
                         </div>
-                        <div class="center">
-                            <h1>YAYASAN KARTIKA EKA PAKSI</h1>
-                            <p>UNIVERSITAS JENDERAL ACHMAD YANI (UNJANI)</p>
-                            <p>Kampus Cimahi: Jl. Terusan Jend. Sudirman www.unjani.ac.id Cimahi Telp. (022) 6631861-8656190 Fax. (022) 6652069</p>
-                            <p>Kampus Bandung: Jl. Gatot Subroto www.unjani.ac.id Bandung Telp. (022) 7312741 Fax. (022) 7312741</p>
-                        </div>
-                        <div class="right">
-                            <img src="assets/img/Unjani.png" alt="Logo Right">
-                        </div>
-                    </div>
+                        <hr class="divider"> 
                         <h1>Laporan Kartu Akses</h1>
                         <table>
                             ${contentToPrint}
