@@ -2,7 +2,6 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f1f8f4;
-    /* Warna hijau sage sebagai latar belakang */
     margin: 0;
     padding: 0;
 }
@@ -22,7 +21,6 @@ body {
 h2 {
     text-align: center;
     color: #4b9164;
-    /* Warna hijau sage tua untuk judul */
     margin-bottom: 20px;
     font-size: 28px;
     font-weight: 600;
@@ -31,16 +29,54 @@ h2 {
 /* Table responsive container */
 .table-responsive {
     overflow-x: auto;
-    /* Memastikan tabel bisa di-scroll secara horizontal jika terlalu besar */
     margin-bottom: 20px;
+}
+
+/* Mengatur ukuran setiap kolom */
+.column-id {
+    width: 3%;
+    /* Lebih kecil untuk ID */
+}
+
+.column-nama {
+    width: 15%;
+    /* Lebar lebih besar untuk nama pelapor */
+}
+
+.column-nip {
+    width: 8%;
+}
+
+.column-fakultas,
+.column-jurusan,
+.column-bagian {
+    width: 8%;
+}
+
+.column-website {
+    width: 13%;
+    /* Lebar lebih besar untuk nama website */
+}
+
+.column-deskripsi {
+    width: 25%;
+    /* Lebar untuk deskripsi masalah */
+}
+
+.column-tanggal {
+    width: 10%;
+}
+
+.column-status {
+    width: 10%;
 }
 
 /* Table styling */
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
     table-layout: fixed;
-    /* Fixed layout untuk menjaga ukuran kolom */
 }
 
 /* Table headers and cells */
@@ -50,54 +86,32 @@ table td {
     border: 1px solid #ddd;
     text-align: left;
     vertical-align: top;
-    /* Menjaga konten vertikal */
+    word-wrap: break-word;
+    white-space: normal;
+    font-size: 14px;
+    /* Adjust font size for a better fit */
 }
 
 /* Table header styling */
 table th {
     background-color: #4b9164;
-    /* Warna hijau sage tua */
     color: white;
-    font-weight: 590;
-    font-size: 16px;
+    font-weight: bold;
+    font-size: 15px;
     text-transform: uppercase;
     text-align: center;
-    /* Menyelaraskan teks header tabel ke tengah */
+    letter-spacing: 0.5px;
+    /* Extra spacing between letters */
 }
 
 /* Even row background color */
 table tr:nth-child(even) {
     background-color: #f1f8f4;
-    /* Warna hijau sage yang sangat terang */
 }
 
 /* Hover effect on rows */
 table tr:hover {
     background-color: #dceee5;
-    /* Warna hijau sage yang sedikit lebih gelap saat hover */
-}
-
-/* Column for ID */
-table th.column-id,
-table td.column-id {
-    width: 80px;
-    /* Lebar kolom ID yang lebih kecil */
-}
-
-/* Column for Deskripsi Masalah */
-table th.column-deskripsi,
-table td.column-deskripsi {
-    width: 25%;
-    /* Lebar kolom Deskripsi Masalah */
-    word-wrap: break-word;
-    /* Membungkus kata-kata panjang */
-    white-space: normal;
-    /* Izinkan teks untuk membungkus */
-    overflow: hidden;
-    /* Sembunyikan teks yang melebihi batas */
-    position: relative;
-    vertical-align: top;
-    /* Menjaga teks tetap di atas */
 }
 
 /* More text functionality for Deskripsi Masalah */
@@ -108,7 +122,6 @@ table td.column-deskripsi {
 .column-deskripsi .more-text {
     display: none;
     white-space: normal;
-    /* Izinkan teks tambahan untuk membungkus */
 }
 
 .column-deskripsi .toggle-more {
@@ -126,12 +139,27 @@ table td.column-deskripsi {
 /* Styling for links */
 td a {
     color: #4b9164;
-    /* Warna hijau sage untuk link */
     text-decoration: none;
 }
 
 td a:hover {
     text-decoration: underline;
+}
+
+/* Tombol cetak */
+.btn-print {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.btn-print:hover {
+    background-color: #45a049;
 }
 
 /* Responsive design adjustments */
@@ -143,6 +171,6 @@ td a:hover {
 
     table th,
     table td {
-        font-size: 14px;
+        font-size: 12px;
     }
 }
