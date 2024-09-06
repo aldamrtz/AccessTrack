@@ -121,86 +121,6 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new
-                                            monthly report is ready to
-                                            download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
-
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -249,7 +169,7 @@
                                             <i class="fas fa-id-card fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
-                                    <a href="#" class="btn btn-link text-xs text-decoration-none">Lihat Detail <i
+                                    <a href="#" id="detailKartuAkses" class="btn btn-link text-xs text-decoration-none">Lihat Detail <i
                                             class="fas fa-arrow-right"></i></a>
                                 </div>
                             </div>
@@ -272,7 +192,7 @@
                                             <i class="fas fa-shield-alt fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
-                                    <a href="#" class="btn btn-link text-xs text-decoration-none">Lihat Detail <i
+                                    <a href="#" id="detailLaporanKeluhan" class="btn btn-link text-xs text-decoration-none">Lihat Detail <i
                                             class="fas fa-arrow-right"></i></a>
                                 </div>
                             </div>
@@ -294,7 +214,7 @@
                                             <i class="fas fa-envelope fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
-                                    <a href="#" class="btn btn-link text-xs text-decoration-none">Lihat Detail <i
+                                    <a href="#" id="detailPengajuanEmail" class="btn btn-link text-xs text-decoration-none">Lihat Detail <i
                                             class="fas fa-arrow-right"></i></a>
                                 </div>
                             </div>
@@ -316,7 +236,7 @@
                                             <i class="fas fa-globe fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
-                                    <a href="#" class="btn btn-link text-xs text-decoration-none">Lihat Detail <i
+                                    <a href="#" id="detailPengajuanDomain" class="btn btn-link text-xs text-decoration-none">Lihat Detail <i
                                             class="fas fa-arrow-right"></i></a>
                                 </div>
                             </div>
@@ -326,6 +246,11 @@
                     <!-- Dropdown Button beside "Total Laporan" -->
                     <div class="row">
                         <!-- Bar Chart Card -->
+                        <!-- Button untuk Lihat Semua Data -->
+                        <div class="col-12 mb-4">
+                            <button id="showAllData" class="btn btn-primary">Lihat Semua Data</button>
+                        </div>
+
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
@@ -422,33 +347,38 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 var ctx = document.getElementById('my3DBarChart').getContext('2d');
+
+                // Data awal (semua data)
+                var initialData = {
+                    labels: ['Kartu Akses', 'Laporan Keluhan', 'Pengajuan Email', 'Pengajuan Domain'],
+                    datasets: [{
+                        label: 'Total',
+                        data: [
+                            <?= $dashboard_data['kartu_akses']; ?>,
+                            <?= $dashboard_data['laporan_keluhan']; ?>,
+                            <?= $dashboard_data['pengajuan_email']; ?>,
+                            <?= $dashboard_data['pengajuan_domain']; ?>
+                        ],
+                        backgroundColor: [
+                            'rgba(78, 115, 223, 0.6)',
+                            'rgba(28, 200, 138, 0.6)',
+                            'rgba(255, 193, 7, 0.6)',
+                            'rgba(54, 185, 204, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(78, 115, 223, 1)',
+                            'rgba(28, 200, 138, 1)',
+                            'rgba(255, 193, 7, 1)',
+                            'rgba(54, 185, 204, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                };
+
+                // Inisialisasi chart
                 var my3DBarChart = new Chart(ctx, {
                     type: 'bar',
-                    data: {
-                        labels: ['Kartu Akses', 'Laporan Keluhan', 'Pengajuan Email', 'Pengajuan Domain'],
-                        datasets: [{
-                            label: 'Total',
-                            data: [
-                                <?= $dashboard_data['kartu_akses']; ?>,
-                                <?= $dashboard_data['laporan_keluhan']; ?>,
-                                <?= $dashboard_data['pengajuan_email']; ?>,
-                                <?= $dashboard_data['pengajuan_domain']; ?>
-                            ],
-                            backgroundColor: [
-                                'rgba(78, 115, 223, 0.6)',
-                                'rgba(28, 200, 138, 0.6)',
-                                'rgba(255, 193, 7, 0.6)',
-                                'rgba(54, 185, 204, 0.6)'
-                            ],
-                            borderColor: [
-                                'rgba(78, 115, 223, 1)',
-                                'rgba(28, 200, 138, 1)',
-                                'rgba(255, 193, 7, 1)',
-                                'rgba(54, 185, 204, 1)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
+                    data: initialData,
                     options: {
                         responsive: true,
                         maintainAspectRatio: true,
@@ -489,12 +419,84 @@
                     }
                 });
 
+                // Event listener untuk Kartu Akses
+                document.getElementById('detailKartuAkses').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    my3DBarChart.data = {
+                        labels: ['Kartu Akses'],
+                        datasets: [{
+                            label: 'Total',
+                            data: [<?= $dashboard_data['kartu_akses']; ?>],
+                            backgroundColor: ['rgba(78, 115, 223, 0.6)'],
+                            borderColor: ['rgba(78, 115, 223, 1)'],
+                            borderWidth: 1
+                        }]
+                    };
+                    my3DBarChart.update();
+                });
+
+                // Event listener untuk Laporan Keluhan
+                document.getElementById('detailLaporanKeluhan').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    my3DBarChart.data = {
+                        labels: ['Laporan Keluhan'],
+                        datasets: [{
+                            label: 'Total',
+                            data: [<?= $dashboard_data['laporan_keluhan']; ?>],
+                            backgroundColor: ['rgba(28, 200, 138, 0.6)'],
+                            borderColor: ['rgba(28, 200, 138, 1)'],
+                            borderWidth: 1
+                        }]
+                    };
+                    my3DBarChart.update();
+                });
+
+                // Event listener untuk Pengajuan Email
+                document.getElementById('detailPengajuanEmail').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    my3DBarChart.data = {
+                        labels: ['Pengajuan Email'],
+                        datasets: [{
+                            label: 'Total',
+                            data: [<?= $dashboard_data['pengajuan_email']; ?>],
+                            backgroundColor: ['rgba(255, 193, 7, 0.6)'],
+                            borderColor: ['rgba(255, 193, 7, 1)'],
+                            borderWidth: 1
+                        }]
+                    };
+                    my3DBarChart.update();
+                });
+
+                // Event listener untuk Pengajuan Domain
+                document.getElementById('detailPengajuanDomain').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    my3DBarChart.data = {
+                        labels: ['Pengajuan Domain'],
+                        datasets: [{
+                            label: 'Total',
+                            data: [<?= $dashboard_data['pengajuan_domain']; ?>],
+                            backgroundColor: ['rgba(54, 185, 204, 0.6)'],
+                            borderColor: ['rgba(54, 185, 204, 1)'],
+                            borderWidth: 1
+                        }]
+                    };
+                    my3DBarChart.update();
+                });
+
+                // Event listener untuk "Lihat Semua Data"
+                document.getElementById('showAllData').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Kembalikan chart ke data awal (semua data)
+                    my3DBarChart.data = initialData;
+                    my3DBarChart.update();
+                });
+
                 window.addEventListener('resize', function() {
                     my3DBarChart.resize();
                 });
             });
         </script>
-
+        
         <script>
             // JavaScript untuk toggle sidebar
             document.addEventListener('DOMContentLoaded', function() {
