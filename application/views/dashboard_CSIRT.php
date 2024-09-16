@@ -414,7 +414,6 @@
                         $('#SubmitCount').text(SubmitCount);
                         $('#ProcessCount').text(ProcessCount);
                         $('#ApprovedCount').text(ApprovedCount);
-                        $('#SendCount').text(SendCount);
                     }
 
                     // Update card counts on page load
