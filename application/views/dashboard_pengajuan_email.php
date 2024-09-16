@@ -51,7 +51,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo site_url('Dashboard_akses'); ?>">
+                <a class="nav-link" href="<?php echo site_url('Dashboard'); ?>">
                     <i class="fas fa-home"></i>
                     <span>Home</span></a>
             </li>
