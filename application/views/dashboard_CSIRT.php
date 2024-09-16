@@ -128,7 +128,7 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-                      <!-- Nav Item - User Information -->
+                        <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="d-flex align-items-center">
@@ -414,7 +414,6 @@
                         $('#SubmitCount').text(SubmitCount);
                         $('#ProcessCount').text(ProcessCount);
                         $('#ApprovedCount').text(ApprovedCount);
-                        $('#SendCount').text(SendCount);
                     }
 
                     // Update card counts on page load
@@ -463,7 +462,7 @@
                     });
                 });
             </script>
-           <script>
+            <script>
                 document.getElementById('printButton').addEventListener('click', function() {
                     // Store the content to print
                     var contentToPrint = document.querySelector('.dataTable').innerHTML;
