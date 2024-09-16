@@ -3498,23 +3498,19 @@ input[type=submit].btn-block {
 }
 
 .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
     display: none;
-    float: left;
-    min-width: 10rem;
-    padding: .5rem 0;
-    margin: .125rem 0 0;
-    font-size: .85rem;
-    color: #858796;
-    text-align: left;
-    list-style: none;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #e3e6f0;
-    border-radius: .35rem
+    /* Hide dropdown initially */
+    position: absolute;
+    /* Position it absolutely */
+    top: 100%;
+    /* Align it below the button */
+    left: 0;
+    margin: 0;
+    padding: .25rem 0;
+    width: 100%;
+    /* Make sure it takes full width of the button */
+    z-index: 1000;
+    /* Ensure it appears above other content */
 }
 
 .dropdown-menu-left {
@@ -3678,22 +3674,30 @@ input[type=submit].btn-block {
 
 .dropdown-item {
     display: block;
-    width: 100%;
     padding: .25rem 1.5rem;
-    clear: both;
+    /* Adjust padding as needed */
     font-weight: 400;
     color: #3a3b45;
     text-align: inherit;
     white-space: nowrap;
     background-color: transparent;
-    border: 0
+    border: 0;
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    /* Adds border between items */
+}
+
+.dropdown-item:last-child {
+    border-bottom: 0;
+    /* Remove border from the last item */
 }
 
 .dropdown-item:focus,
 .dropdown-item:hover {
     color: #2e2f37;
     text-decoration: none;
-    background-color: #eaecf4
+    background-color: rgba(0, 0, 0, 0.1);
+    /* Highlight on hover */
 }
 
 .dropdown-item.active,

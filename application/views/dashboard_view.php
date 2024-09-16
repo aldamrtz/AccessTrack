@@ -384,8 +384,20 @@
                         maintainAspectRatio: true,
                         aspectRatio: 2,
                         plugins: {
+                            title: {
+                                display: true,
+                                text: "Data Laporan",
+                                font: {
+                                    size: 17
+                                }
+                            },
+                            padding: {
+                                top: 1,
+                                bottom: 1
+                            },
                             legend: {
                                 position: 'top',
+                                display: false
                             },
                             tooltip: {
                                 callbacks: {
@@ -394,6 +406,7 @@
                                     }
                                 }
                             }
+
                         },
                         scales: {
                             x: {
@@ -419,19 +432,145 @@
                     }
                 });
 
+                // Data for Fakultas and Jurusan
+                const fakultasJurusan = {
+                    'Teknik (FT)': [
+                        'Teknik Elektro S-1',
+                        'Teknik Kimia S-1',
+                        'Teknik Sipil S-1',
+                        'Magister Teknik Sipil S-2',
+                        'Teknik Geomatika S-1'
+                    ],
+                    'Teknologi Manufaktur (FTM)': [
+                        'Teknik Mesin S-1',
+                        'Teknik Industri S-1',
+                        'Teknik Metalurgi S-1',
+                        'Magister Manajemen Teknologi S-2'
+                    ],
+                    'Ekonomi dan Bisnis (FEB)': [
+                        'Akuntansi S-1',
+                        'Manajemen S-1',
+                        'Magister Manajemen S-2'
+                    ],
+                    'Ilmu Sosial dan Ilmu Politik (FISIP)': [
+                        'Ilmu Pemerintahan S-1',
+                        'Ilmu Hub. Internasional S-1',
+                        'Magister Hub. Internasional S-2',
+                        'Ilmu Hukum S-1',
+                        'Magister Ilmu Pemerintahan S-2'
+                    ],
+                    'Sains dan Informatika (FSI)': [
+                        'Kimia S-1',
+                        'Magister Kimia S-2',
+                        'Teknik Informatika S-1',
+                        'Sistem Informasi S-1'
+                    ],
+                    'Psikologi': [
+                        'Psikologi S-1'
+                    ],
+                    'Farmasi': [
+                        'Farmasi S-1',
+                        'Profesi Apoteker',
+                        'Magister Farmasi S-2'
+                    ],
+                    'Kedokteran': [
+                        'Pendidikan Dokter S-1',
+                        'Profesi Dokter',
+                        'Administrasi Rumah Sakit S-1',
+                        'Magister Penuaan Kulit dan Estetika S-2'
+                    ],
+                    'Kedokteran Gigi': [
+                        'Kedokteran Gigi S-1',
+                        'Profesi Dokter Gigi'
+                    ],
+                    'FITKES': [
+                        'Magister Keperawatan S-2',
+                        'Profesi Ners',
+                        'Ilmu Keperawatan S-1',
+                        'Keperawatan D-3',
+                        'Kesehatan Masyarakat S-1',
+                        'Teknologi Laboraturium Medis D-4',
+                        'Teknologi Laboraturium Medis D-3',
+                        'Kebidanan S-1',
+                        'Profesi Bidan',
+                        'Kebidanan D-3',
+                        'Magister Kesehatan Masyarakat S-2'
+                    ]
+                };
+
+                const fakultasDropdown = document.getElementById('fakultasDropdown');
+                const dropdownFakultasButton = document.getElementById('dropdownMenuButton1');
+                const jurusanDropdown = document.getElementById('jurusanDropdown');
+                const dropdownJurusanButton = document.getElementById('dropdownMenuButton2');
+
+                // Populate Fakultas Dropdown
+                Object.keys(fakultasJurusan).forEach(fakultasName => {
+                    const item = document.createElement('a');
+                    item.className = 'dropdown-item';
+                    item.href = '#';
+                    item.dataset.fakultas = fakultasName;
+                    item.textContent = fakultasName;
+                    fakultasDropdown.appendChild(item);
+                });
+
+                // Handle Fakultas Dropdown Selection
+                fakultasDropdown.addEventListener('click', function(event) {
+                    const target = event.target;
+                    if (target.classList.contains('dropdown-item')) {
+                        const fakultasName = target.dataset.fakultas;
+                        dropdownFakultasButton.textContent = fakultasName; // Update Fakultas button text
+                        jurusanDropdown.innerHTML = ''; // Clear existing jurusan
+                        dropdownJurusanButton.textContent = 'Jurusan'; // Reset Jurusan button text
+
+                        // Populate Jurusan Dropdown based on selected Fakultas
+                        if (fakultasJurusan[fakultasName]) {
+                            fakultasJurusan[fakultasName].forEach(jurusan => {
+                                const item = document.createElement('a');
+                                item.className = 'dropdown-item';
+                                item.href = '#';
+                                item.textContent = jurusan;
+                                item.dataset.jurusan = jurusan;
+                                jurusanDropdown.appendChild(item);
+                            });
+                        }
+                    }
+                });
+
+                // Handle Jurusan Dropdown Selection
+                jurusanDropdown.addEventListener('click', function(event) {
+                    const target = event.target;
+                    if (target.classList.contains('dropdown-item')) {
+                        const jurusanName = target.dataset.jurusan;
+                        dropdownJurusanButton.textContent = jurusanName; // Update Jurusan button text
+                    }
+                });
+
                 // Event listener untuk Kartu Akses
                 document.getElementById('detailKartuAkses').addEventListener('click', function(e) {
                     e.preventDefault();
                     my3DBarChart.data = {
-                        labels: ['Kartu Akses'],
+                        labels: ['Kartu Diajukan', 'Kartu Diproses', 'Kartu Terverifikasi'],
                         datasets: [{
                             label: 'Total',
-                            data: [<?= $dashboard_data['kartu_akses']; ?>],
-                            backgroundColor: ['rgba(78, 115, 223, 0.6)'],
-                            borderColor: ['rgba(78, 115, 223, 1)'],
+                            data: [
+                                <?= $dashboard_data['kartu_akses_rejected']; ?>,
+                                <?= $dashboard_data['kartu_akses_pending']; ?>,
+                                <?= $dashboard_data['kartu_akses_approved']; ?>
+                            ],
+                            backgroundColor: [
+                                'rgba(78, 115, 223, 0.6)', // Color for Kartu Diajukan
+                                'rgba(28, 200, 138, 0.6)', // Color for Kartu Diproses
+                                'rgba(255, 193, 7, 0.6)' // Color for Kartu Terverifikasi
+                            ],
+                            borderColor: [
+                                'rgba(78, 115, 223, 1)', // Border color for Kartu Diajukan
+                                'rgba(28, 200, 138, 1)', // Border color for Kartu Diproses
+                                'rgba(255, 193, 7, 1)' // Border color for Kartu Terverifikasi
+                            ],
                             borderWidth: 1
                         }]
                     };
+                    my3DBarChart.options.plugins.title.text = 'Kartu Akses';
                     my3DBarChart.update();
                 });
 
@@ -439,15 +578,28 @@
                 document.getElementById('detailLaporanKeluhan').addEventListener('click', function(e) {
                     e.preventDefault();
                     my3DBarChart.data = {
-                        labels: ['Laporan Keluhan'],
+                        labels: ['Laporan Diajukan', 'Laporan Diproses', 'Laporan Diatasi'],
                         datasets: [{
                             label: 'Total',
-                            data: [<?= $dashboard_data['laporan_keluhan']; ?>],
-                            backgroundColor: ['rgba(28, 200, 138, 0.6)'],
-                            borderColor: ['rgba(28, 200, 138, 1)'],
+                            data: [
+                                <?= $dashboard_data['laporan_keluhan_rejected']; ?>,
+                                <?= $dashboard_data['laporan_keluhan_pending']; ?>,
+                                <?= $dashboard_data['laporan_keluhan_approved']; ?>
+                            ],
+                            backgroundColor: [
+                                'rgba(78, 115, 223, 0.6)', // Color for Kartu Diajukan
+                                'rgba(28, 200, 138, 0.6)', // Color for Kartu Diproses
+                                'rgba(255, 193, 7, 0.6)' // Color for Kartu Terverifikasi
+                            ],
+                            borderColor: [
+                                'rgba(78, 115, 223, 1)', // Border color for Kartu Diajukan
+                                'rgba(28, 200, 138, 1)', // Border color for Kartu Diproses
+                                'rgba(255, 193, 7, 1)' // Border color for Kartu Terverifikasi
+                            ],
                             borderWidth: 1
                         }]
                     };
+                    my3DBarChart.options.plugins.title.text = 'Laporan Keluhan';
                     my3DBarChart.update();
                 });
 
@@ -455,15 +607,32 @@
                 document.getElementById('detailPengajuanEmail').addEventListener('click', function(e) {
                     e.preventDefault();
                     my3DBarChart.data = {
-                        labels: ['Pengajuan Email'],
+                        labels: ['Email Diajukan', 'Email Diproses', 'Email Terverifikasi', 'Email Dikirimkan'],
                         datasets: [{
-                            label: 'Total',
-                            data: [<?= $dashboard_data['pengajuan_email']; ?>],
-                            backgroundColor: ['rgba(255, 193, 7, 0.6)'],
-                            borderColor: ['rgba(255, 193, 7, 1)'],
+                            label: 'Pengajuan Email',
+                            data: [
+                                <?= $dashboard_data['pengajuan_email_diajukan']; ?>,
+                                <?= $dashboard_data['pengajuan_email_diproses']; ?>,
+                                <?= $dashboard_data['pengajuan_email_diverifikasi']; ?>,
+                                <?= $dashboard_data['pengajuan_email_dikirim']; ?>,
+                            ],
+                            backgroundColor: [
+                                'rgba(255, 193, 7, 0.6)', // Warna untuk Jenis 1
+                                'rgba(54, 162, 235, 0.6)', // Warna untuk Jenis 2
+                                'rgba(75, 192, 192, 0.6)', // Warna untuk Jenis 3
+                                'rgba(153, 102, 255, 0.6)' // Warna untuk Jenis 4
+                            ],
+                            borderColor: [
+                                'rgba(255, 193, 7, 1)', // Warna border untuk Jenis 1
+                                'rgba(54, 162, 235, 1)', // Warna border untuk Jenis 2
+                                'rgba(75, 192, 192, 1)', // Warna border untuk Jenis 3
+                                'rgba(153, 102, 255, 1)' // Warna border untuk Jenis 4
+                            ],
                             borderWidth: 1
                         }]
+
                     };
+                    my3DBarChart.options.plugins.title.text = 'Pengajuan Email';
                     my3DBarChart.update();
                 });
 
@@ -471,15 +640,31 @@
                 document.getElementById('detailPengajuanDomain').addEventListener('click', function(e) {
                     e.preventDefault();
                     my3DBarChart.data = {
-                        labels: ['Pengajuan Domain'],
+                        labels: ['Domain Diajukan', 'Domain Diproses', 'Domain Terverifikasi', 'Domain Dikirimkan'],
                         datasets: [{
-                            label: 'Total',
-                            data: [<?= $dashboard_data['pengajuan_domain']; ?>],
-                            backgroundColor: ['rgba(54, 185, 204, 0.6)'],
-                            borderColor: ['rgba(54, 185, 204, 1)'],
+                            label: 'Pengajuan Email',
+                            data: [
+                                <?= $dashboard_data['pengajuan_domain']; ?>,
+                                <?= $dashboard_data['pengajuan_domain']; ?>,
+                                <?= $dashboard_data['pengajuan_domain']; ?>,
+                                <?= $dashboard_data['pengajuan_domain']; ?>,
+                            ],
+                            backgroundColor: [
+                                'rgba(255, 193, 7, 0.6)', // Warna untuk Jenis 1
+                                'rgba(54, 162, 235, 0.6)', // Warna untuk Jenis 2
+                                'rgba(75, 192, 192, 0.6)', // Warna untuk Jenis 3
+                                'rgba(153, 102, 255, 0.6)' // Warna untuk Jenis 4
+                            ],
+                            borderColor: [
+                                'rgba(255, 193, 7, 1)', // Warna border untuk Jenis 1
+                                'rgba(54, 162, 235, 1)', // Warna border untuk Jenis 2
+                                'rgba(75, 192, 192, 1)', // Warna border untuk Jenis 3
+                                'rgba(153, 102, 255, 1)' // Warna border untuk Jenis 4
+                            ],
                             borderWidth: 1
                         }]
                     };
+                    my3DBarChart.options.plugins.title.text = 'Pengajuan Domain';
                     my3DBarChart.update();
                 });
 
@@ -488,15 +673,33 @@
                     e.preventDefault();
                     // Kembalikan chart ke data awal (semua data)
                     my3DBarChart.data = initialData;
+                    my3DBarChart.options.plugins.title.text = 'Data Laporan';
                     my3DBarChart.update();
-                });
 
+                    // Reset Fakultas dropdown
+                    dropdownFakultasButton.textContent = 'Fakultas';
+                    fakultasDropdown.innerHTML = ''; // Clear existing options
+
+                    // Reset Jurusan dropdown
+                    dropdownJurusanButton.textContent = 'Jurusan';
+                    jurusanDropdown.innerHTML = ''; // Clear existing options
+
+                    // Re-populate Fakultas dropdown
+                    Object.keys(fakultasJurusan).forEach(fakultasName => {
+                        var item = document.createElement('a');
+                        item.className = 'dropdown-item';
+                        item.href = '#';
+                        item.dataset.fakultas = fakultasName;
+                        item.textContent = fakultasName;
+                        fakultasDropdown.appendChild(item);
+                    });
+                });
                 window.addEventListener('resize', function() {
                     my3DBarChart.resize();
                 });
             });
         </script>
-        
+
         <script>
             // JavaScript untuk toggle sidebar
             document.addEventListener('DOMContentLoaded', function() {
@@ -541,7 +744,6 @@
         <!-- Kemudian Bootstrap JavaScript -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-        <script src="assets/js/scripts.js"></script>
 
 
 </body>
