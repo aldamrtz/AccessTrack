@@ -258,7 +258,8 @@
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Nomor Induk</th>
-                                                    <th>Unit Kerja</th>
+                                                    <th>Fakultas</th>
+                                                    <th>Prodi</th>
                                                     <th>Penanggung Jawab</th>
                                                     <th>Email Penanggung Jawab</th>
                                                     <th>Kontak Penanggung Jawab</th>
@@ -275,7 +276,8 @@
                                                     <tr>
                                                         <td><?= $no++; ?></td>
                                                         <td><?php echo $data['nomor_induk']; ?></td>
-                                                        <td><?php echo $data['unit_kerja']; ?></td>
+                                                        <td><?php echo $data['fakultas']; ?></td>
+                                                        <td><?php echo $data['prodi']; ?></td>
                                                         <td><?php echo $data['penanggung_jawab']; ?></td>
                                                         <td><?php echo $data['email_penanggung_jawab']; ?></td>
                                                         <td><?php echo $data['kontak_penanggung_jawab']; ?></td>
@@ -458,7 +460,7 @@
 
                         // Iterate through each row in the table
                         table.rows().nodes().to$().each(function(index, tr) {
-                            const status = $(tr).find('td').eq(10).text().trim();
+                            const status = $(tr).find('td').eq(11).text().trim();
 
                             if (status === 'Domain Diajukan') {
                                 SubmitCount++;

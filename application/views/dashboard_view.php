@@ -644,10 +644,10 @@
                         datasets: [{
                             label: 'Pengajuan Email',
                             data: [
-                                <?= $dashboard_data['pengajuan_domain']; ?>,
-                                <?= $dashboard_data['pengajuan_domain']; ?>,
-                                <?= $dashboard_data['pengajuan_domain']; ?>,
-                                <?= $dashboard_data['pengajuan_domain']; ?>,
+                                <?= $dashboard_data['pengajuan_domain_diajukan']; ?>,
+                                <?= $dashboard_data['pengajuan_domain_diproses']; ?>,
+                                <?= $dashboard_data['pengajuan_domain_diverifikasi']; ?>,
+                                <?= $dashboard_data['pengajuan_domain_dikirim']; ?>,
                             ],
                             backgroundColor: [
                                 'rgba(255, 193, 7, 0.6)', // Warna untuk Jenis 1

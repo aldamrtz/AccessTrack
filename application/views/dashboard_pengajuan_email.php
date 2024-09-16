@@ -259,6 +259,7 @@
                                                     <th>No</th>
                                                     <th>Nama</th>
                                                     <th>NIM</th>
+                                                    <th>Fakultas</th>
                                                     <th>Prodi</th>
                                                     <th>E-mail Pengguna</th>
                                                     <th>E-mail Diajukan</th>
@@ -273,6 +274,7 @@
                                                         <td><?= $no++; ?></td>
                                                         <td><?php echo $data['nama_depan'] . ' ' . $data['nama_belakang']; ?></td>
                                                         <td><?php echo $data['nim']; ?></td>
+                                                        <td><?php echo $data['fakultas']; ?></td>
                                                         <td><?php echo $data['prodi']; ?></td>
                                                         <td><?php echo $data['email_pengguna']; ?></td>
                                                         <td><?php echo $data['email_diajukan']; ?></td>
@@ -415,7 +417,7 @@
 
                         // Iterate through each row in the table
                         table.rows().nodes().to$().each(function(index, tr) {
-                            const status = $(tr).find('td').eq(7).text().trim();
+                            const status = $(tr).find('td').eq(8).text().trim();
 
                             if (status === 'Email Diajukan') {
                                 SubmitCount++;
