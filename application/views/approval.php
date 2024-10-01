@@ -148,6 +148,7 @@
                                     <th>Nama Lengkap</th>
                                     <th>Email</th>
                                     <th>Jenis Pengajuan</th>
+                                    <th>Bukti Pembayaran</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -158,6 +159,13 @@
                                     <td><?= $pnd['nama_lengkap']; ?></td>
                                     <td><?= $pnd['email']; ?></td>
                                     <td><?= ucfirst($pnd['applicant_type']); ?></td>
+                                    <td>
+                                        <?php if ($pnd['applicant_type'] == 'Mahasiswa' && !empty($pnd['bukti_pembayaran'])): ?>
+                                            <a href="<?= base_url('uploads/payment_proofs/'.$pnd['bukti_pembayaran']); ?>" target="_blank">Lihat Bukti</a>
+                                        <?php else: ?>
+                                            Tidak Ada Bukti
+                                        <?php endif; ?>
+                                    </td>
                                     <td>
                                         <a href="<?= base_url('access/approve/'.$pnd['id_KA']); ?>" class="btn btn-success btn-sm">Approve</a>
                                         <a href="<?= base_url('access/reject/'.$pnd['id_KA']); ?>" class="btn btn-danger btn-sm">Reject</a>
@@ -216,21 +224,46 @@
             // Pencarian Nama
             $("#search").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
-                $("#pendingTable tbody tr, #approvedTable tbody tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
+                var activeTab = $("#approvalTabs .nav-link.active").attr("id");
+                if (activeTab === "pending-tab") {
+                    $("#pendingTable tbody tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                } else if (activeTab === "approved-tab") {
+                    $("#approvedTable tbody tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                }
             });
 
             // Filter Status
             $("#filterStatus").on("change", function() {
                 var status = $(this).val();
+                $("#pendingTable tbody tr, #approvedTable tbody tr").hide(); // Sembunyikan semua baris terlebih dahulu
                 if (status === "all") {
-                    $("#pendingTable tbody tr, #approvedTable tbody tr").show();
+                    if ($("#pending-tab").hasClass("active")) {
+                        $("#pendingTable tbody tr").show();
+                    } else if ($("#approved-tab").hasClass("active")) {
+                        $("#approvedTable tbody tr").show();
+                    }
                 } else {
-                    $("#pendingTable tbody tr, #approvedTable tbody tr").filter(function() {
-                        $(this).toggle($(this).find('td:nth-child(5)').text().toLowerCase().indexOf(status) > -1);
-                    });
+                    if ($("#pending-tab").hasClass("active")) {
+                        $("#pendingTable tbody tr").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(status) > -1);
+                        }).show();
+                    } else if ($("#approved-tab").hasClass("active")) {
+                        $("#approvedTable tbody tr").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(status) > -1);
+                        }).show();
+                    }
                 }
+            });
+
+            // Handle tab switching
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                $("#search").val(""); // Clear the search box
+                $("#filterStatus").val("all"); // Reset the filter status
+                $("#pendingTable tbody tr, #approvedTable tbody tr").show(); // Show all rows
             });
         });
     </script>

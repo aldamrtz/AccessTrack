@@ -3,9 +3,9 @@
         <h3>APPROVAL</h3>
     </div>
     <ul class="list-unstyled components">
-        <li>
+        <!-- <li>
             <a href="<?= base_url('admin/dashboard'); ?>">Dashboard</a>
-        </li>
+        </li> -->
         <li>
             <a href="<?= base_url('access/approval_list'); ?>">Laporan I - Ngeapprove Pengajuan</a>
         </li>

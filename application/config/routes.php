@@ -13,6 +13,14 @@ $route['access/confirmation'] = 'access/confirmation';  // Rute untuk halaman ko
 // Rute untuk admin approval dan laporan
 $route['admin/approval_list'] = 'access/approval_list';
 $route['admin/laporan'] = 'access/laporan';
+$route['access/hapus_pengajuan/(:num)'] = 'access/hapus_pengajuan/$1';
+$route['access/laporan'] = 'access/laporan';
+
+// Di dalam function submit() di controller Access
+$config['upload_path'] = './uploads/payment_proofs/';
+$config['allowed_types'] = 'jpg|jpeg|png|pdf';
+$config['max_size'] = 2048; // Maksimal ukuran file 2MB
+
 
 // Rute untuk captcha
 $route['captcha'] = 'CaptchaController/generateCaptcha';
