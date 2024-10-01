@@ -81,10 +81,25 @@
                         <input type="text" class="form-control" id="nim_mahasiswa" name="identityNumber_mahasiswa">
                     </div>
                     <div class="mb-4">
-                        <label for="facultyDepartment_mahasiswa" class="form-label">Fakultas</label>
-                        <select class="form-select" id="facultyDepartment_mahasiswa" name="facultyDepartment_mahasiswa">
+                        <label for="fakultas">Fakultas</label>
+                        <select class="form-select" id="fakultas" name="fakultas" onchange="updateJurusan()" required>
                             <option value="" disabled selected>Pilih Fakultas</option>
-                            <!-- Fakultas options -->
+                            <option value="Fakultas Sains dan Informatika">Fakultas Sains dan Informatika</option>
+                            <option value="Fakultas Teknik Metalurgi">Fakultas Teknik Metalurgi</option>
+                            <option value="Fakultas Teknik">Fakultas Teknik</option>
+                            <option value="Fakultas Ekonomi dan Bisnis">Fakultas Ekonomi dan Bisnis</option>
+                            <option value="Fakultas Ilmu Sosial dan Ilmu Politik">Fakultas Ilmu Sosial dan Ilmu Politik</option>
+                            <option value="Fakultas Farmasi">Fakultas Farmasi</option>
+                            <option value="Fakultas Kedokteran">Fakultas Kedokteran</option>
+                            <option value="Fakultas Kedokteran Gigi">Fakultas Kedokteran Gigi</option>
+                            <option value="Fakultas Ilmu Teknologi Kesehatan">Fakultas Ilmu Teknologi Kesehatan</option>
+                            <option value="Fakultas Psikologi">Fakultas Psikologi</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="jurusan">Jurusan</label>
+                        <select class="form-select" id="jurusan" name="jurusan" required>
+                            <option value="" disabled selected>Pilih Jurusan</option>
                         </select>
                     </div>
                     <div class="mb-4">
@@ -140,6 +155,68 @@
     </div>
 
     <script>
+        const jurusanList = {
+            "Fakultas Sains dan Informatika": [
+                "Teknik Informatika S-1",
+                "Sistem Informasi S-1",
+                "Kimia S-1",
+                "Magister Kimia S-2"
+            ],
+            "Fakultas Teknik Metalurgi": [
+                "Teknik Metalurgi S-1"
+            ],
+            "Fakultas Teknik": [
+                "Teknik Elektro S-1",
+                "Teknik Kimia S-1",
+                "Teknik Sipil S-1",
+                "Magister Teknik Sipil S-2",
+                "Teknik Geomatika S-1",
+                "Teknik Mesin S-1",
+                "Teknik Industri S-1"
+            ],
+            "Fakultas Ekonomi dan Bisnis": [
+                "Akuntansi S-1",
+                "Manajemen S-1",
+                "Magister Manajemen S-2"
+            ],
+            "Fakultas Ilmu Sosial dan Ilmu Politik": [
+                "Ilmu Pemerintahan S-1",
+                "Ilmu Hub. Internasional S-1",
+                "Magister Hub. Internasional S-2",
+                "Ilmu Hukum S-1",
+                "Magister Ilmu Pemerintahan S-2"
+            ],
+            "Fakultas Farmasi": [
+                "Farmasi S-1",
+                "Profesi Apoteker",
+                "Magister Farmasi S-2"
+            ],
+            "Fakultas Kedokteran": [
+                "Pendidikan Dokter S-1",
+                "Profesi Dokter"
+            ],
+            "Fakultas Kedokteran Gigi": [
+                "Kedokteran Gigi S-1",
+                "Profesi Dokter Gigi"
+            ],
+            "Fakultas Ilmu Teknologi Kesehatan": [
+                "Administrasi Rumah Sakit S-1",
+                "Magister Penuaan Kulit dan Estetika S-2",
+                "Magister Keperawatan S-2",
+                "Profesi Ners",
+                "Ilmu Keperawatan S-1",
+                "Keperawatan D-3",
+                "Kesehatan Masyarakat S-1",
+                "Teknologi Laboratorium Medis D-4",
+                "Teknologi Laboratorium Medis D-3",
+                "Kebidanan S-1",
+                "Profesi Bidan"
+            ],
+            "Fakultas Psikologi": [
+                "Psikologi S-1"
+            ]
+        };
+
         function showFormPart(value) {
             var formMahasiswa = document.getElementById('formMahasiswa');
             var formDosenStaff = document.getElementById('formDosenStaff');
@@ -171,6 +248,21 @@
             inputs.forEach(input => {
                 input.removeAttribute('disabled');
             });
+        }
+
+        function updateJurusan() {
+            const fakultas = document.getElementById('fakultas').value;
+            const jurusanSelect = document.getElementById('jurusan');
+            jurusanSelect.innerHTML = '<option value="" disabled selected>Pilih Jurusan</option>'; // Reset jurusan options
+
+            if (jurusanList[fakultas]) {
+                jurusanList[fakultas].forEach(jurusan => {
+                    const option = document.createElement('option');
+                    option.value = jurusan;
+                    option.textContent = jurusan;
+                    jurusanSelect.appendChild(option);
+                });
+            }
         }
 
         function validateForm() {
