@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="<?= base_url('assets/img/logo-unjani.png'); ?>" rel="icon" type="image/png">
-    <title>Admin - Pengajuan Email</title>
+    <title>Admin - Pengajuan Subdomain</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" type="text/css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/startbootstrap-sb-admin-2@4.0.5/css/sb-admin-2.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -178,11 +178,11 @@
         }
 
         .tab-content {
-            border-radius: 5px;
             padding: 25px;
             background-color: #ffffff;
             margin-bottom: 30px;
             overflow-x: auto;
+            border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
@@ -235,19 +235,9 @@
         }
 
         .table td:nth-child(1),
-        .table td:nth-child(7),
-        .table td:nth-child(9),
-        .table td:nth-child(10) {
+        .table td:nth-child(11),
+        .table td:nth-child(12) {
             text-align: center;
-        }
-
-        .ktm-icon {
-            cursor: pointer;
-            color: #333;
-        }
-
-        .ktm-icon:hover {
-            color: #0e6b47;
         }
 
         .custom-process-btn {
@@ -286,26 +276,13 @@
             border: none;
         }
 
-        .send-email-btn,
-        .send-email-btn:focus {
+        .custom-send-btn {
             background-color: #00aaff;
             color: #ffffff;
             border: none;
         }
 
-        .send-email-btn:hover {
-            background-color: #0088cc;
-            color: #ffffff;
-            border: none;
-        }
-
-        .send-btn {
-            background-color: #00aaff;
-            color: #ffffff;
-            border: none;
-        }
-
-        .send-btn:hover {
+        .custom-send-btn:hover {
             background-color: #0088cc;
             color: #ffffff;
             border: none;
@@ -321,31 +298,6 @@
             background-color: #e0a800;
             color: #ffffff;
             border: none;
-        }
-
-        .modal-ktm {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        .modal-ktm .modal-header,
-        .modal-ktm .modal-footer {
-            padding: 15px;
-        }
-
-        .modal-ktm .modal-body {
-            overflow: hidden;
-            padding: 0;
-        }
-
-        .modal-ktm .modal-body img {
-            max-width: 100%;
-            max-height: 70vh;
-            transition: transform 0.3s ease;
-            position: relative;
-            cursor: default;
         }
 
         .modal-dialog {
@@ -369,6 +321,10 @@
             color: #aaa;
             font-size: 15px;
             cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 5px;
         }
 
         .modal-body {
@@ -494,10 +450,6 @@
             border-color: #d9534f;
         }
 
-        input[type="file"].error-border {
-            border-color: #d9534f;
-        }
-
         .shake {
             animation: shake 0.5s;
             border-color: #d9534f;
@@ -524,6 +476,7 @@
             }
         }
     </style>
+
 </head>
 
 <body id="page-top">
@@ -537,13 +490,13 @@
             </a>
             <hr class="sidebar-divider">
             <div class="sidebar-heading" style="font-size: 12px; margin-bottom: -7px;">DATA PENGAJUAN</div>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="<?= site_url('AdminPengajuanController/data_pengajuan_email'); ?>">
                     <i class="fas fa-envelope"></i>
                     <span>Pengajuan Email</span>
                 </a>
             </li>
-            <li class="nav-item" style="margin-top: -10px;">
+            <li class="nav-item active" style="margin-top: -10px;">
                 <a class="nav-link" href="<?= site_url('AdminPengajuanController/data_pengajuan_subdomain'); ?>">
                     <i class="fas fa-globe"></i>
                     <span>Pengajuan Subdomain</span>
@@ -598,7 +551,7 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">DASHBOARD</h1>
                         <div class="dropdown">
-                            <button class="btn btn btn-cetak dropdown-toggle" type="button" id="dropdownCetakLaporan" data-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-cetak dropdown-toggle" type="button" id="dropdownCetakLaporan" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-download fa-sm" style="color: #ffffff; margin-right: 5px;"></i> Cetak Laporan
                             </button>
                             <ul class="dropdown-menu dropdown-cetak" aria-labelledby="dropdownCetakLaporan">
@@ -622,8 +575,8 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="tab-content" id="emailTabsContent">
-                        <ul class="nav nav-tabs" id="emailTabs" role="tablist">
+                    <div class="tab-content" id="subdomainTabsContent">
+                        <ul class="nav nav-tabs" id="subdomainTabs" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="diajukan-tab" data-bs-toggle="tab" data-bs-target="#diajukan" type="button" role="tab" aria-controls="diajukan" aria-selected="true">Diajukan</button>
                             </li>
@@ -642,12 +595,14 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Program Studi</th>
-                                        <th>NIM</th>
-                                        <th>Nama</th>
-                                        <th>Email yang Diajukan</th>
-                                        <th>Email Pengguna</th>
-                                        <th>KTM</th>
+                                        <th>Unit Kerja</th>
+                                        <th>Nomor Induk</th>
+                                        <th>Nama Penanggung Jawab</th>
+                                        <th>Email Penanggung Jawab</th>
+                                        <th>Kontak Penanggung Jawab</th>
+                                        <th>Subdomain yang Diajukan</th>
+                                        <th>IP Pointing</th>
+                                        <th>Keterangan</th>
                                         <th>Tanggal Pengajuan</th>
                                         <th>Status</th>
                                         <th>Aksi</th>
@@ -657,39 +612,40 @@
                                 </thead>
                                 <tbody>
                                     <?php $no = 1;
-                                    foreach ($email_diajukan as $email): ?>
+                                    foreach ($subdomain_diajukan as $subdomain): ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
-                                            <td><?= $email['prodi']; ?></td>
-                                            <td><?= $email['nim']; ?></td>
-                                            <td><?= $email['nama_lengkap']; ?></td>
-                                            <td><?= $email['email_diajukan']; ?></td>
-                                            <td><?= $email['email_pengguna']; ?></td>
+                                            <td><?= $subdomain['unit_kerja']; ?></td>
+                                            <td><?= $subdomain['nomor_induk']; ?></td>
+                                            <td><?= $subdomain['penanggung_jawab']; ?></td>
+                                            <td><?= $subdomain['email_penanggung_jawab']; ?></td>
+                                            <td><?= $subdomain['kontak_penanggung_jawab']; ?></td>
+                                            <td><?= $subdomain['sub_domain']; ?></td>
+                                            <td><?= $subdomain['ip_pointing']; ?></td>
+                                            <td><?= $subdomain['keterangan']; ?></td>
+                                            <td><?= $subdomain['tgl_pengajuan']; ?></td>
+                                            <td><?= $subdomain['status_pengajuan']; ?></td>
                                             <td>
-                                                <a href="#" class="ktm-icon" data-img="<?= $email['ktm']; ?>" data-type="<?= pathinfo($email['ktm'], PATHINFO_EXTENSION); ?>">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                            </td>
-                                            <td><?= $email['tgl_pengajuan']; ?></td>
-                                            <td><?= $email['status_pengajuan']; ?></td>
-                                            <td>
-                                                <form method="post" action="<?= site_url('AdminPengajuanController/updateStatusEmail'); ?>">
-                                                    <input type="hidden" name="id" value="<?= $email['nim']; ?>">
+                                                <form method="post" action="<?= site_url('AdminPengajuanController/updateStatusSubDomain'); ?>">
+                                                    <input type="hidden" name="id" value="<?= $subdomain['id_pengajuan_subdomain']; ?>">
                                                     <input type="hidden" name="status_pengajuan" value="Diproses">
                                                     <button type="submit" class="btn custom-process-btn">Proses</button>
                                                 </form>
                                             </td>
                                             <td>
                                                 <button class="btn btn-warning" style="color: #ffffff;" data-toggle="modal" data-target="#editModal"
-                                                    data-id="<?= $email['nim']; ?>"
-                                                    data-prodi="<?= $email['prodi']; ?>"
-                                                    data-nama-lengkap="<?= $email['nama_lengkap']; ?>"
-                                                    data-email="<?= $email['email_diajukan']; ?>"
-                                                    data-email-pengguna="<?= $email['email_pengguna']; ?>"
-                                                    data-ktm="<?= $email['ktm']; ?>">Edit</button>
+                                                    data-id="<?= $subdomain['id_pengajuan_subdomain']; ?>"
+                                                    data-nomor-induk="<?= $subdomain['nomor_induk']; ?>"
+                                                    data-unit-kerja="<?= $subdomain['unit_kerja']; ?>"
+                                                    data-penanggung-jawab="<?= $subdomain['penanggung_jawab']; ?>"
+                                                    data-email-penanggung-jawab="<?= $subdomain['email_penanggung_jawab']; ?>"
+                                                    data-kontak-penanggung-jawab="<?= $subdomain['kontak_penanggung_jawab']; ?>"
+                                                    data-sub-domain="<?= $subdomain['sub_domain']; ?>"
+                                                    data-ip-pointing="<?= $subdomain['ip_pointing']; ?>"
+                                                    data-keterangan="<?= $subdomain['keterangan']; ?>">Edit</button>
                                             </td>
                                             <td>
-                                                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="<?= $email['nim']; ?>">Hapus</button>
+                                                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="<?= $subdomain['id_pengajuan_subdomain']; ?>">Hapus</button>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -702,12 +658,14 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Program Studi</th>
-                                        <th>NIM</th>
-                                        <th>Nama</th>
-                                        <th>Email yang Diajukan</th>
-                                        <th>Email Pengguna</th>
-                                        <th>KTM</th>
+                                        <th>Unit Kerja</th>
+                                        <th>Nomor Induk</th>
+                                        <th>Nama Penanggung Jawab</th>
+                                        <th>Email Penanggung Jawab</th>
+                                        <th>Kontak Penanggung Jawab</th>
+                                        <th>Subdomain yang Diajukan</th>
+                                        <th>IP Pointing</th>
+                                        <th>Keterangan</th>
                                         <th>Tanggal Pengajuan</th>
                                         <th>Status</th>
                                         <th>Aksi</th>
@@ -717,39 +675,40 @@
                                 </thead>
                                 <tbody>
                                     <?php $no = 1;
-                                    foreach ($email_diproses as $email): ?>
+                                    foreach ($subdomain_diproses as $subdomain): ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
-                                            <td><?= $email['prodi']; ?></td>
-                                            <td><?= $email['nim']; ?></td>
-                                            <td><?= $email['nama_lengkap']; ?></td>
-                                            <td><?= $email['email_diajukan']; ?></td>
-                                            <td><?= $email['email_pengguna']; ?></td>
+                                            <td><?= $subdomain['unit_kerja']; ?></td>
+                                            <td><?= $subdomain['nomor_induk']; ?></td>
+                                            <td><?= $subdomain['penanggung_jawab']; ?></td>
+                                            <td><?= $subdomain['email_penanggung_jawab']; ?></td>
+                                            <td><?= $subdomain['kontak_penanggung_jawab']; ?></td>
+                                            <td><?= $subdomain['sub_domain']; ?></td>
+                                            <td><?= $subdomain['ip_pointing']; ?></td>
+                                            <td><?= $subdomain['keterangan']; ?></td>
+                                            <td><?= $subdomain['tgl_pengajuan']; ?></td>
+                                            <td><?= $subdomain['status_pengajuan']; ?></td>
                                             <td>
-                                                <a href="#" class="ktm-icon" data-img="<?= $email['ktm']; ?>" data-type="<?= pathinfo($email['ktm'], PATHINFO_EXTENSION); ?>">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                            </td>
-                                            <td><?= $email['tgl_pengajuan']; ?></td>
-                                            <td><?= $email['status_pengajuan']; ?></td>
-                                            <td>
-                                                <form method="post" action="<?= site_url('AdminPengajuanController/updateStatusEmail'); ?>">
-                                                    <input type="hidden" name="id" value="<?= $email['nim']; ?>">
+                                                <form method="post" action="<?= site_url('AdminPengajuanController/updateStatusSubDomain'); ?>">
+                                                    <input type="hidden" name="id" value="<?= $subdomain['id_pengajuan_subdomain']; ?>">
                                                     <input type="hidden" name="status_pengajuan" value="Diverifikasi">
                                                     <button type="submit" class="btn custom-verify-btn">Verifikasi</button>
                                                 </form>
                                             </td>
                                             <td>
                                                 <button class="btn btn-warning" style="color: #ffffff;" data-toggle="modal" data-target="#editModal"
-                                                    data-id="<?= $email['nim']; ?>"
-                                                    data-prodi="<?= $email['prodi']; ?>"
-                                                    data-nama-lengkap="<?= $email['nama_lengkap']; ?>"
-                                                    data-email="<?= $email['email_diajukan']; ?>"
-                                                    data-email-pengguna="<?= $email['email_pengguna']; ?>"
-                                                    data-ktm="<?= $email['ktm']; ?>">Edit</button>
+                                                    data-id="<?= $subdomain['id_pengajuan_subdomain']; ?>"
+                                                    data-nomor-induk="<?= $subdomain['nomor_induk']; ?>"
+                                                    data-unit-kerja="<?= $subdomain['unit_kerja']; ?>"
+                                                    data-penanggung-jawab="<?= $subdomain['penanggung_jawab']; ?>"
+                                                    data-email-penanggung-jawab="<?= $subdomain['email_penanggung_jawab']; ?>"
+                                                    data-kontak-penanggung-jawab="<?= $subdomain['kontak_penanggung_jawab']; ?>"
+                                                    data-sub-domain="<?= $subdomain['sub_domain']; ?>"
+                                                    data-ip-pointing="<?= $subdomain['ip_pointing']; ?>"
+                                                    data-keterangan="<?= $subdomain['keterangan']; ?>">Edit</button>
                                             </td>
                                             <td>
-                                                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="<?= $email['nim']; ?>">Hapus</button>
+                                                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="<?= $subdomain['id_pengajuan_subdomain']; ?>">Hapus</button>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -762,12 +721,14 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Program Studi</th>
-                                        <th>NIM</th>
-                                        <th>Nama</th>
-                                        <th>Email yang Diajukan</th>
-                                        <th>Email Pengguna</th>
-                                        <th>KTM</th>
+                                        <th>Unit Kerja</th>
+                                        <th>Nomor Induk</th>
+                                        <th>Nama Penanggung Jawab</th>
+                                        <th>Email Penanggung Jawab</th>
+                                        <th>Kontak Penanggung Jawab</th>
+                                        <th>Subdomain yang Diajukan</th>
+                                        <th>IP Pointing</th>
+                                        <th>Keterangan</th>
                                         <th>Tanggal Pengajuan</th>
                                         <th>Status</th>
                                         <th>Aksi</th>
@@ -777,53 +738,40 @@
                                 </thead>
                                 <tbody>
                                     <?php $no = 1;
-                                    foreach ($email_diverifikasi as $email): ?>
+                                    foreach ($subdomain_diverifikasi as $subdomain): ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
-                                            <td><?= $email['prodi']; ?></td>
-                                            <td><?= $email['nim']; ?></td>
-                                            <td><?= $email['nama_lengkap']; ?></td>
-                                            <td><?= $email['email_diajukan']; ?></td>
-                                            <td><?= $email['email_pengguna']; ?></td>
+                                            <td><?= $subdomain['unit_kerja']; ?></td>
+                                            <td><?= $subdomain['nomor_induk']; ?></td>
+                                            <td><?= $subdomain['penanggung_jawab']; ?></td>
+                                            <td><?= $subdomain['email_penanggung_jawab']; ?></td>
+                                            <td><?= $subdomain['kontak_penanggung_jawab']; ?></td>
+                                            <td><?= $subdomain['sub_domain']; ?></td>
+                                            <td><?= $subdomain['ip_pointing']; ?></td>
+                                            <td><?= $subdomain['keterangan']; ?></td>
+                                            <td><?= $subdomain['tgl_pengajuan']; ?></td>
+                                            <td><?= $subdomain['status_pengajuan']; ?></td>
                                             <td>
-                                                <a href="#" class="ktm-icon" data-img="<?= $email['ktm']; ?>" data-type="<?= pathinfo($email['ktm'], PATHINFO_EXTENSION); ?>">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                            </td>
-                                            <td><?= $email['tgl_pengajuan']; ?></td>
-                                            <td><?= $email['status_pengajuan']; ?></td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <button class="btn send-email-btn dropdown-toggle" type="button" id="dropdownFormButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Kirim Email
-                                                    </button>
-                                                    <div class="dropdown-menu p-4 dropdown-kirim" aria-labelledby="dropdownFormButton">
-                                                        <form id="passwordForm" method="post" action="<?= site_url('AdminPengajuanController/sendEmailWithPassword'); ?>">
-                                                            <input type="hidden" name="id" value="<?= $email['nim']; ?>">
-                                                            <div class="mb-3">
-                                                                <label for="emailDiajukan-<?= $email['nim']; ?>" class="form-label">Email yang Diajukan</label>
-                                                                <input type="text" class="form-control" id="emailDiajukan-<?= $email['nim']; ?>" value="<?= $email['email_diajukan']; ?>" disabled style="width: calc(<?= strlen($email['email_diajukan']); ?>ch - 2ch); box-sizing: border-box;">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="password-<?= $email['nim']; ?>" class="form-label">Password</label>
-                                                                <input type="text" class="form-control" id="password-<?= $email['nim']; ?>" name="password" required>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-primary send-btn w-100">Kirim</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
+                                                <form method="post" action="<?= site_url('AdminPengajuanController/updateStatusSubDomain'); ?>">
+                                                    <input type="hidden" name="id" value="<?= $subdomain['id_pengajuan_subdomain']; ?>">
+                                                    <input type="hidden" name="status_pengajuan" value="Selesai">
+                                                    <button type="submit" class="btn custom-send-btn">Kirim</button>
+                                                </form>
                                             </td>
                                             <td>
                                                 <button class="btn btn-warning" style="color: #ffffff;" data-toggle="modal" data-target="#editModal"
-                                                    data-id="<?= $email['nim']; ?>"
-                                                    data-prodi="<?= $email['prodi']; ?>"
-                                                    data-nama-lengkap="<?= $email['nama_lengkap']; ?>"
-                                                    data-email="<?= $email['email_diajukan']; ?>"
-                                                    data-email-pengguna="<?= $email['email_pengguna']; ?>"
-                                                    data-ktm="<?= $email['ktm']; ?>">Edit</button>
+                                                    data-id="<?= $subdomain['id_pengajuan_subdomain']; ?>"
+                                                    data-nomor-induk="<?= $subdomain['nomor_induk']; ?>"
+                                                    data-unit-kerja="<?= $subdomain['unit_kerja']; ?>"
+                                                    data-penanggung-jawab="<?= $subdomain['penanggung_jawab']; ?>"
+                                                    data-email-penanggung-jawab="<?= $subdomain['email_penanggung_jawab']; ?>"
+                                                    data-kontak-penanggung-jawab="<?= $subdomain['kontak_penanggung_jawab']; ?>"
+                                                    data-sub-domain="<?= $subdomain['sub_domain']; ?>"
+                                                    data-ip-pointing="<?= $subdomain['ip_pointing']; ?>"
+                                                    data-keterangan="<?= $subdomain['keterangan']; ?>">Edit</button>
                                             </td>
                                             <td>
-                                                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="<?= $email['nim']; ?>">Hapus</button>
+                                                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="<?= $subdomain['id_pengajuan_subdomain']; ?>">Hapus</button>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -836,12 +784,14 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Program Studi</th>
-                                        <th>NIM</th>
-                                        <th>Nama</th>
-                                        <th>Email yang Diajukan</th>
-                                        <th>Email Pengguna</th>
-                                        <th>KTM</th>
+                                        <th>Unit Kerja</th>
+                                        <th>Nomor Induk</th>
+                                        <th>Nama Penanggung Jawab</th>
+                                        <th>Email Penanggung Jawab</th>
+                                        <th>Kontak Penanggung Jawab</th>
+                                        <th>Subdomain yang Diajukan</th>
+                                        <th>IP Pointing</th>
+                                        <th>Keterangan</th>
                                         <th>Tanggal Pengajuan</th>
                                         <th>Status</th>
                                         <th>Edit</th>
@@ -850,32 +800,33 @@
                                 </thead>
                                 <tbody>
                                     <?php $no = 1;
-                                    foreach ($email_dikirim as $email): ?>
+                                    foreach ($subdomain_dikirim as $subdomain): ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
-                                            <td><?= $email['prodi']; ?></td>
-                                            <td><?= $email['nim']; ?></td>
-                                            <td><?= $email['nama_lengkap']; ?></td>
-                                            <td><?= $email['email_diajukan']; ?></td>
-                                            <td><?= $email['email_pengguna']; ?></td>
-                                            <td>
-                                                <a href="#" class="ktm-icon" data-img="<?= $email['ktm']; ?>" data-type="<?= pathinfo($email['ktm'], PATHINFO_EXTENSION); ?>">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                            </td>
-                                            <td><?= $email['tgl_pengajuan']; ?></td>
-                                            <td><?= $email['status_pengajuan']; ?></td>
+                                            <td><?= $subdomain['unit_kerja']; ?></td>
+                                            <td><?= $subdomain['nomor_induk']; ?></td>
+                                            <td><?= $subdomain['penanggung_jawab']; ?></td>
+                                            <td><?= $subdomain['email_penanggung_jawab']; ?></td>
+                                            <td><?= $subdomain['kontak_penanggung_jawab']; ?></td>
+                                            <td><?= $subdomain['sub_domain']; ?></td>
+                                            <td><?= $subdomain['ip_pointing']; ?></td>
+                                            <td><?= $subdomain['keterangan']; ?></td>
+                                            <td><?= $subdomain['tgl_pengajuan']; ?></td>
+                                            <td><?= $subdomain['status_pengajuan']; ?></td>
                                             <td>
                                                 <button class="btn btn-warning" style="color: #ffffff;" data-toggle="modal" data-target="#editModal"
-                                                    data-id="<?= $email['nim']; ?>"
-                                                    data-nama-lengkap="<?= $email['nama_lengkap']; ?>"
-                                                    data-email="<?= $email['email_diajukan']; ?>"
-                                                    data-email-pengguna="<?= $email['email_pengguna']; ?>"
-                                                    data-prodi="<?= $email['prodi']; ?>"
-                                                    data-ktm="<?= $email['ktm']; ?>">Edit</button>
+                                                    data-id="<?= $subdomain['id_pengajuan_subdomain']; ?>"
+                                                    data-nomor-induk="<?= $subdomain['nomor_induk']; ?>"
+                                                    data-unit-kerja="<?= $subdomain['unit_kerja']; ?>"
+                                                    data-penanggung-jawab="<?= $subdomain['penanggung_jawab']; ?>"
+                                                    data-email-penanggung-jawab="<?= $subdomain['email_penanggung_jawab']; ?>"
+                                                    data-kontak-penanggung-jawab="<?= $subdomain['kontak_penanggung_jawab']; ?>"
+                                                    data-sub-domain="<?= $subdomain['sub_domain']; ?>"
+                                                    data-ip-pointing="<?= $subdomain['ip_pointing']; ?>"
+                                                    data-keterangan="<?= $subdomain['keterangan']; ?>">Edit</button>
                                             </td>
                                             <td>
-                                                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="<?= $email['nim']; ?>">Hapus</button>
+                                                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="<?= $subdomain['id_pengajuan_subdomain']; ?>">Hapus</button>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -886,52 +837,13 @@
                 </div>
             </div>
         </div>
-
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
 
-        <div class="modal fade" id="ktmModal" tabindex="-1" aria-labelledby="ktmModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-ktm modal-md">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="dropdown">
-                            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownDownload" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-download"></i>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownDownload" style="min-width: 250px;">
-                                <li><a class="dropdown-item" href="#" id="downloadPng">Download PNG</a></li>
-                                <li><a class="dropdown-item" href="#" id="downloadJpg">Download JPG</a></li>
-                                <li><a class="dropdown-item" href="#" id="downloadJpeg">Download JPEG</a></li>
-                            </ul>
-                        </div>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <img id="ktmImage" src="" class="img-fluid" alt="KTM">
-                    </div>
-                    <div class="modal-footer justify-content-center">
-                        <button id="zoomIn" class="btn btn-light">
-                            <i class="fas fa-search-plus"></i>
-                        </button>
-                        <button id="zoomOut" class="btn btn-light">
-                            <i class="fas fa-search-minus"></i>
-                        </button>
-                        <button id="rotateLeft" class="btn btn-light">
-                            <i class="fas fa-undo"></i>
-                        </button>
-                        <button id="rotateRight" class="btn btn-light">
-                            <i class="fas fa-redo"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <!-- Modal Edit -->
         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm" role="document" style="width: 100%; max-width: 700px; margin-top: 130px; margin-bottom: 130px;">
+            <div class="modal-dialog" role="document" style="width: 100%; max-width: 700px; margin-top: 87px; margin-bottom: 87px;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editModalLabel">Edit Pengajuan</h5>
@@ -939,71 +851,70 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="editForm" method="post" enctype="multipart/form-data" action="<?= site_url('AdminPengajuanController/editPengajuanEmail'); ?>">
+                    <form id="editForm" method="post" action="<?= site_url('AdminPengajuanController/editPengajuanSubdomain'); ?>">
                         <div class="modal-body">
+                            <input type="hidden" name="id_pengajuan_subdomain" id="editId">
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="editNim">Nomor Induk Mahasiswa (NIM)</label>
-                                        <input type="text" class="form-control" id="editNim" disabled>
-                                        <input type="hidden" name="nim" id="hiddenEditNim">
+                                        <label for="editNomorInduk">Nomor Induk</label>
+                                        <input type="text" class="form-control" id="editNomorInduk" name="nomor_induk" required pattern="\d*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="editProdi">Program Studi</label>
-                                        <select class="form-select" id="editProdi" name="prodi" required>
-                                            <option value=""></option>
-                                            <?php foreach ($program_studi as $value => $label): ?>
-                                                <option value="<?= $value; ?>"><?= $label; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
+                                        <label for="editUnitKerja">Unit Kerja</label>
+                                        <input type="text" class="form-control" id="editUnitKerja" name="unit_kerja" required>
+                                        <div id="unitKerjaFeedback" class="feedback"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="editNamaLengkap">Nama Lengkap</label>
-                                        <input type="text" class="form-control" id="editNamaLengkap" name="nama_lengkap" required>
-                                        <div id="namaLengkapFeedback" class="feedback"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="editEmail">Email yang Diajukan</label>
-                                        <input type="email" class="form-control" id="editEmail" name="email_diajukan" required>
-                                        <div id="emailValidationFeedback" class="feedback"></div>
-                                        <div id="emailAvailabilityFeedback" class="feedback"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="editEmailPengguna">Email Pengguna</label>
-                                        <input type="email" class="form-control" id="editEmailPengguna" name="email_pengguna" required>
-                                        <div id="emailPenggunaFeedback" class="feedback"></div>
+                                        <label for="editPenanggungJawab">Penanggung Jawab</label>
+                                        <input type="text" class="form-control" id="editPenanggungJawab" name="penanggung_jawab" required>
+                                        <div id="penanggungJawabFeedback" class="feedback"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="ktmPreview">KTM Saat Ini</label>
-                                        <input type="hidden" name="current_ktm" id="hiddenEditKtm">
-                                        <div id="ktmPreviewContainer">
-                                            <img id="ktmPreview" src="" alt="KTM Preview" class="img-thumbnail" style="max-width: 300px;">
-                                        </div>
+                                        <label for="editEmailPenanggungJawab">Email Penanggung Jawab</label>
+                                        <input type="email" class="form-control" id="editEmailPenanggungJawab" name="email_penanggung_jawab" required>
+                                        <div id="emailFeedback" class="feedback"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="editKtm">Ganti KTM</label>
-                                        <input type="file" class="form-control" id="editKtm" name="ktm" accept="image/jpeg, image/jpg, image/png">
-                                        <div id="ktmFeedback" class="feedback"></div>
+                                        <label for="editKontakPenanggungJawab">Kontak Penanggung Jawab</label>
+                                        <input type="text" class="form-control" id="editKontakPenanggungJawab" name="kontak_penanggung_jawab" required pattern="\d*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="editSubDomain">Subdomain</label>
+                                        <input type="text" class="form-control" id="editSubDomain" name="sub_domain" required>
+                                        <div id="subdomainValidationFeedback" class="feedback"></div>
+                                        <div id="subdomainAvailabilityFeedback" class="feedback"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="editIpPointing">IP Pointing</label>
+                                        <input type="text" class="form-control" id="editIpPointing" name="ip_pointing" required>
+                                        <div id="ipPointingFeedback" class="feedback"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="editKeterangan">Keterangan</label>
+                                        <textarea type="text" class="form-control" id="editKeterangan" name="keterangan" rows="3" required></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1031,7 +942,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <form id="deleteForm" method="post" action="<?= site_url('AdminPengajuanController/deletePengajuanEmail'); ?>">
+                        <form id="deleteForm" method="post" action="<?= site_url('AdminPengajuanController/deletePengajuanSubdomain'); ?>">
                             <input type="hidden" name="id" id="deleteId">
                             <button type="submit" class="btn btn-danger">Hapus</button>
                         </form>
@@ -1040,7 +951,6 @@
             </div>
         </div>
 
-        <!-- Modal Konfirmasi Aksi -->
         <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -1061,7 +971,6 @@
             </div>
         </div>
 
-        <!-- Logout Modal-->
         <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="max-width: 350px;">
                 <div class="modal-content">
@@ -1076,7 +985,6 @@
                 </div>
             </div>
         </div>
-
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -1097,61 +1005,58 @@
 
                 $('#editModal').on('show.bs.modal', function(event) {
                     var button = $(event.relatedTarget);
-                    var nim = button.data('id');
-                    var prodi = button.data('prodi');
-                    var nama_lengkap = button.data('nama-lengkap');
-                    var email = button.data('email');
-                    var emailPengguna = button.data('email-pengguna');
-                    var ktm = button.data('ktm');
+                    var id_pengajuan_subdomain = button.data('id');
+                    var nomor_induk = button.data('nomor-induk');
+                    var unit_kerja = button.data('unit-kerja');
+                    var penanggung_jawab = button.data('penanggung-jawab');
+                    var email_penanggung_jawab = button.data('email-penanggung-jawab');
+                    var kontak_penanggung_jawab = button.data('kontak-penanggung-jawab');
+                    var sub_domain = button.data('sub-domain');
+                    var ip_pointing = button.data('ip-pointing');
+                    var keterangan = button.data('keterangan');
 
                     var modal = $(this);
-                    modal.find('#editNim').val(nim);
-                    modal.find('#hiddenEditNim').val(nim);
-                    modal.find('#editProdi').val(prodi);
-                    modal.find('#editNamaLengkap').val(nama_lengkap);
-                    modal.find('#editEmail').val(email);
-                    modal.find('#editEmailPengguna').val(emailPengguna);
-
-                    modal.find('#ktmPreview').attr('src', ktm);
-                    modal.find('#hiddenEditKtm').val(ktm);
-                    $('#editKtm').on('change', function() {
-                        const file = this.files[0];
-                        if (file) {
-                            const reader = new FileReader();
-                            reader.onload = function(e) {
-                                $('#ktmPreview').attr('src', e.target.result);
-                            };
-                            reader.readAsDataURL(file);
-                        }
-                    });
+                    modal.find('#editId').val(id_pengajuan_subdomain);
+                    modal.find('#editNomorInduk').val(nomor_induk);
+                    modal.find('#editUnitKerja').val(unit_kerja);
+                    modal.find('#editPenanggungJawab').val(penanggung_jawab);
+                    modal.find('#editEmailPenanggungJawab').val(email_penanggung_jawab);
+                    modal.find('#editKontakPenanggungJawab').val(kontak_penanggung_jawab);
+                    modal.find('#editSubDomain').val(sub_domain);
+                    modal.find('#editIpPointing').val(ip_pointing);
+                    modal.find('#editKeterangan').val(keterangan);
                 });
 
                 $('#editModal').on('hide.bs.modal', function() {
-                    $('#namaLengkapFeedback').text('').removeClass('feedback error success');
-                    $('#emailAvailabilityFeedback').text('').removeClass('feedback error success');
-                    $('#emailValidationFeedback').text('').removeClass('feedback error success');
-                    $('#emailPenggunaFeedback').text('').removeClass('feedback error success');
-                    $('#ktmFeedback').text('').removeClass('feedback error success');
+                    $('#unitKerjaFeedback').text('').removeClass('feedback error success');
+                    $('#penanggungJawabFeedback').text('').removeClass('feedback error success');
+                    $('#emailFeedback').text('').removeClass('feedback error success');
+                    $('#subdomainValidationFeedback').text('').removeClass('feedback error success');
+                    $('#subdomainAvailabilityFeedback').text('').removeClass('feedback error success');
+                    $('#ipPointingFeedback').text('').removeClass('feedback error success');
 
-                    $('#editNamaLengkap').removeClass('error-border');
-                    $('#editEmail').removeClass('error-border');
-                    $('#editEmailPengguna').removeClass('error-border');
-                    $('#editKtm').removeClass('error-border');
+                    $('#editUnitKerja').removeClass('error-border');
+                    $('#editPenanggungJawab').removeClass('error-border');
+                    $('#editEmailPenanggungJawab').removeClass('error-border');
+                    $('#editSubDomain').removeClass('error-border');
+                    $('#editIpPointing').removeClass('error-border');
                 });
 
                 var formToSubmit;
 
-                $('.custom-process-btn, .custom-verify-btn, .send-btn').on('click', function(e) {
+                $('.custom-process-btn, .custom-verify-btn, .custom-send-btn').on('click', function(e) {
                     e.preventDefault();
                     formToSubmit = $(this).closest('form');
+
                     var actionText = '';
                     if ($(this).hasClass('custom-process-btn')) {
                         actionText = 'Apakah anda yakin ingin memproses pengajuan ini?';
                     } else if ($(this).hasClass('custom-verify-btn')) {
                         actionText = 'Apakah anda yakin ingin memverifikasi pengajuan ini?';
-                    } else if ($(this).hasClass('send-btn')) {
+                    } else if ($(this).hasClass('custom-send-btn')) {
                         actionText = 'Apakah Anda yakin ingin mengirimkan email ini?';
                     }
+
                     $('#modalBody').text(actionText);
                     $('#confirmModal').modal('show');
                 });
@@ -1177,10 +1082,6 @@
                     }
                 });
 
-                document.getElementById('sidebarToggle').addEventListener('click', function() {
-                    document.body.classList.toggle('sidebar-collapsed');
-                });
-
                 $('#monthYearPicker').datepicker({
                     format: 'MM yyyy',
                     startView: 'months',
@@ -1189,34 +1090,38 @@
                 });
 
                 document.getElementById('printDiajukan').onclick = function() {
-                    const monthYear = document.getElementById('monthYearPicker').value;
+                    const monthYear = $('#monthYearPicker').val();
                     printTable('diajukanTable', 'Diajukan', monthYear);
                     $('#monthYearPicker').val('');
                 };
 
                 document.getElementById('printDiproses').onclick = function() {
-                    const monthYear = document.getElementById('monthYearPicker').value;
+                    const monthYear = $('#monthYearPicker').val();
                     printTable('diprosesTable', 'Diproses', monthYear);
                     $('#monthYearPicker').val('');
                 };
 
                 document.getElementById('printDiverifikasi').onclick = function() {
-                    const monthYear = document.getElementById('monthYearPicker').value;
+                    const monthYear = $('#monthYearPicker').val();
                     printTable('diverifikasiTable', 'Diverifikasi', monthYear);
                     $('#monthYearPicker').val('');
                 };
 
                 document.getElementById('printDikirim').onclick = function() {
-                    const monthYear = document.getElementById('monthYearPicker').value;
+                    const monthYear = $('#monthYearPicker').val();
                     printTable('dikirimTable', 'Dikirim', monthYear);
                     $('#monthYearPicker').val('');
                 };
 
                 document.getElementById('printAll').onclick = function() {
-                    const monthYear = document.getElementById('monthYearPicker').value;
+                    const monthYear = $('#monthYearPicker').val();
                     printAllTables(monthYear);
                     $('#monthYearPicker').val('');
                 };
+            });
+
+            document.getElementById('sidebarToggle').addEventListener('click', function() {
+                document.body.classList.toggle('sidebar-collapsed');
             });
 
             function printTable(tableId, status, monthYear) {
@@ -1251,7 +1156,7 @@
                     const selectedMonth = monthYear.split(" ")[0];
 
                     data.each((row, index) => {
-                        const tanggalPengajuan = new Date(row[7]);
+                        const tanggalPengajuan = new Date(row[9]);
                         const year = tanggalPengajuan.getFullYear();
                         const month = tanggalPengajuan.toLocaleString('default', {
                             month: 'long'
@@ -1260,13 +1165,16 @@
                         if (year == selectedYear && month.toLowerCase() === selectedMonth.toLowerCase()) {
                             formattedData.push({
                                 no: index + 1,
-                                prodi: row[1],
-                                nim: row[2],
-                                nama: row[3],
-                                emailDiajukan: row[4],
-                                emailPengguna: row[5],
-                                tanggalPengajuan: row[7],
-                                status: status || row[8],
+                                unitKerja: row[1],
+                                nomorInduk: row[2],
+                                penanggungJawab: row[3],
+                                emailPenanggungJawab: row[4],
+                                kontakPenanggungJawab: row[5],
+                                subDomain: row[6],
+                                ipPointing: row[7],
+                                keterangan: row[8],
+                                tanggalPengajuan: row[9],
+                                status: status || row[10],
                             });
                         }
                     });
@@ -1274,13 +1182,16 @@
                     data.each((row, index) => {
                         formattedData.push({
                             no: index + 1,
-                            prodi: row[1],
-                            nim: row[2],
-                            nama: row[3],
-                            emailDiajukan: row[4],
-                            emailPengguna: row[5],
-                            tanggalPengajuan: row[7],
-                            status: status || row[8],
+                            unitKerja: row[1],
+                            nomorInduk: row[2],
+                            penanggungJawab: row[3],
+                            emailPenanggungJawab: row[4],
+                            kontakPenanggungJawab: row[5],
+                            subDomain: row[6],
+                            ipPointing: row[7],
+                            keterangan: row[8],
+                            tanggalPengajuan: row[9],
+                            status: status || row[10],
                         });
                     });
                 }
@@ -1299,40 +1210,46 @@
                 const formattedDate = currentDate.toLocaleDateString('id-ID', options);
 
                 let printContent = `
-    <div style="text-align: center;">
-        <h2>Yayasan Kartika Eka Paksi</h2>
-        <h3>Universitas Jenderal Achmad Yani (Unjani)</h3>
-        <p>Kampus Cimahi: Jl. Terusan Jend. Sudirman, Cimahi Telp: (022) 1663186 - 6656, Fax: (022) 6652069</p>
-        <p>Kampus Bandung: Jl. Gatot Subroto, Bandung Telp: (022) 7312741, Fax: (022) 7312741</p>
-        <hr style=" ont-weight: bold;"/>
-        <h4 style="margin-top: 35px; margin-bottom: 35px;">Data Pengajuan Pembuatan Email - ${title} Pada Bulan ${monthYear}</h4>
-    </div>
-    <table border="1" style="width: 100%; border-collapse: collapse;">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Program Studi</th>
-                <th>NIM</th>
-                <th>Nama</th>
-                <th>Email yang Diajukan</th>
-                <th>Email Pengguna</th>
-                <th>Tanggal Pengajuan</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>`;
+        <div style="text-align: center;">
+            <h2>Yayasan Kartika Eka Paksi</h2>
+            <h3>Universitas Jenderal Achmad Yani (Unjani)</h3>
+            <p>Kampus Cimahi: Jl. Terusan Jend. Sudirman, Cimahi Telp: (022) 1663186 - 6656, Fax: (022) 6652069</p>
+            <p>Kampus Bandung: Jl. Gatot Subroto, Bandung Telp: (022) 7312741, Fax: (022) 7312741</p>
+            <hr style="border: 1px solid black;"/>
+            <h4 style="margin-top: 35px; margin-bottom: 35px;">Data Pengajuan Pembuatan Subdomain - ${title} Pada Bulan ${monthYear}</h4>
+        </div>
+        <table border="1" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Unit Kerja</th>
+                    <th>Nomor Induk</th>
+                    <th>Nama Penanggung Jawab</th>
+                    <th>Email Penanggung Jawab</th>
+                    <th>Kontak Penanggung Jawab</th>
+                    <th>Subdomain yang Diajukan</th>
+                    <th>IP Pointing</th>
+                    <th>Keterangan</th>
+                    <th>Tanggal Pengajuan</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>`;
                 data.forEach(item => {
                     printContent += `
-        <tr>
-            <td>${item.no}</td>
-            <td>${item.prodi}</td>
-            <td>${item.nim}</td>
-            <td>${item.nama}</td>
-            <td>${item.emailDiajukan}</td>
-            <td>${item.emailPengguna}</td>
-            <td>${item.tanggalPengajuan}</td>
-            <td>${item.status}</td>
-        </tr>`;
+            <tr>
+                <td>${item.no}</td>
+                <td>${item.unitKerja}</td>
+                <td>${item.nomorInduk}</td>
+                <td>${item.penanggungJawab}</td>
+                <td>${item.emailPenanggungJawab}</td>
+                <td>${item.kontakPenanggungJawab}</td>
+                <td>${item.subDomain}</td>
+                <td>${item.ipPointing}</td>
+                <td>${item.keterangan}</td>
+                <td>${item.tanggalPengajuan}</td>
+                <td>${item.status}</td>
+            </tr>`;
                 });
                 printContent += `</tbody></table>`;
                 printContent += `
@@ -1342,28 +1259,27 @@
         <p>Staf Administrasi SISFO UNJANI</p>
     </div>`;
                 const printFrame = document.createElement('iframe');
-                printFrame.style.display = 'none';
                 document.body.appendChild(printFrame);
                 const printWindow = printFrame.contentWindow || printFrame.contentDocument.parentWindow;
                 printWindow.document.open();
                 printWindow.document.write(`
-    <html>
-    <head>
-        <title>Cetak Laporan</title>
-        <style>
-            body { font-family: Arial, sans-serif; position: relative;}
-            table { width: 100%; border-collapse: collapse; }
-            th, td { padding: 8px; text-align: left; }
-            th { background-color: #f2f2f2; text-align: center; }
-            @media print {
-                @page { size: A4 landscape; margin: 9mm; }
-            }
-        </style>
-    </head>
-    <body onload="window.print(); window.parent.document.body.removeChild(window.frameElement);">
-        ${printContent}
-    </body>
-    </html>`);
+        <html>
+        <head>
+            <title>Cetak Laporan</title>
+            <style>
+                body { font-family: Arial, sans-serif; position: relative;}
+                table { width: 100%; border-collapse: collapse; }
+                th, td { padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; text-align: center; }
+                @media print {
+                    @page { size: A4 landscape; margin: 9mm; }
+                }
+            </style>
+        </head>
+        <body onload="window.print(); window.parent.document.body.removeChild(window.frameElement);">
+            ${printContent}
+        </body>
+        </html>`);
                 printWindow.document.close();
             }
 
@@ -1399,303 +1315,233 @@
                     saveActiveTab(tabId);
                 });
 
-                let zoomLevel = 1;
-                let rotation = 0;
-                let isDragging = false;
-                let startX, startY, initialX, initialY;
-                const ktmImage = document.getElementById('ktmImage');
+                const unitKerjaInput = document.getElementById('editUnitKerja');
+                const unitKerjaFeedback = document.getElementById('unitKerjaFeedback');
+                unitKerjaInput.addEventListener('input', function() {
+                    const unitKerjaPattern = /^[A-Za-z0-9.,&\-\(\)\s]*$/;
 
-                document.getElementById('zoomIn').addEventListener('click', function() {
-                    zoomLevel += 0.1;
-                    ktmImage.style.transform = `scale(${zoomLevel}) rotate(${rotation}deg)`;
-                    ktmImage.style.cursor = 'grab';
-                });
-                document.getElementById('zoomOut').addEventListener('click', function() {
-                    zoomLevel = Math.max(0.1, zoomLevel - 0.1);
-                    ktmImage.style.transform = `scale(${zoomLevel}) rotate(${rotation}deg)`;
-                    if (zoomLevel <= 1) {
-                        ktmImage.style.cursor = 'default'; // Kembali ke cursor default saat zoom out
-                    }
-                });
-
-                document.getElementById('rotateLeft').addEventListener('click', function() {
-                    rotation -= 90;
-                    ktmImage.style.transform = `scale(${zoomLevel}) rotate(${rotation}deg)`;
-                });
-                document.getElementById('rotateRight').addEventListener('click', function() {
-                    rotation += 90;
-                    ktmImage.style.transform = `scale(${zoomLevel}) rotate(${rotation}deg)`;
-                });
-
-                function downloadImage(format) {
-                    const link = document.createElement('a');
-                    link.download = `ktm-image.${format}`;
-                    link.href = ktmImage.src;
-                    link.click();
-                }
-
-                document.getElementById('downloadPng').addEventListener('click', function() {
-                    downloadImage('png');
-                });
-                document.getElementById('downloadJpg').addEventListener('click', function() {
-                    downloadImage('jpg');
-                });
-                document.getElementById('downloadJpeg').addEventListener('click', function() {
-                    downloadImage('jpeg');
-                });
-
-                let lastTapTime = 0;
-                ktmImage.addEventListener('click', function(e) {
-                    const now = new Date().getTime();
-                    if (now - lastTapTime < 300) {
-                        if (zoomLevel > 1) {
-                            zoomLevel = 1;
-                            ktmImage.style.transform = `scale(${zoomLevel}) rotate(${rotation}deg)`;
-                            ktmImage.style.cursor = 'default';
-                        } else {
-                            zoomLevel += 0.1;
-                            ktmImage.style.transform = `scale(${zoomLevel}) rotate(${rotation}deg)`;
-                            ktmImage.style.cursor = 'grab';
-                        }
-                    }
-                    lastTapTime = now;
-                });
-
-                ktmImage.addEventListener('mousedown', function(e) {
-                    if (zoomLevel > 1) {
-                        isDragging = true;
-                        startX = e.clientX;
-                        startY = e.clientY;
-                        initialX = ktmImage.offsetLeft;
-                        initialY = ktmImage.offsetTop;
-                        ktmImage.style.cursor = 'grabbing';
-                    }
-                });
-
-                document.addEventListener('mousemove', function(e) {
-                    if (isDragging) {
-                        const dx = e.clientX - startX;
-                        const dy = e.clientY - startY;
-                        ktmImage.style.left = `${initialX + dx}px`;
-                        ktmImage.style.top = `${initialY + dy}px`;
-                    }
-                });
-
-                document.addEventListener('mouseup', function() {
-                    isDragging = false;
-                    ktmImage.style.cursor = 'grab';
-                });
-
-                document.getElementById('ktmModal').addEventListener('hide.bs.modal', function() {
-                    zoomLevel = 1;
-                    rotation = 0;
-                    ktmImage.style.transform = 'scale(1) rotate(0deg)';
-                    ktmImage.style.left = '0';
-                    ktmImage.style.top = '0';
-                    ktmImage.style.cursor = 'default';
-                });
-
-                const ktmIcons = document.querySelectorAll('.ktm-icon');
-                ktmIcons.forEach(icon => {
-                    icon.addEventListener('click', function() {
-                        const imgSrc = this.getAttribute('data-img');
-                        const imgLink = this.getAttribute('data-link');
-                        document.getElementById('ktmImage').src = imgSrc;
-                        const ktmModal = new bootstrap.Modal(document.getElementById('ktmModal'));
-                        ktmModal.show();
-                    });
-                });
-
-                const namaLengkapInput = document.getElementById('editNamaLengkap');
-                const namaLengkapFeedback = document.getElementById('namaLengkapFeedback');
-                namaLengkapInput.addEventListener('input', function() {
-                    if (namaLengkapInput.value === '') {
-                        namaLengkapFeedback.textContent = '';
-                    } else if (!/^[A-Za-z\s]+$/.test(namaLengkapInput.value)) {
-                        namaLengkapFeedback.textContent = 'Nama lengkap hanya boleh berisi huruf dan spasi.';
-                        namaLengkapFeedback.className = 'feedback error';
+                    if (unitKerjaInput.value === '') {
+                        unitKerjaFeedback.textContent = '';
+                    } else if (!unitKerjaPattern.test(unitKerjaInput.value)) {
+                        unitKerjaFeedback.textContent = 'Hanya boleh berisi huruf, angka, dan karakter (.), (,), (&), (-), serta (()).';
+                        unitKerjaFeedback.className = 'feedback error';
                     } else {
-                        namaLengkapFeedback.textContent = '';
-                        namaLengkapInput.classList.remove('error-border');
+                        unitKerjaFeedback.textContent = '';
+                        unitKerjaInput.classList.remove('error-border');
                     }
                 });
 
-                const emailInput = document.getElementById('editEmail');
-                const validationFeedback = document.getElementById('emailValidationFeedback');
-                const availabilityFeedback = document.getElementById('emailAvailabilityFeedback');
+
+                const penanggungJawabInput = document.getElementById('editPenanggungJawab');
+                const penanggungJawabFeedback = document.getElementById('penanggungJawabFeedback');
+                penanggungJawabInput.addEventListener('input', function() {
+                    if (penanggungJawabInput.value === '') {
+                        penanggungJawabFeedback.textContent = '';
+                    } else if (!/^[A-Za-z\s]+$/.test(penanggungJawabInput.value)) {
+                        penanggungJawabFeedback.textContent = 'Hanya boleh berisi huruf.';
+                        penanggungJawabFeedback.className = 'feedback error';
+                    } else {
+                        penanggungJawabFeedback.textContent = '';
+                        penanggungJawabInput.classList.remove('error-border');
+                    }
+                });
+
+                const emailInput = document.getElementById('editEmailPenanggungJawab');
+                const emailFeedback = document.getElementById('emailFeedback');
                 emailInput.addEventListener('input', function() {
                     const emailValue = emailInput.value;
                     const lengthPattern = /^.{6,30}$/;
                     const contentPattern = /^[a-z0-9.@]+$/;
                     const consecutiveDotPattern = /\.\./;
                     const startEndDotPattern = /^\.|\.$/;
-                    const atSymbolPattern = /^([^@]*@{0,1}[^@]*)$/;
+
                     if (emailValue === '') {
-                        validationFeedback.textContent = '';
-                        availabilityFeedback.textContent = '';
+                        emailFeedback.textContent = '';
                     } else if (!contentPattern.test(emailValue)) {
-                        validationFeedback.textContent = 'Hanya huruf (a-z), angka (0-9), dan tanda titik (.) yang diizinkan.';
-                        validationFeedback.className = 'feedback error';
-                        availabilityFeedback.textContent = '';
+                        emailFeedback.textContent = 'Hanya huruf (a-z), angka (0-9), dan tanda titik (.) yang diizinkan.';
+                        emailFeedback.className = 'feedback error';
                     } else if (startEndDotPattern.test(emailValue)) {
-                        validationFeedback.textContent = 'Tanda titik (.) tidak boleh di awal atau di akhir username.';
-                        validationFeedback.className = 'feedback error';
-                        availabilityFeedback.textContent = '';
+                        emailFeedback.textContent = 'Tanda titik (.) tidak boleh di awal atau di akhir email.';
+                        emailFeedback.className = 'feedback error';
                     } else if (!lengthPattern.test(emailValue)) {
-                        validationFeedback.textContent = 'Nama pengguna yang diajukan harus terdiri dari 6-30 karakter.';
-                        validationFeedback.className = 'feedback error';
-                        availabilityFeedback.textContent = '';
+                        emailFeedback.textContent = 'Email harus terdiri dari 6-30 karakter.';
+                        emailFeedback.className = 'feedback error';
                     } else if (consecutiveDotPattern.test(emailValue)) {
-                        validationFeedback.textContent = 'Tanda titik (.) tidak boleh berurutan.';
-                        validationFeedback.className = 'feedback error';
-                        availabilityFeedback.textContent = '';
+                        emailFeedback.textContent = 'Tanda titik (.) tidak boleh berurutan.';
+                        emailFeedback.className = 'feedback error';
                     } else {
-                        validationFeedback.textContent = '';
-                        checkEmailAvailability(emailValue);
+                        emailFeedback.textContent = '';
                         emailInput.classList.remove('error-border');
                     }
                 });
 
-                function checkEmailAvailability(email) {
-                    const emailInput = document.getElementById('editEmail'); // Define emailInput here
-                    const emailPrefix = email.split('@')[0];
-                    const prodi = document.getElementById('editProdi').value;
-                    const availabilityFeedback = document.getElementById('emailAvailabilityFeedback');
+                const subdomainInput = document.getElementById('editSubDomain');
+                const validationFeedback = document.getElementById('subdomainValidationFeedback');
+                const availabilityFeedback = document.getElementById('subdomainAvailabilityFeedback');
 
-                    fetch('<?= site_url("AdminPengajuanController/check_email_availability"); ?>', {
-                            method: 'POST',
-                            body: new URLSearchParams({
-                                'email_prefix': emailPrefix,
-                                'prodi': prodi,
-                                'nama_lengkap': document.getElementById('editNamaLengkap').value
-                            }),
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.status === 'taken') {
-                                availabilityFeedback.textContent = 'Username sudah terdaftar';
-                                availabilityFeedback.className = 'feedback error';
-                            } else {
-                                availabilityFeedback.textContent = 'Username tersedia';
-                                availabilityFeedback.className = 'feedback success';
-                                emailInput.classList.remove('error-border');
-                            }
-                        })
-                        .catch(error => {
-                            availabilityFeedback.textContent = 'Terjadi kesalahan. Coba lagi.';
-                            availabilityFeedback.className = 'feedback error';
-                        });
-                }
+                subdomainInput.addEventListener('input', function() {
+                    let subdomainValue = subdomainInput.value;
+                    if (subdomainValue.startsWith('https://')) {
+                        subdomainValue = subdomainValue.replace('https://', '');
+                    }
 
-                const emailPenggunaInput = document.getElementById('editEmailPengguna');
-                const emailPenggunaFeedback = document.getElementById('emailPenggunaFeedback');
-                emailPenggunaInput.addEventListener('input', function() {
-                    const emailValue = emailPenggunaInput.value;
-                    const lengthPattern = /^.{6,30}$/;
-                    const contentPattern = /^[a-z0-9.@]+$/;
+                    const lengthPattern = /^.{6,63}$/;
+                    const contentPattern = /^[a-z0-9\-\.]+$/;
+                    const consecutiveHyphenPattern = /--/;
                     const consecutiveDotPattern = /\.\./;
+                    const startEndHyphenPattern = /^-|-$/;
                     const startEndDotPattern = /^\.|\.$/;
-                    if (emailValue === '') {
-                        emailPenggunaFeedback.textContent = '';
-                    } else if (!contentPattern.test(emailValue)) {
-                        emailPenggunaFeedback.textContent = 'Hanya huruf (a-z), angka (0-9), dan tanda titik (.) yang diizinkan.';
-                        emailPenggunaFeedback.className = 'feedback error';
-                    } else if (startEndDotPattern.test(emailValue)) {
-                        emailPenggunaFeedback.textContent = 'Tanda titik (.) tidak boleh di awal atau di akhir username.';
-                        emailPenggunaFeedback.className = 'feedback error';
-                    } else if (!lengthPattern.test(emailValue)) {
-                        emailPenggunaFeedback.textContent = 'Email harus terdiri dari 6-30 karakter.';
-                        emailPenggunaFeedback.className = 'feedback error';
-                    } else if (consecutiveDotPattern.test(emailValue)) {
-                        emailPenggunaFeedback.textContent = 'Tanda titik (.) tidak boleh berurutan.';
-                        emailPenggunaFeedback.className = 'feedback error';
+                    const hyphenDotFollowingPattern = /[-]\./;
+                    const dotHyphenFollowingPattern = /\.[-]/;
+
+                    validationFeedback.textContent = '';
+                    availabilityFeedback.textContent = '';
+
+                    if (subdomainValue === '') {
+                        validationFeedback.textContent = '';
+                        availabilityFeedback.textContent = '';
+                    } else if (!contentPattern.test(subdomainValue)) {
+                        validationFeedback.textContent = 'Hanya huruf kecil (a-z), angka (0-9), tanda hubung (-), dan titik (.) yang diizinkan.';
+                        validationFeedback.className = 'feedback error';
+                    } else if (startEndHyphenPattern.test(subdomainValue)) {
+                        validationFeedback.textContent = 'Subdomain tidak boleh dimulai atau diakhiri dengan tanda hubung (-).';
+                        validationFeedback.className = 'feedback error';
+                    } else if (startEndDotPattern.test(subdomainValue)) {
+                        validationFeedback.textContent = 'Titik (.) tidak boleh di awal atau akhir subdomain.';
+                        validationFeedback.className = 'feedback error';
+                    } else if (!lengthPattern.test(subdomainValue)) {
+                        validationFeedback.textContent = 'Subdomain yang diajukan harus terdiri dari 6-63 karakter.';
+                        validationFeedback.className = 'feedback error';
+                    } else if (consecutiveHyphenPattern.test(subdomainValue)) {
+                        validationFeedback.textContent = 'Subdomain tidak boleh mengandung dua tanda hubung berturut-turut.';
+                        validationFeedback.className = 'feedback error';
+                    } else if (consecutiveDotPattern.test(subdomainValue)) {
+                        validationFeedback.textContent = 'Subdomain tidak boleh mengandung dua titik berturut-turut.';
+                        validationFeedback.className = 'feedback error';
+                    } else if (hyphenDotFollowingPattern.test(subdomainValue)) {
+                        validationFeedback.textContent = 'Tanda hubung (-) tidak boleh diikuti oleh titik (.).';
+                        validationFeedback.className = 'feedback error';
+                    } else if (dotHyphenFollowingPattern.test(subdomainValue)) {
+                        validationFeedback.textContent = 'Titik (.) tidak boleh diikuti oleh tanda hubung (-).';
+                        validationFeedback.className = 'feedback error';
                     } else {
-                        emailPenggunaFeedback.textContent = '';
-                        emailPenggunaInput.classList.remove('error-border');
+                        validationFeedback.textContent = '';
+                        subdomainInput.classList.remove('error-border');
+                        checkSubDomainAvailability(subdomainValue);
                     }
                 });
 
-                const ktmInput = document.getElementById('editKtm');
-                const ktmFeedback = document.getElementById('ktmFeedback');
-                ktmInput.addEventListener('change', function() {
-                    const file = ktmInput.files[0];
-                    const allowedExtensions = ['image/jpeg', 'image/png', 'image/jpg'];
-                    const maxSize = 2 * 1024 * 1024;
-                    if (file) {
-                        if (!allowedExtensions.includes(file.type)) {
-                            ktmFeedback.textContent = 'File KTM harus dalam format .png, .jpg, atau .jpeg.';
-                            ktmFeedback.className = 'feedback error';
-                        } else if (file.size > maxSize) {
-                            ktmFeedback.textContent = 'Ukuran file KTM tidak boleh lebih dari 2MB.';
-                            ktmFeedback.className = 'feedback error';
-                        } else {
-                            ktmFeedback.textContent = '';
-                            ktmInput.classList.remove('error-border');
-                        }
+                function checkSubDomainAvailability(subDomainPrefix) {
+                    if (subDomainPrefix.length > 0) {
+                        $.ajax({
+                            url: '<?= site_url('AdminPengajuanController/check_subdomain_availability'); ?>',
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                sub_domain_prefix: subDomainPrefix
+                            },
+                            success: function(response) {
+                                var availabilityFeedback = '';
+                                if (response.status === 'taken') {
+                                    availabilityFeedback = '<span class="feedback error">Subdomain sudah terdaftar</span><br>';
+                                } else {
+                                    availabilityFeedback = '<span class="feedback success">Subdomain tersedia</span>';
+                                    subdomainInput.classList.remove('error-border');
+                                }
+                                $('#subdomainAvailabilityFeedback').html(availabilityFeedback);
+                            }
+                        });
+                    } else {
+                        $('#subdomainAvailabilityFeedback').empty();
+                        subdomainInput.classList.remove('error-border');
+                    }
+                }
+
+                const ipPointingInput = document.getElementById('editIpPointing');
+                const ipPointingFeedback = document.getElementById('ipPointingFeedback');
+                ipPointingInput.addEventListener('input', function() {
+                    const ipPattern = /^(\d{1,3}\.){3}\d{1,3}$/;
+                    if (ipPointingInput.value === '') {
+                        ipPointingFeedback.textContent = '';
+                    } else if (!ipPattern.test(ipPointingInput.value)) {
+                        ipPointingFeedback.textContent = 'Hanya boleh mengandung angka dan tanda titik.';
+                        ipPointingFeedback.className = 'feedback error';
+                    } else {
+                        ipPointingFeedback.textContent = '';
+                        ipPointingInput.classList.remove('error-border');
                     }
                 });
 
                 const form = document.getElementById('editForm');
                 form.addEventListener('submit', function(event) {
                     event.preventDefault();
-                    const namaLengkapInput = document.getElementById('editNamaLengkap');
-                    const emailInput = document.getElementById('editEmail');
-                    const emailPenggunaInput = document.getElementById('editEmailPengguna');
-                    const ktmInput = document.getElementById('editKtm');
+                    const unitKerjaInput = document.getElementById('editUnitKerja');
+                    const penanggungJawabInput = document.getElementById('editPenanggungJawab');
+                    const emailInput = document.getElementById('editEmailPenanggungJawab');
+                    const ipPointingInput = document.getElementById('editIpPointing');
 
-                    const namaLengkapFeedback = document.getElementById('namaLengkapFeedback');
-                    const emailAvailabilityFeedback = document.getElementById('emailAvailabilityFeedback');
-                    const emailPenggunaFeedback = document.getElementById('emailPenggunaFeedback');
-                    const ktmFeedback = document.getElementById('ktmFeedback');
+                    const unitKerjaFeedback = document.getElementById('unitKerjaFeedback');
+                    const penanggungJawabFeedback = document.getElementById('penanggungJawabFeedback');
+                    const emailFeedback = document.getElementById('emailFeedback');
+                    const ipPointingFeedback = document.getElementById('ipPointingFeedback');
                     let hasError = false;
 
-                    if (namaLengkapFeedback && namaLengkapFeedback.textContent.includes('Nama lengkap hanya boleh berisi huruf dan spasi.')) {
-                        namaLengkapInput.classList.add('shake', 'error-border');
+                    if (unitKerjaFeedback.textContent.includes('Hanya boleh berisi huruf, angka, dan karakter (.), (,), (&), (-), serta (()).')) {
+                        unitKerjaInput.classList.add('shake', 'error-border');
                         setTimeout(() => {
-                            namaLengkapInput.classList.remove('shake');
+                            unitKerjaInput.classList.remove('shake');
                         }, 500);
                         hasError = true;
                     }
 
-                    if (emailAvailabilityFeedback.textContent.includes('Username sudah terdaftar')) {
-                        emailInput.classList.add('shake', 'error-border');
+                    if (penanggungJawabFeedback.textContent.includes('Hanya boleh berisi huruf.')) {
+                        penanggungJawabInput.classList.add('shake', 'error-border');
+                        setTimeout(() => {
+                            penanggungJawabInput.classList.remove('shake');
+                        }, 500);
+                        hasError = true;
+                    }
 
+                    if (emailFeedback.textContent.includes('Hanya huruf (a-z), angka (0-9), dan tanda titik (.) yang diizinkan.') ||
+                        emailFeedback.textContent.includes('Tanda titik (.) tidak boleh di awal atau di akhir email.') ||
+                        emailFeedback.textContent.includes('Email harus terdiri dari 6-30 karakter.') ||
+                        emailFeedback.textContent.includes('Tanda titik (.) tidak boleh berurutan.')) {
+                        emailInput.classList.add('shake', 'error-border');
                         setTimeout(() => {
                             emailInput.classList.remove('shake');
                         }, 500);
                         hasError = true;
                     }
 
-                    if (validationFeedback.textContent.includes('Nama pengguna yang diajukan harus terdiri dari 6-30 karakter.') ||
-                        validationFeedback.textContent.includes('Hanya huruf (a-z), angka (0-9), dan tanda titik (.) yang diizinkan.') ||
-                        validationFeedback.textContent.includes('Tanda titik (.) tidak boleh di awal atau di akhir username.') ||
-                        validationFeedback.textContent.includes('Tanda titik (.) tidak boleh berurutan.')) {
-                        emailInput.classList.add('shake', 'error-border');
-
+                    if (subdomainAvailabilityFeedback.textContent.includes('Subdomain sudah terdaftar')) {
+                        subdomainInput.classList.add('shake', 'error-border');
                         setTimeout(() => {
-                            emailInput.classList.remove('shake');
-                        }, 500);
-
-                        hasError = true;
-                    }
-
-                    if (emailPenggunaFeedback.textContent.includes('Hanya huruf (a-z), angka (0-9), dan tanda titik (.) yang diizinkan.') ||
-                        emailPenggunaFeedback.textContent.includes('Tanda titik (.) tidak boleh di awal atau di akhir username.') ||
-                        emailPenggunaFeedback.textContent.includes('Email harus terdiri dari 6-30 karakter.') ||
-                        emailPenggunaFeedback.textContent.includes('Tanda titik (.) tidak boleh berurutan.')) {
-
-                        emailPenggunaInput.classList.add('shake', 'error-border');
-                        setTimeout(() => {
-                            emailPenggunaInput.classList.remove('shake');
+                            subdomainInput.classList.remove('shake');
                         }, 500);
                         hasError = true;
                     }
 
-                    if (ktmFeedback && ktmFeedback.textContent.includes('File KTM harus dalam format .png, .jpg, atau .jpeg.') ||
-                        ktmFeedback.textContent.includes('Ukuran file KTM tidak boleh lebih dari 2MB.')) {
-                        ktmInput.classList.add('shake', 'error-border');
+                    if (
+                        validationFeedback.textContent.includes('Subdomain yang diajukan harus terdiri dari 6-63 karakter.') ||
+                        validationFeedback.textContent.includes('Hanya huruf kecil (a-z), angka (0-9), tanda hubung (-), dan titik (.) yang diizinkan.') ||
+                        validationFeedback.textContent.includes('Subdomain tidak boleh mengandung dua tanda hubung berturut-turut.') ||
+                        validationFeedback.textContent.includes('Subdomain tidak boleh mengandung dua titik berturut-turut.') ||
+                        validationFeedback.textContent.includes('Subdomain tidak boleh dimulai atau diakhiri dengan tanda hubung (-).') ||
+                        validationFeedback.textContent.includes('Titik (.) tidak boleh di awal atau akhir subdomain.') ||
+                        validationFeedback.textContent.includes('Tanda hubung (-) tidak boleh diikuti oleh titik (.).') ||
+                        validationFeedback.textContent.includes('Titik (.) tidak boleh diikuti oleh tanda hubung (-).')
+                    ) {
+                        subdomainInput.classList.add('shake', 'error-border');
                         setTimeout(() => {
-                            ktmInput.classList.remove('shake');
+                            subdomainInput.classList.remove('shake');
+                        }, 500);
+                        hasError = true;
+                    }
+
+                    if (ipPointingFeedback.textContent.includes('Hanya boleh mengandung angka dan tanda titik.')) {
+                        ipPointingInput.classList.add('shake', 'error-border');
+                        setTimeout(() => {
+                            ipPointingInput.classList.remove('shake');
                         }, 500);
                         hasError = true;
                     }
@@ -1709,6 +1555,7 @@
                         }, 1000);
                     }
                 });
+
             });
         </script>
 </body>

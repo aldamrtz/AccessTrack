@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class EmailModel extends CI_Model
+class SubDomainModel extends CI_Model
 {
     public function __construct()
     {
@@ -11,55 +11,51 @@ class EmailModel extends CI_Model
 
     public function insert($data)
     {
-        if ($this->db->get_where('pengajuan_email', ['nim' => $data['nim']])->num_rows() > 0) {
-            return FALSE;
-        } else {
-            if (!isset($data['tgl_Pengajuan'])) {
-                $data['tgl_pengajuan'] = date('Y-m-d');
-            }
-            return $this->db->insert('pengajuan_email', $data);
+        if (!isset($data['tgl_pengajuan'])) {
+            $data['tgl_pengajuan'] = date('Y-m-d');
         }
+        return $this->db->insert('pengajuan_subdomain', $data);
     }
 
-    public function isNimTaken($nim)
+    public function isSubDomainExist($sub_domain)
     {
-        $this->db->where('nim', $nim);
-        $query1 = $this->db->get('pengajuan_email');
-        $this->db->where('nim', $nim);
-        $query2 = $this->db->get('email_terdaftar');
-        return $query1->num_rows() > 0 || $query2->num_rows() > 0;
-    }
-
-    public function isEmailExist($email_prefix)
-    {
-        $this->db->like('email_diajukan', $email_prefix . '@', 'after');
-        $query = $this->db->get('pengajuan_email');
+        $this->db->where('sub_domain', $sub_domain);
+        $query = $this->db->get('pengajuan_subdomain');
         return $query->num_rows() > 0;
     }
 
-    public function isEmailExistInRegistered($email_prefix)
+    public function checkSubDomainExists($sub_domain)
     {
-        $this->db->like('email', $email_prefix . '@', 'after');
-        $query = $this->db->get('email_terdaftar');
+        $this->db->where('sub_domain', 'https://' . $sub_domain . '.unjani.ac.id');
+        $query = $this->db->get('pengajuan_subdomain');
+
+        return $query->num_rows() > 0;
+    }
+
+
+    public function isSubDomainExistInRegistered($sub_domain)
+    {
+        $this->db->where('sub_domain', $sub_domain);
+        $query = $this->db->get('subdomain_terdaftar');
         return $query->num_rows() > 0;
     }
 
     public function insertToRegistered($data)
     {
-        return $this->db->insert('email_terdaftar', $data);
+        return $this->db->insert('subdomain_terdaftar', $data);
     }
 
-    public function getAllRegisteredEmails()
+    public function getAllRegisteredSubdomains()
     {
-        $this->db->select('nim, prodi, nama_lengkap, email, password, tgl_selesai');
-        $query = $this->db->get('email_terdaftar');
+        $this->db->select('id_subdomain, nomor_induk, unit_kerja, penanggung_jawab, sub_domain, tgl_selesai');
+        $query = $this->db->get('subdomain_terdaftar');
         return $query->result_array();
     }
 
     public function getAllPengajuan()
     {
         $this->db->order_by('tgl_pengajuan', 'DESC');
-        $query = $this->db->get('pengajuan_email');
+        $query = $this->db->get('pengajuan_subdomain');
         return $query->result_array();
     }
 
@@ -67,45 +63,46 @@ class EmailModel extends CI_Model
     {
         $this->db->where('status_pengajuan', $status);
         $this->db->order_by('tgl_pengajuan', 'DESC');
-        return $this->db->get('pengajuan_email')->result_array();
+        return $this->db->get('pengajuan_subdomain')->result_array();
     }
 
     public function updateStatus($id, $status)
     {
-        $this->db->where('nim', $id);
-        $this->db->update('pengajuan_email', array('status_pengajuan' => $status));
-        $this->db->insert('status_history_email', array('nim' => $id, 'status' => $status));
+        $this->db->where('id_pengajuan_subdomain', $id);
+        $this->db->update('pengajuan_subdomain', array('status_pengajuan' => $status));
+        $this->db->insert('status_history_subdomain', array('id_pengajuan_subdomain' => $id, 'status' => $status));
     }
 
-    public function getStatusHistory($nim)
+    public function getStatusHistory($id_pengajuan_subdomain)
     {
-        $this->db->where('nim', $nim);
+        $this->db->where('id_pengajuan_subdomain', $id_pengajuan_subdomain);
         $this->db->order_by('tgl_update', 'DESC'); // pastikan ada kolom tgl_update di tabel
-        return $this->db->get('status_history_email')->result_array();
+        return $this->db->get('status_history_subdomain')->result_array();
     }
 
-    public function insertStatusHistoryEmail($data)
+    public function insertStatusHistorySubdomain($data)
     {
-        return $this->db->insert('status_history_email', $data);
+        return $this->db->insert('status_history_subdomain', $data);
     }
 
     public function getPengajuanById($id)
     {
-        $query = $this->db->get_where('pengajuan_email', array('nim' => $id));
+        $this->db->where('id_pengajuan_subdomain', $id);
+        $query = $this->db->get('pengajuan_subdomain');
         return $query->row();
     }
 
-    public function checkEmailAndCode($email_pengguna, $kode_pengajuan)
+    public function checkEmailAndCode($email_penanggung_jawab, $kode_pengajuan)
     {
-        $this->db->where('email_pengguna', $email_pengguna);
-        $query = $this->db->get('pengajuan_email');
+        $this->db->where('email_penanggung_jawab', $email_penanggung_jawab);
+        $query = $this->db->get('pengajuan_subdomain');
 
         if ($query->num_rows() == 0) {
             return 'email_not_found';
         }
 
         $this->db->where('kode_pengajuan', $kode_pengajuan);
-        $query = $this->db->get('pengajuan_email');
+        $query = $this->db->get('pengajuan_subdomain');
 
         if ($query->num_rows() == 0) {
             return 'kode_salah';
@@ -114,55 +111,55 @@ class EmailModel extends CI_Model
         return 'success';
     }
 
-    public function getPengajuanByEmailAndCode($email_pengguna, $kode_pengajuan)
+    public function getPengajuanByEmailAndCode($email_penanggung_jawab, $kode_pengajuan)
     {
-        $this->db->where('email_pengguna', $email_pengguna);
+        $this->db->where('email_penanggung_jawab', $email_penanggung_jawab);
         $this->db->where('kode_pengajuan', $kode_pengajuan);
-        $query = $this->db->get('pengajuan_email');
+        $query = $this->db->get('pengajuan_subdomain');
         return $query->row();
     }
 
-    public function updatePengajuan($nim, $prodi, $nama_lengkap, $email_diajukan, $email_pengguna, $ktm)
+    public function updatePengajuan($id_pengajuan_subdomain, $nomor_induk, $unit_kerja, $penanggung_jawab, $email_penanggung_jawab, $kontak_penanggung_jawab, $sub_domain, $ip_pointing, $keterangan)
     {
-        $data = [
-            'prodi' => $prodi,
-            'nama_lengkap' => $nama_lengkap,
-            'email_diajukan' => $email_diajukan,
-            'email_pengguna' => $email_pengguna,
-            'ktm' => $ktm
-        ];
-
-        $this->db->where('nim', $nim);
-        $this->db->update('pengajuan_email', $data);
+        $this->db->where('id_pengajuan_subdomain', $$id_pengajuan_subdomain);
+        $this->db->update('pengajuan_subdomain', [
+            'id_pengajuan_subdomain' => $id_pengajuan_subdomain,
+            'nomor_induk' => $nomor_induk,
+            'unit_kerja' => $unit_kerja,
+            'penanggung_jawab' => $penanggung_jawab,
+            'email_penanggung_jawab' => $email_penanggung_jawab,
+            'kontak_penanggung_jawab' => $kontak_penanggung_jawab,
+            'sub_domain' => $sub_domain,
+            'ip_pointing' => $ip_pointing,
+            'keterangan' => $keterangan
+        ]);
     }
 
-
-    public function deletePengajuan($nim)
+    public function deletePengajuan($id_pengajuan_subdomain)
     {
-        $this->db->where('nim', $nim);
-        $this->db->delete('status_history_email');
+        $this->db->where('id_pengajuan_subdomain', $id_pengajuan_subdomain);
+        $this->db->delete('status_history_subdomain');
 
-        $this->db->where('nim', $nim);
-        $this->db->delete('pengajuan_email');
+        $this->db->where('id_pengajuan_subdomain', $id_pengajuan_subdomain);
+        $this->db->delete('pengajuan_subdomain');
 
-        $this->db->where('nim', $nim);
-        return $this->db->delete('email_terdaftar');
+        $this->db->where('id_subdomain', $id_pengajuan_subdomain);
+        return $this->db->delete('subdomain_terdaftar');
     }
 
-
-    public function deleteEmailTerdaftar($nim)
+    public function deleteSubdomainTerdaftar($id_pengajuan_subdomain)
     {
-        $this->db->where('nim', $nim);
-        $this->db->delete('status_history_email');
+        $this->db->where('id_pengajuan_subdomain', $id_pengajuan_subdomain);
+        $this->db->delete('status_history_subdomain');
 
-        $this->db->where('nim', $nim);
-        $this->db->delete('pengajuan_email');
+        $this->db->where('id_pengajuan_subdomain', $id_pengajuan_subdomain);
+        $this->db->delete('pengajuan_subdomain');
 
-        $this->db->where('nim', $nim);
-        return $this->db->delete('email_terdaftar');
+        $this->db->where('id_subdomain', $id_pengajuan_subdomain);
+        return $this->db->delete('subdomain_terdaftar');
     }
 
-    public function getProgramStudi()
+    public function getUnitKerja()
     {
         return [
             'Teknik Elektro S-1' => 'Teknik Elektro S-1',
