@@ -21,8 +21,7 @@
                             <th class="column-nama">Nama Pelapor</th>
                             <th class="column-nip">NIP</th>
                             <th class="column-fakultas">Fakultas</th>
-                            <th class="column-jurusan">Jurusan</th>
-                            <th class="column-bagian">Bagian</th>
+                            <th class="column-jurusan">Prodi</th>
                             <th class="column-website">Nama Website</th>
                             <th class="column-deskripsi">Deskripsi Masalah</th>
                             <th class="column-tanggal">Tanggal Pelaporan</th>

@@ -29,11 +29,8 @@
             <label for="fakultas">Fakultas</label>
             <input type="text" name="fakultas" id="fakultas" required>
 
-            <label for="jurusan">Jurusan</label>
+            <label for="jurusan">Prodi</label>
             <input type="text" name="jurusan" id="jurusan" required>
-
-            <label for="bagian">Bagian</label>
-            <input type="text" name="bagian" id="bagian" required>
 
             <label for="nama_website">Nama Website</label>
             <input type="text" name="nama_website" id="nama_website" required>

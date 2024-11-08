@@ -23,8 +23,7 @@
                             <th>Nama Pelapor</th>
                             <th>NIP</th>
                             <th>Fakultas</th>
-                            <th>Jurusan</th>
-                            <th>Bagian</th>
+                            <th>Prodi</th>
                             <th>Nama Website</th>
                             <th class="column-deskripsi">Deskripsi Masalah</th>
                             <th>Bukti File</th>
