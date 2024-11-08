@@ -19,7 +19,7 @@ class Admin extends CI_Controller {
         $this->load->model('Admin_model');
         
         // Mengubah status pengajuan menjadi approved
-        $this->Admin_model->update_status($id, 'approved');
+        $this->Admin_model->update_status($id, 'approved', 'lunas');
         
         // Mengarahkan kembali ke halaman admin
         redirect('admin');

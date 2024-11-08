@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laporan Pengajuan Kartu Akses</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -62,10 +63,24 @@
         .btn-print:hover {
             background-color: #218838;
         }
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            padding: 10px 20px;
+        }
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
     </style>
 </head>
 <body>
     <div class="container my-5">
+        <a href="javascript:history.back()" class="btn btn-back">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </a>
         <h2 class="text-center">Laporan Pengajuan Kartu Akses</h2>
 
         <!-- Button Cetak -->
@@ -91,35 +106,34 @@
             <div class="tab-pane active" id="mahasiswa">
                 <h3 class="text-center">Data Mahasiswa</h3>
                 <table class="table table-bordered table-hover dataTable">
-                <thead class="thead-dark">
-    <tr>
-        <th>ID</th>
-        <th>Nama Lengkap</th>
-        <th>Email</th>
-        <th>Program Studi</th>
-        <th>Tanggal Pengajuan</th>
-        <th>Bukti Pembayaran</th> <!-- Tambahan Kolom Bukti Pembayaran -->
-    </tr>
-</thead>
-<tbody>
-    <?php foreach ($mahasiswa as $mhs): ?>
-    <tr>
-        <td><?= $mhs['id_KA']; ?></td>
-        <td><?= $mhs['nama_lengkap']; ?></td>
-        <td><?= $mhs['email']; ?></td>
-        <td><?= $mhs['program_studi']; ?></td>
-        <td><?= $mhs['tanggal_pengajuan']; ?></td>
-        <td>
-            <?php if ($mhs['payment_proof']): ?>
-                <a href="<?= base_url('uploads/' . $mhs['payment_proof']); ?>" target="_blank">Lihat Bukti</a>
-            <?php else: ?>
-                Tidak ada bukti
-            <?php endif; ?>
-        </td>
-    </tr>
-    <?php endforeach; ?>
-</tbody>
-
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama Lengkap</th>
+                            <th>Email</th>
+                            <th>Program Studi</th>
+                            <th>Tanggal Pengajuan</th>
+                            <th>Bukti Pembayaran</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($mahasiswa as $mhs): ?>
+                        <tr>
+                            <td><?= $mhs['id_KA']; ?></td>
+                            <td><?= $mhs['nama_lengkap']; ?></td>
+                            <td><?= $mhs['email']; ?></td>
+                            <td><?= $mhs['program_studi']; ?></td>
+                            <td><?= $mhs['tanggal_pengajuan']; ?></td>
+                            <td>
+                                <?php if ($mhs['payment_proof']): ?>
+                                    <a href="<?= base_url('uploads/' . $mhs['payment_proof']); ?>" target="_blank">Lihat Bukti</a>
+                                <?php else: ?>
+                                    Tidak ada bukti
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
                 </table>
             </div>
 
@@ -194,42 +208,19 @@
     <!-- Script Cetak -->
     <script>
         document.getElementById('printButton').addEventListener('click', function() {
-            // Store the content to print
-            var contentToPrint = document.querySelector('.tab-content').innerHTML;
+            var printContent = document.querySelector('.tab-content').outerHTML;
             var originalContent = document.body.innerHTML;
 
-            // Create the print view
             document.body.innerHTML = `
             <html>
             <head>
                 <title>Cetak Laporan Pengajuan Kartu Akses</title>
+                <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
                 <style>
                     body {
                         font-family: 'Nunito', sans-serif;
                         color: #000;
                         margin: 20px;
-                    }
-                    .header {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        margin-bottom: 20px;
-                    }
-                    .header img {
-                        max-height: 100px;
-                    }
-                    .header .center {
-                        text-align: center;
-                        flex-grow: 2;
-                    }
-                    .header .center h1 {
-                        margin: 0;
-                        font-size: 24px;
-                        font-weight: bold;
-                    }
-                    .header .center p {
-                        margin: 0;
-                        font-size: 14px;
                     }
                     table {
                         width: 100%;
@@ -246,41 +237,18 @@
                     th {
                         background-color: #f2f2f2;
                     }
-                    h1 {
-                        text-align: center;
-                        margin-bottom: 20px;
-                    }
                 </style>
             </head>
             <body>
-                <div class="header">
-                    <div class="left">
-                        <img src="assets/img/undraw_posting_photo.svg" alt="Logo Left">
-                    </div>
-                    <div class="center">
-                        <h1>YAYASAN KARTIKA EKA PAKSI</h1>
-                        <p>UNIVERSITAS JENDERAL ACHMAD YANI (UNJANI)</p>
-                        <p>Kampus Cimahi: Jl. Terusan Jend. Sudirman www.unjani.ac.id Cimahi Telp. (022) 6631861-8656190 Fax. (022) 6652069</p>
-                        <p>Kampus Bandung: Jl. Gatot Subroto www.unjani.ac.id Bandung Telp. (022) 7312741 Fax. (022) 7312741</p>
-                    </div>
-                    <div class="right">
-                        <img src="assets/img/Unjani.png" alt="Logo Right">
-                    </div>
-                </div>
-                <h1>Laporan Pengajuan Kartu Akses</h1>
-                <table>
-                    ${contentToPrint}
-                </table>
+                <h2 class="text-center">Laporan Pengajuan Kartu Akses</h2>
+                ${printContent}
             </body>
             </html>
             `;
 
-            // Print the page
             window.print();
-
-            // Restore the original content after printing
             document.body.innerHTML = originalContent;
-            location.reload(); // Reload the page to restore the event listeners
+            location.reload();
         });
     </script>
 </body>

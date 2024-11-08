@@ -53,18 +53,26 @@
         .container {
             max-width: 700px;
         }
+        .qr-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .qr-container img {
+            width: 150px;
+            height: 150px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="card">
             <h2>Pengajuan Kartu Akses</h2>
-            <form method="post" action="<?= base_url('access/submit'); ?>" enctype="multipart/form-data" onsubmit="return validateForm();">
+            <form id="mainForm" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
                 <div class="mb-4">
                     <label for="applicantType" class="form-label">Jenis Pemohon</label>
-                    <select class="form-select" id="applicantType" name="applicantType" onchange="showFormPart(this.value);" required>
+                    <select class="form-select" id="applicantType" name="applicantType" onchange="updateFormAction(this.value); showFormPart(this.value);" required>
                         <option value="" disabled selected>Pilih jenis pemohon</option>
-                        <option value="Mahasiswa">Mahasiswa</option>
+                        <option value="Mahasiswa">Mahasiswa</option>                      
                         <option value="Dosen">Dosen</option>
                         <option value="Staff">Staff</option>
                     </select>
@@ -81,8 +89,8 @@
                         <input type="text" class="form-control" id="nim_mahasiswa" name="identityNumber_mahasiswa">
                     </div>
                     <div class="mb-4">
-                        <label for="fakultas">Fakultas</label>
-                        <select class="form-select" id="fakultas" name="fakultas" onchange="updateJurusan()" required>
+                        <label for="fakultas" class="form-label">Fakultas</label>
+                        <select class="form-select" id="fakultas" name="fakultas" onchange="updateJurusan('jurusan')" required>
                             <option value="" disabled selected>Pilih Fakultas</option>
                             <option value="Fakultas Sains dan Informatika">Fakultas Sains dan Informatika</option>
                             <option value="Fakultas Teknik Metalurgi">Fakultas Teknik Metalurgi</option>
@@ -97,22 +105,22 @@
                         </select>
                     </div>
                     <div class="mb-4">
-                        <label for="jurusan">Jurusan</label>
+                        <label for="jurusan" class="form-label">Jurusan</label>
                         <select class="form-select" id="jurusan" name="jurusan" required>
                             <option value="" disabled selected>Pilih Jurusan</option>
                         </select>
                     </div>
-                    <div class="mb-4">
-                        <label for="programStudi_mahasiswa" class="form-label">Program Studi</label>
-                        <input type="text" class="form-control" id="programStudi_mahasiswa" name="programStudi_mahasiswa">
-                    </div>
-                    <div class="mb-4">
-                        <label for="payment_amount" class="form-label">Biaya Pengajuan</label>
-                        <input type="text" class="form-control" id="payment_amount" value="Rp 40.000" disabled />
-                    </div>
+
                     <div class="mb-4">
                         <label for="payment_proof" class="form-label">Upload Bukti Pembayaran</label>
                         <input type="file" class="form-control" id="payment_proof" name="payment_proof" required />
+                    </div>
+
+                    <!-- QR Code untuk Pembayaran -->
+                    <div class="qr-container">
+                        <p>Silakan bayar melalui QR Code berikut:</p>
+                        <img src="<?= base_url('assets/img/qr_code_image.png'); ?>" alt="QR Code Pembayaran" width="200" height="200">
+                        <p><strong>Nominal:</strong> Rp 40.000</p>
                     </div>
                 </div>
 
@@ -123,14 +131,29 @@
                         <input type="text" class="form-control" id="nama_lengkap_dosen_staff" name="nama_lengkap">
                     </div>
                     <div class="mb-4">
-                        <label for="nid_dosen_staff" class="form-label">NID</label>
+                        <label for="nid_dosen_staff" class="form-label">NID/NIP</label>
                         <input type="text" class="form-control" id="nid_dosen_staff" name="identityNumber">
                     </div>
                     <div class="mb-4">
                         <label for="faculty_department_dosen_staff" class="form-label">Fakultas/Departemen</label>
-                        <select class="form-select" id="faculty_department_dosen_staff" name="facultyDepartment">
+                        <select class="form-select" id="faculty_department_dosen_staff" name="facultyDepartment" onchange="updateJurusan('jurusan_dosen_staff')">
                             <option value="" disabled selected>Pilih Fakultas/Departemen</option>
-                            <!-- Fakultas/Departemen options -->
+                            <option value="Fakultas Sains dan Informatika">Fakultas Sains dan Informatika</option>
+                            <option value="Fakultas Teknik Metalurgi">Fakultas Teknik Metalurgi</option>
+                            <option value="Fakultas Teknik">Fakultas Teknik</option>
+                            <option value="Fakultas Ekonomi dan Bisnis">Fakultas Ekonomi dan Bisnis</option>
+                            <option value="Fakultas Ilmu Sosial dan Ilmu Politik">Fakultas Ilmu Sosial dan Ilmu Politik</option>
+                            <option value="Fakultas Farmasi">Fakultas Farmasi</option>
+                            <option value="Fakultas Kedokteran">Fakultas Kedokteran</option>
+                            <option value="Fakultas Kedokteran Gigi">Fakultas Kedokteran Gigi</option>
+                            <option value="Fakultas Ilmu Teknologi Kesehatan">Fakultas Ilmu Teknologi Kesehatan</option>
+                            <option value="Fakultas Psikologi">Fakultas Psikologi</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="jurusan_dosen_staff" class="form-label">Jurusan</label>
+                        <select class="form-select" id="jurusan_dosen_staff" name="jurusan_dosen_staff">
+                            <option value="" disabled selected>Pilih Jurusan</option>
                         </select>
                     </div>
                     <div class="mb-4">
@@ -157,60 +180,36 @@
     <script>
         const jurusanList = {
             "Fakultas Sains dan Informatika": [
-                "Teknik Informatika S-1",
-                "Sistem Informasi S-1",
-                "Kimia S-1",
-                "Magister Kimia S-2"
+                "Teknik Informatika S-1", "Sistem Informasi S-1", "Kimia S-1"
             ],
             "Fakultas Teknik Metalurgi": [
                 "Teknik Metalurgi S-1"
             ],
             "Fakultas Teknik": [
-                "Teknik Elektro S-1",
-                "Teknik Kimia S-1",
-                "Teknik Sipil S-1",
-                "Magister Teknik Sipil S-2",
-                "Teknik Geomatika S-1",
-                "Teknik Mesin S-1",
-                "Teknik Industri S-1"
+                "Teknik Elektro S-1", "Teknik Kimia S-1", "Teknik Sipil S-1", 
+                "Magister Teknik Sipil S-2", "Teknik Geomatika S-1", "Teknik Mesin S-1", "Teknik Industri S-1"
             ],
             "Fakultas Ekonomi dan Bisnis": [
-                "Akuntansi S-1",
-                "Manajemen S-1",
-                "Magister Manajemen S-2"
+                "Akuntansi S-1", "Manajemen S-1", "Magister Manajemen S-2"
             ],
             "Fakultas Ilmu Sosial dan Ilmu Politik": [
-                "Ilmu Pemerintahan S-1",
-                "Ilmu Hub. Internasional S-1",
-                "Magister Hub. Internasional S-2",
-                "Ilmu Hukum S-1",
-                "Magister Ilmu Pemerintahan S-2"
+                "Ilmu Pemerintahan S-1", "Ilmu Hub. Internasional S-1", 
+                "Magister Hub. Internasional S-2", "Ilmu Hukum S-1", "Magister Ilmu Pemerintahan S-2"
             ],
             "Fakultas Farmasi": [
-                "Farmasi S-1",
-                "Profesi Apoteker",
-                "Magister Farmasi S-2"
+                "Farmasi S-1", "Profesi Apoteker", "Magister Farmasi S-2"
             ],
             "Fakultas Kedokteran": [
-                "Pendidikan Dokter S-1",
-                "Profesi Dokter"
+                "Pendidikan Dokter S-1", "Profesi Dokter"
             ],
             "Fakultas Kedokteran Gigi": [
-                "Kedokteran Gigi S-1",
-                "Profesi Dokter Gigi"
+                "Kedokteran Gigi S-1", "Profesi Dokter Gigi"
             ],
             "Fakultas Ilmu Teknologi Kesehatan": [
-                "Administrasi Rumah Sakit S-1",
-                "Magister Penuaan Kulit dan Estetika S-2",
-                "Magister Keperawatan S-2",
-                "Profesi Ners",
-                "Ilmu Keperawatan S-1",
-                "Keperawatan D-3",
-                "Kesehatan Masyarakat S-1",
-                "Teknologi Laboratorium Medis D-4",
-                "Teknologi Laboratorium Medis D-3",
-                "Kebidanan S-1",
-                "Profesi Bidan"
+                "Administrasi Rumah Sakit S-1", "Magister Penuaan Kulit dan Estetika S-2", 
+                "Magister Keperawatan S-2", "Profesi Ners", "Ilmu Keperawatan S-1", "Keperawatan D-3", 
+                "Kesehatan Masyarakat S-1", "Teknologi Laboratorium Medis D-4", 
+                "Teknologi Laboratorium Medis D-3", "Kebidanan S-1", "Profesi Bidan"
             ],
             "Fakultas Psikologi": [
                 "Psikologi S-1"
@@ -220,40 +219,44 @@
         function showFormPart(value) {
             var formMahasiswa = document.getElementById('formMahasiswa');
             var formDosenStaff = document.getElementById('formDosenStaff');
+            var fakultasField = document.getElementById('fakultas');
+            var jurusanField = document.getElementById('jurusan');
+            var jurusanDosenField = document.getElementById('jurusan_dosen_staff');
+            var paymentProofField = document.getElementById('payment_proof');
 
             formMahasiswa.classList.add('hidden');
             formDosenStaff.classList.add('hidden');
-
-            disableFormInputs(formMahasiswa);
-            disableFormInputs(formDosenStaff);
+            fakultasField.required = false;
+            jurusanField.required = false;
+            paymentProofField.required = false;
+            jurusanDosenField.required = false;
 
             if (value === 'Mahasiswa') {
                 formMahasiswa.classList.remove('hidden');
-                enableFormInputs(formMahasiswa);
+                fakultasField.required = true;
+                jurusanField.required = true;
+                paymentProofField.required = true;
             } else if (value === 'Dosen' || value === 'Staff') {
                 formDosenStaff.classList.remove('hidden');
-                enableFormInputs(formDosenStaff);
+                jurusanDosenField.required = true;
             }
         }
 
-        function disableFormInputs(form) {
-            var inputs = form.querySelectorAll('input, select');
-            inputs.forEach(input => {
-                input.setAttribute('disabled', 'true');
-            });
+        function updateFormAction(value) {
+            const form = document.getElementById('mainForm');
+            if (value === 'Mahasiswa') {
+                form.action = "<?= base_url('access/submit_mahasiswa'); ?>";
+            } else if (value === 'Dosen') {
+                form.action = "<?= base_url('access/submit_dosen'); ?>";
+            } else if (value === 'Staff') {
+                form.action = "<?= base_url('access/submit_staff'); ?>";
+            }
         }
 
-        function enableFormInputs(form) {
-            var inputs = form.querySelectorAll('input, select');
-            inputs.forEach(input => {
-                input.removeAttribute('disabled');
-            });
-        }
-
-        function updateJurusan() {
-            const fakultas = document.getElementById('fakultas').value;
-            const jurusanSelect = document.getElementById('jurusan');
-            jurusanSelect.innerHTML = '<option value="" disabled selected>Pilih Jurusan</option>'; // Reset jurusan options
+        function updateJurusan(selectId) {
+            const fakultas = document.getElementById('fakultas').value || document.getElementById('faculty_department_dosen_staff').value;
+            const jurusanSelect = document.getElementById(selectId);
+            jurusanSelect.innerHTML = '<option value="" disabled selected>Pilih Jurusan</option>'; 
 
             if (jurusanList[fakultas]) {
                 jurusanList[fakultas].forEach(jurusan => {
@@ -275,7 +278,6 @@
                     return false;
                 }
             }
-
             return true;
         }
     </script>

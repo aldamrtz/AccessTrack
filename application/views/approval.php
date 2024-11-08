@@ -1,27 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Approval Pengajuan Kartu Akses</title>
     <!-- Bootstrap CSS dari CDN -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f1f3f6;
+            font-family: 'Roboto', sans-serif;
         }
-
         .sidebar {
             background-color: #343a40;
             height: 100vh;
             padding: 20px;
             color: white;
         }
-
         .sidebar-header h3 {
             margin-bottom: 30px;
+            color: #ffc107;
+            text-transform: uppercase;
+            font-size: 20px;
+            letter-spacing: 2px;
         }
-
         .sidebar a {
             color: white;
             font-weight: bold;
@@ -29,108 +32,125 @@
             padding: 10px;
             text-decoration: none;
             transition: all 0.3s;
+            margin-bottom: 10px;
+            font-size: 16px;
         }
-
         .sidebar a:hover {
             background-color: #495057;
-            border-radius: 5px;
+            border-radius: 8px;
         }
-
         .container-fluid {
-            padding: 20px;
+            padding: 40px;
         }
-
         h2 {
-            margin-bottom: 30px;
             font-size: 28px;
             font-weight: bold;
             color: #343a40;
+            margin-bottom: 30px;
         }
-
-        .btn-success, .btn-danger {
-            width: 100px;
-            padding: 10px;
+        .form-control {
+            border-radius: 10px;
         }
-
-        table {
+        .btn-approve {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: all 0.3s;
+            box-shadow: 0px 4px 10px rgba(40, 167, 69, 0.3);
+        }
+        .btn-approve:hover {
+            background-color: #218838;
+            box-shadow: 0px 6px 12px rgba(40, 167, 69, 0.5);
+            transform: translateY(-2px);
+        }
+        .btn-reject {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: all 0.3s;
+            box-shadow: 0px 4px 10px rgba(220, 53, 69, 0.3);
+        }
+        .btn-reject:hover {
+            background-color: #c82333;
+            box-shadow: 0px 6px 12px rgba(220, 53, 69, 0.5);
+            transform: translateY(-2px);
+        }
+        .table {
             margin-top: 20px;
             background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
         }
-
         .table th, .table td {
             text-align: center;
             vertical-align: middle;
+            padding: 15px;
         }
-
         .thead-dark th {
-            background-color: #343a40;
+            background-color: #6c757d;
             color: white;
+            font-size: 16px;
         }
-
         .table tbody tr:hover {
-            background-color: #f1f1f1;
+            background-color: #f8f9fa;
         }
-
-        .form-control {
-            border-radius: 5px;
-        }
-
         .nav-tabs .nav-link {
             color: #495057;
             font-weight: bold;
+            border: none;
+            transition: all 0.3s;
         }
-
         .nav-tabs .nav-link.active {
             background-color: #343a40;
             color: white;
-            border-radius: 5px;
+            border-radius: 8px;
         }
-
-        .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
+        .search-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
         }
-
-        .btn-danger {
-            background-color: #dc3545;
-            border-color: #dc3545;
+        .search-box input {
+            width: 100%;
+            margin-right: 15px;
+            border-radius: 10px;
+            padding: 10px;
         }
-
-        .btn-success:hover, .btn-danger:hover {
-            opacity: 0.8;
+        .search-box select {
+            width: 100%;
+            border-radius: 10px;
+            padding: 10px;
         }
-
     </style>
 </head>
 <body>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3">
-                <!-- Panggil sidebar -->
                 <?php $this->load->view('templates/sidebar'); ?>
             </div>
             <div class="col-md-9">
-                <h2 class="mt-4">Daftar Pengajuan Kartu Akses</h2>
-
-                <!-- Pencarian -->
-                <div class="row mb-3">
-                    <div class="col-md-4">
+                <h2>Daftar Pengajuan Kartu Akses</h2>
+                <div class="search-box">
+                    <div class="col-md-6">
                         <input type="text" id="search" class="form-control" placeholder="Cari berdasarkan nama...">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <select id="filterStatus" class="form-control">
                             <option value="all">Semua Status</option>
                             <option value="pending">Menunggu Persetujuan</option>
                             <option value="approved">Disetujui</option>
                         </select>
                     </div>
-                    <div class="col-md-4 text-right">
-                        <a href="<?= base_url('access/export_excel'); ?>" class="btn btn-success">Export ke Excel</a>
-                    </div>
                 </div>
-
                 <ul class="nav nav-tabs" id="approvalTabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="pending-tab" data-toggle="tab" href="#pending" role="tab" aria-controls="pending" aria-selected="true">Menunggu Persetujuan</a>
@@ -147,6 +167,7 @@
                                     <th>ID</th>
                                     <th>Nama Lengkap</th>
                                     <th>Email</th>
+                                    <th>Program Studi</th>
                                     <th>Jenis Pengajuan</th>
                                     <th>Bukti Pembayaran</th>
                                     <th>Aksi</th>
@@ -158,6 +179,8 @@
                                     <td><?= $pnd['id_KA']; ?></td>
                                     <td><?= $pnd['nama_lengkap']; ?></td>
                                     <td><?= $pnd['email']; ?></td>
+                                    <td><?= $pnd['faculty_department']; ?></td>
+                                    <td><?= $pnd['program_studi']; ?></td>
                                     <td><?= ucfirst($pnd['applicant_type']); ?></td>
                                     <td>
                                         <?php if ($pnd['applicant_type'] == 'Mahasiswa' && !empty($pnd['bukti_pembayaran'])): ?>
@@ -167,8 +190,12 @@
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <a href="<?= base_url('access/approve/'.$pnd['id_KA']); ?>" class="btn btn-success btn-sm">Approve</a>
-                                        <a href="<?= base_url('access/reject/'.$pnd['id_KA']); ?>" class="btn btn-danger btn-sm">Reject</a>
+                                        <a href="<?= base_url('access/approve/'.$pnd['id_KA']); ?>" class="btn btn-success btn-sm btn-approve">
+                                            <i class="fas fa-check"></i> Approve
+                                        </a>
+                                        <a href="<?= base_url('access/reject/'.$pnd['id_KA']); ?>" class="btn btn-danger btn-sm btn-reject">
+                                            <i class="fas fa-times"></i> Reject
+                                        </a>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -185,6 +212,7 @@
                                     <th>ID</th>
                                     <th>Nama Lengkap</th>
                                     <th>Email</th>
+                                    <th>Program Studi</th>
                                     <th>Jenis Pengajuan</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
@@ -196,10 +224,13 @@
                                     <td><?= $app['id_KA']; ?></td>
                                     <td><?= $app['nama_lengkap']; ?></td>
                                     <td><?= $app['email']; ?></td>
+                                    <td><?= $app['faculty_department']; ?></td>
                                     <td><?= ucfirst($app['applicant_type']); ?></td>
                                     <td><?= ucfirst($app['status']); ?></td>
                                     <td>
-                                        <a href="<?= base_url('access/hapus_pengajuan/'.$app['id_KA']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan ini?');">Hapus</a>
+                                        <a href="<?= base_url('access/hapus_pengajuan/'.$app['id_KA']); ?>" class="btn btn-danger btn-sm btn-reject" onclick="return confirm('Apakah Anda yakin ingin menghapus pengajuan ini?');">
+                                            <i class="fas fa-trash-alt"></i> Hapus
+                                        </a>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -213,57 +244,39 @@
             </div>
         </div>
     </div>
-
-    <!-- jQuery dan Bootstrap JS dari CDN -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Tambahan Script untuk Pencarian dan Filter -->
     <script>
         $(document).ready(function(){
-            // Pencarian Nama
             $("#search").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
                 var activeTab = $("#approvalTabs .nav-link.active").attr("id");
-                if (activeTab === "pending-tab") {
-                    $("#pendingTable tbody tr").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                } else if (activeTab === "approved-tab") {
-                    $("#approvedTable tbody tr").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                }
+                var tableId = activeTab === "pending-tab" ? "#pendingTable" : "#approvedTable";
+
+                $(tableId + " tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
             });
 
-            // Filter Status
             $("#filterStatus").on("change", function() {
                 var status = $(this).val();
-                $("#pendingTable tbody tr, #approvedTable tbody tr").hide(); // Sembunyikan semua baris terlebih dahulu
-                if (status === "all") {
-                    if ($("#pending-tab").hasClass("active")) {
-                        $("#pendingTable tbody tr").show();
-                    } else if ($("#approved-tab").hasClass("active")) {
-                        $("#approvedTable tbody tr").show();
+                var activeTab = $("#approvalTabs .nav-link.active").attr("id");
+                var tableId = activeTab === "pending-tab" ? "#pendingTable" : "#approvedTable";
+
+                $(tableId + " tbody tr").each(function() {
+                    var rowStatus = $(this).find('td:nth-child(6)').text().toLowerCase(); // Pastikan ini menyesuaikan kolom Status
+                    if (status === "all" || rowStatus.indexOf(status) > -1) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
                     }
-                } else {
-                    if ($("#pending-tab").hasClass("active")) {
-                        $("#pendingTable tbody tr").filter(function() {
-                            $(this).toggle($(this).text().toLowerCase().indexOf(status) > -1);
-                        }).show();
-                    } else if ($("#approved-tab").hasClass("active")) {
-                        $("#approvedTable tbody tr").filter(function() {
-                            $(this).toggle($(this).text().toLowerCase().indexOf(status) > -1);
-                        }).show();
-                    }
-                }
+                });
             });
 
-            // Handle tab switching
-            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                $("#search").val(""); // Clear the search box
-                $("#filterStatus").val("all"); // Reset the filter status
-                $("#pendingTable tbody tr, #approvedTable tbody tr").show(); // Show all rows
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+                $("#search").val("");
+                $("#filterStatus").val("all");
+                $("#pendingTable tbody tr, #approvedTable tbody tr").show();
             });
         });
     </script>

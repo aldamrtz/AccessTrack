@@ -35,8 +35,13 @@ class Access_model extends CI_Model
     // Fungsi untuk memperbarui status pengajuan berdasarkan ID
     public function update_status($id, $status)
     {
-        $this->db->where('id_KA', $id);  // Filter berdasarkan ID pengajuan
-        $this->db->update('pengajuan_ka', ['status' => $status]);  // Memperbarui status
+        $data = [
+            'status' => $status,
+            'payment_status' => 'Lunas'
+        ];
+    
+        $this->db->where('id_KA', $id);
+        $this->db->update('pengajuan_ka', $data);
     }
 
     // Fungsi untuk menghapus pengajuan berdasarkan ID
