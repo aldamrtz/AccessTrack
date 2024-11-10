@@ -1,0 +1,97 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.welcome-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: #1f2937;
+}
+
+.cards-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.card {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.card.selected {
+    border-color: #3b82f6;
+}
+
+.card-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 1.5rem;
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #374151;
+    line-height: 1.5;
+}
+
+/* Custom icons */
+.icon-access {
+    color: #3B82F6;
+}
+
+.icon-report {
+    color: #EF4444;
+}
+
+.icon-domain {
+    color: #8B5CF6;
+}
+
+@media (max-width: 768px) {
+    .cards-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .card {
+        min-height: 180px;
+    }
+}
