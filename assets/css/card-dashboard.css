@@ -59,9 +59,8 @@
 }
 
 .card-icon {
-    width: 64px;
-    height: 64px;
-    margin-bottom: 1.5rem;
+    width: 164px; /* Adjust size as needed */
+    height: 164px;
 }
 
 .card-title {
@@ -94,4 +93,33 @@
     .card {
         min-height: 180px;
     }
+}
+
+.hover-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+}
+
+.card-icon {
+    transition: transform 0.2s;
+}
+
+.hover-card:hover .card-icon {
+    transform: scale(1.1);
+}
+
+.card-title {
+    font-size: 1.1rem;
+    color: #4e73df;
+}
+
+.navbar-brand img {
+    max-height: 40px;
+    width: auto;
 }

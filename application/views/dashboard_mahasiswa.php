@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,6 +19,12 @@
     <link href="assets/css/card-dashboard.css" rel="stylesheet">
     <!-- Menambahkan favicon -->
     <link rel="icon" href="assets/img/Unjani.png" type="img/png">
+
+    <style>
+        body {
+            background-color: #f8f9fc;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -28,116 +35,145 @@
         </div>
     </div>
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
-            <div id="content">
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <!-- Brand -->
-                    <a class="navbar-brand d-flex align-items-center" href="<?php echo site_url('DashboardTendik'); ?>">
-                        <img src="assets/img/Unjani.png" height="40" class="mr-2">
-                        <span class="text-success font-weight-bold">Access Track</span>
-                    </a>
+    <!-- Topbar -->
+    <nav class="navbar navbar-expand navbar-light bg-gradient-success topbar mb-4 static-top shadow">
+        <!-- Logo dan Teks di Topbar Kiri -->
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <div class="d-inline-block">
+                <img src="assets/img/Unjani.png" alt="Logo" style="height: 40px;">
+            </div>
 
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <div class="d-flex align-items-center">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small username-text">NIM</span>
-                                    <img class="img-profile rounded-circle" src="assets/img/undraw_profile.svg" alt="Profile Picture">
-                                </div>
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- End of Topbar -->
+            <!-- Garis Vertikal -->
+            <div class="mx-2" style="border-left: 2px solid white; height: 60px;"></div>
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid" style="padding-left: 20px; padding-right: 20px;">
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Selamat Datang, Nama</h1>
+            <!-- Teks Access Track -->
+            <div class="text-white">
+                Access Track (Mahasiswa)
+            </div>
+        </a>
+
+        <!-- Topbar Navbar -->
+        <ul class="navbar-nav ml-auto">
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="d-flex align-items-center">
+                        <span class="mr-2 d-none d-lg-inline text-white-600 small username-text">NIM</span>
+                        <img class="img-profile rounded-circle" src="assets/img/undraw_profile.svg" alt="Profile Picture">
                     </div>
+                </a>
+                <!-- Dropdown - User Information -->
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </nav>
 
-                    <!-- Card Container -->
-                    <div class="container">
-                        <div class="row justify-content-center align-items-center" style="min-height: 60vh;">
-                            <div class="col-md-4">
-                                <div class="card text-center p-4 shadow-sm hover-card" onclick="selectCard(this, 0)">
-                                    <div class="mx-auto mb-3">
-                                        <img src="assets/img/kartuakses.png" class="card-icon icon-access" alt="Access Card Icon" style="width: 64px; height: 64px;">
-                                    </div>
-                                    <h3 class="card-title mb-0">Pengajuan Kartu Akses</h3>
-                                </div>
-                            </div>
+    <!-- End of Topbar -->
+
+    <!-- Begin Page Content -->
+    <div class="container-fluid" style="padding-left: 20px; padding-right: 20px;">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Selamat Datang, Nama</h1>
+        </div>
+
+        <!-- Card Container -->
+        <div class="container">
+            <div class="row justify-content-center align-items-center" style="min-height: 60vh;">
+                <div class="col-md-4">
+                    <div class="card text-center p-4 shadow-sm hover-card" onclick="selectCard(this, 0)">
+                        <div class="mx-auto mb-3">
+                            <img src="assets/img/access.png" class="card-icon" alt="Access Card Icon">
                         </div>
+                        <h3 class="card-title">Pengajuan Kartu Akses</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center p-4 shadow-sm hover-card" onclick="selectCard(this, 2)">
+                        <div class="mx-auto mb-3">
+                            <img src="assets/img/email.png" class="card-icon" alt="Domain Icon">
+                        </div>
+                        <h3 class="card-title">Pengajuan Email</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center p-4 shadow-sm hover-card" onclick="selectCard(this, 2)">
+                        <div class="mx-auto mb-3">
+                            <img src="assets/img/history.png" class="card-icon" alt="Domain Icon">
+                        </div>
+                        <h3 class="card-title">Riwayat Pengajuan</h3>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <style>
-    .hover-card {
-        transition: transform 0.2s, box-shadow 0.2s;
-        cursor: pointer;
-        border-radius: 10px;
-    }
+        <!-- Loading -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Fungsi untuk menghapus spinner setelah halaman selesai dimuat
+                function hideLoadingSpinner() {
+                    document.getElementById('loading-spinner').style.display = 'none';
+                }
 
-    .hover-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
-    }
+                // Menunggu hingga semua data selesai dimuat
+                var dashboardDataLoad = new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve();
+                    }, 2000);
+                });
 
-    .card-icon {
-        transition: transform 0.2s;
-    }
-
-    .hover-card:hover .card-icon {
-        transform: scale(1.1);
-    }
-
-    .card-title {
-        font-size: 1.1rem;
-        color: #4e73df;
-    }
-
-    .navbar-brand img {
-        max-height: 40px;
-        width: auto;
-    }
-    </style>
-
-    <!-- jQuery and Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    
-    <!-- Loading Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(() => {
-                document.getElementById('loading-spinner').style.display = 'none';
-            }, 2000);
-        });
-
-        function selectCard(element, index) {
-            document.querySelectorAll('.card').forEach(card => {
-                card.classList.remove('selected');
+                dashboardDataLoad.then(() => {
+                    // Menghilangkan spinner setelah data selesai dimuat
+                    hideLoadingSpinner();
+                }).catch((error) => {
+                    console.error('Error loading dashboard data:', error);
+                    hideLoadingSpinner();
+                });
             });
-            element.classList.add('selected');
-        }
-    </script>
+        </script>
+        <script>
+            function selectCard(element, index) {
+                // Remove selected class from all cards
+                document.querySelectorAll('.card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+
+                // Add selected class to clicked card
+                element.classList.add('selected');
+
+                // You can add additional functionality here based on the selected card
+                const titles = [
+                    'Pengajuan Kartu Akses',
+                    'Pengajuan Keluhan/CSIRT',
+                    'Pengajuan Sub Domain'
+                ];
+
+                console.log(`Selected: ${titles[index]}`);
+            }
+
+            // Add hover effect sound if needed
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    // Add hover sound effect here if desired
+                });
+            });
+        </script>
+        <!-- jQuery pertama -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <!-- Kemudian Bootstrap JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <!-- DataTables JS -->
+        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+
 </body>
+
 </html>
