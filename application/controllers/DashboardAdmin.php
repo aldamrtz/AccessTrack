@@ -29,7 +29,7 @@ class DashboardAdmin extends CI_Controller
         // $data['username'] = $this->session->userdata('username') ? $this->session->userdata('username') : $this->session->userdata('email');
 
         // Mengirim data ke view
-        $this->load->view('Dashboard_Mahasiswa');
+        $this->load->view('Dashboard_admin');
     }
 
     // public function logout()

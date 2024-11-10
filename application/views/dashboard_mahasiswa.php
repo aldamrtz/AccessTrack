@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,12 +18,6 @@
     <link href="assets/css/card-dashboard.css" rel="stylesheet">
     <!-- Menambahkan favicon -->
     <link rel="icon" href="assets/img/Unjani.png" type="img/png">
-
-
-    <!-- Menambahkan favicon -->
-    <link rel="icon" href="assets/img/Unjani.png" type="image/png">
-
-
 </head>
 
 <body id="page-top">
@@ -34,80 +27,20 @@
             <span class="sr-only">Loading...</span>
         </div>
     </div>
+
     <!-- Page Wrapper -->
     <div id="wrapper">
-
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo site_url('DashboardTendik'); ?>">
-                <div class="sidebar-brand-icon d-inline-block">
-                    <img src="assets/img/Unjani.png">
-                </div>
-                <div class="sidebar-brand-text">
-                    Access Track
-                </div>
-            </a>
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo site_url('DashboardTendik'); ?>">
-                    <i class="fas fa-home"></i>
-                    <span>Home</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAkses"
-                    aria-expanded="true" aria-controls="collapseAkses">
-                    <i class="fas fa-id-card"></i>
-                    <span>Menu Kartu Akses</span>
-                </a>
-                <div id="collapseAkses" class="collapse" aria-labelledby="headingAkses" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <div class="menu-list">
-                            <a class="collapse-item" href="<?php echo site_url('Pengajuan_akses'); ?>">
-                                <i class="fas fa-id-card mr-2"></i>Pengajuan Kartu Akses
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </li>
-
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-        </ul>
-        <!-- End of Sidebar -->
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
             <!-- Main Content -->
             <div id="content">
-
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <form class="form-inline">
-                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                            <i class="fa fa-bars"></i>
-                        </button>
-                    </form>
+                    <!-- Brand -->
+                    <a class="navbar-brand d-flex align-items-center" href="<?php echo site_url('DashboardTendik'); ?>">
+                        <img src="assets/img/Unjani.png" height="40" class="mr-2">
+                        <span class="text-success font-weight-bold">Access Track</span>
+                    </a>
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -126,15 +59,12 @@
                                 </a>
                             </div>
                         </li>
-
                     </ul>
-
                 </nav>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid" style="padding-left: 20px; padding-right: 20px;">
-
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Selamat Datang, Nama</h1>
@@ -153,80 +83,61 @@
                             </div>
                         </div>
                     </div>
-                    <script>
-                        // JavaScript untuk toggle sidebar
-                        document.addEventListener('DOMContentLoaded', function() {
-                            var sidebarToggle = document.getElementById('sidebarToggle');
-                            var sidebar = document.getElementById('accordionSidebar');
+                </div>
+            </div>
+        </div>
+    </div>
 
-                            sidebarToggle.addEventListener('click', function() {
-                                sidebar.classList.toggle('toggled');
-                            });
-                        });
-                    </script>
+    <style>
+    .hover-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+        border-radius: 10px;
+    }
 
-                    <!-- Loading -->
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            // Fungsi untuk menghapus spinner setelah halaman selesai dimuat
-                            function hideLoadingSpinner() {
-                                document.getElementById('loading-spinner').style.display = 'none';
-                            }
+    .hover-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+    }
 
-                            // Menunggu hingga semua data selesai dimuat
-                            var dashboardDataLoad = new Promise((resolve, reject) => {
-                                setTimeout(() => {
-                                    resolve();
-                                }, 2000);
-                            });
+    .card-icon {
+        transition: transform 0.2s;
+    }
 
-                            dashboardDataLoad.then(() => {
-                                // Menghilangkan spinner setelah data selesai dimuat
-                                hideLoadingSpinner();
-                            }).catch((error) => {
-                                console.error('Error loading dashboard data:', error);
-                                hideLoadingSpinner();
-                            });
-                        });
-                    </script>
-                    <script>
-                        function selectCard(element, index) {
-                            // Remove selected class from all cards
-                            document.querySelectorAll('.card').forEach(card => {
-                                card.classList.remove('selected');
-                            });
+    .hover-card:hover .card-icon {
+        transform: scale(1.1);
+    }
 
-                            // Add selected class to clicked card
-                            element.classList.add('selected');
+    .card-title {
+        font-size: 1.1rem;
+        color: #4e73df;
+    }
 
-                            // You can add additional functionality here based on the selected card
-                            const titles = [
-                                'Pengajuan Kartu Akses',
-                                'Pengajuan Keluhan/CSIRT',
-                                'Pengajuan Sub Domain'
-                            ];
+    .navbar-brand img {
+        max-height: 40px;
+        width: auto;
+    }
+    </style>
 
-                            console.log(`Selected: ${titles[index]}`);
-                        }
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    
+    <!-- Loading Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                document.getElementById('loading-spinner').style.display = 'none';
+            }, 2000);
+        });
 
-                        // Add hover effect sound if needed
-                        document.querySelectorAll('.card').forEach(card => {
-                            card.addEventListener('mouseenter', () => {
-                                // Add hover sound effect here if desired
-                            });
-                        });
-                    </script>
-                    <!-- jQuery pertama -->
-                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-                    <!-- Kemudian Bootstrap JavaScript -->
-                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-
-                    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-                    <!-- DataTables JS -->
-                    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
-
+        function selectCard(element, index) {
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+    </script>
 </body>
-
 </html>
