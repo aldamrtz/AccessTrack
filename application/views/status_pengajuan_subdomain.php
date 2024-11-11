@@ -454,7 +454,7 @@
                 <button class="navbar-toggler" type="button" aria-label="Toggle sidebar">
                     <span class="navbar-toggler-icon"></span> <!-- Icon burger -->
                 </button>
-                <a href="<?= site_url('EmailController/logout'); ?>" class="btn btn-keluar">
+                <a data-bs-toggle="modal" data-bs-target="#logoutModal" href="<?= site_url('EmailController/logout'); ?>" class="btn btn-keluar">
                     Keluar
                 </a>
             </div>
@@ -540,7 +540,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <input type="number" min="7" class="form-control" id="nomor_induk" name="nomor_induk" placeholder=" " value="<?= $pengajuan_subdomain->nomor_induk; ?>" disabled pattern="\d*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                                        <label for="nomor_induk" class="form-label">Nomor Induk</label>
+                                        <label for="nomor_induk" class="form-label">Nomor Induk (NIP/NID)</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -612,7 +612,7 @@
                     <i class="fas fa-exclamation-circle" style="color: #dc3545; font-size: 100px; margin-top: 30px;"></i>
                     <p class="status-text">Konfirmasi Logout</p>
                     <p>Apakah Anda yakin ingin keluar dari halaman ini?</p>
-                    <a class="btn btn-ya" href="<?= site_url('EmailController/logout'); ?>">Ya</a>
+                    <a class="btn btn-ya" href="<?= site_url('SubDomainController/logout'); ?>">Ya</a>
                     <button type="button" class="btn btn-tidak" data-bs-dismiss="modal">Tidak</button>
                 </div>
             </div>

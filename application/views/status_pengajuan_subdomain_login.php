@@ -502,7 +502,7 @@
                         </div>
                         <div class="col-md-6" style="margin-top: 25px; margin-left: -50px;">
                             <h3>Halo!</h3>
-                            <p>Silakan masuk menggunakan email pribadi Anda dan kode yang telah dikirim dari email.</p>
+                            <p>Silakan masuk menggunakan email Anda dan kode yang telah dikirim dari email.</p>
                             <form action="<?= base_url('SubDomainController/status_pengajuan_subdomain_login'); ?>" id="login-form" method="post">
                                 <div class="mb-3">
                                     <input type="email" class="form-control" id="email" name="email_penanggung_jawab" required placeholder=" ">

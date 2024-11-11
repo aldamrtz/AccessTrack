@@ -587,7 +587,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Unit Kerja</th>
-                                    <th>Nomor Induk</th>
+                                    <th>Nomor Induk (NIP/NID)</th>
                                     <th>Penanggung Jawab</th>
                                     <th>Subdomain</th>
                                     <th>Tanggal Selesai</th>
@@ -801,7 +801,7 @@
         <tr>
             <th>No</th>
             <th>Unit Kerja</th>
-            <th>Nomor Induk</th>
+            <th>Nomor Induk (NIP/NID)</th>
             <th>Penanggung Jawab</th>
             <th>Subdomain</th>
             <th>Tanggal Selesai Pengajuan</th>
