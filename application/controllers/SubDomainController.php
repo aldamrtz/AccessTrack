@@ -246,11 +246,6 @@ class SubDomainController extends CI_Controller
         redirect('AdminPengajuanController/data_pengajuan_subdomain');
     }
 
-    public function kendala_pengajuan_subdomain()
-    {
-        $this->load->view('kendala_pengajuan_subdomain');
-    }
-
     public function validateSubDomain($sub_domain)
     {
         $lengthPattern = '/^.{6,63}$/';

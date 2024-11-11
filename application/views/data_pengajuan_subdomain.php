@@ -596,7 +596,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Unit Kerja</th>
-                                        <th>Nomor Induk</th>
+                                        <th>Nomor Induk (NIP/NID)</th>
                                         <th>Nama Penanggung Jawab</th>
                                         <th>Email Penanggung Jawab</th>
                                         <th>Kontak Penanggung Jawab</th>
@@ -659,7 +659,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Unit Kerja</th>
-                                        <th>Nomor Induk</th>
+                                        <th>Nomor Induk (NIP/NID)</th>
                                         <th>Nama Penanggung Jawab</th>
                                         <th>Email Penanggung Jawab</th>
                                         <th>Kontak Penanggung Jawab</th>
@@ -722,7 +722,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Unit Kerja</th>
-                                        <th>Nomor Induk</th>
+                                        <th>Nomor Induk (NIP/NID)</th>
                                         <th>Nama Penanggung Jawab</th>
                                         <th>Email Penanggung Jawab</th>
                                         <th>Kontak Penanggung Jawab</th>
@@ -785,7 +785,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Unit Kerja</th>
-                                        <th>Nomor Induk</th>
+                                        <th>Nomor Induk (NIP/NID)</th>
                                         <th>Nama Penanggung Jawab</th>
                                         <th>Email Penanggung Jawab</th>
                                         <th>Kontak Penanggung Jawab</th>
@@ -857,7 +857,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="editNomorInduk">Nomor Induk</label>
+                                        <label for="editNomorInduk">Nomor Induk (NIP/NID)</label>
                                         <input type="text" class="form-control" id="editNomorInduk" name="nomor_induk" required pattern="\d*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                     </div>
                                 </div>
@@ -1223,7 +1223,7 @@
                 <tr>
                     <th>No</th>
                     <th>Unit Kerja</th>
-                    <th>Nomor Induk</th>
+                    <th>Nomor Induk (NIP/NID)</th>
                     <th>Nama Penanggung Jawab</th>
                     <th>Email Penanggung Jawab</th>
                     <th>Kontak Penanggung Jawab</th>

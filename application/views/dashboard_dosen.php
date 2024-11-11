@@ -94,7 +94,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card text-center p-4 shadow-sm hover-card" onclick="selectCard(this, 2)">
+                    <div class="card text-center p-4 shadow-sm hover-card" onclick="selectCard(this, 1)">
                         <div class="mx-auto mb-3">
                             <img src="assets/img/domain.png" class="card-icon" alt="Domain Icon">
                         </div>
@@ -137,6 +137,17 @@
 
                 // Add selected class to clicked card
                 element.classList.add('selected');
+
+                switch (index) {
+                    case 0:
+                        window.location.href = '';
+                        break;
+                    case 1:
+                        window.location.href = 'SubDomainController';
+                        break;
+                    default:
+                        console.log('Invalid selection');
+                }
 
                 // You can add additional functionality here based on the selected card
                 const titles = [

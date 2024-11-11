@@ -256,6 +256,10 @@
             color: #d9534f;
         }
 
+        .feedback.error+.position-absolute {
+            margin-top: -11px;
+        }
+
         .error-border {
             border-color: #d9534f;
         }
@@ -578,13 +582,13 @@
         <div class="row form-container justify-content-center">
             <div class="col-md-8">
                 <div class="form-wrapper">
-                    <h2></i>Pengajuan Pembuatan Domain</h2>
+                    <h2></i>Pengajuan Pembuatan Subdomain</h2>
                     <?= form_open_multipart('SubDomainController/submit'); ?>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" placeholder=" " value="<?= set_value('nomor_induk'); ?>" required pattern="\d*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                                <label for="nomor_induk" class="form-label">Nomor Induk</label>
+                                <label for="nomor_induk" class="form-label">Nomor Induk (NIP/NID)</label>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -637,8 +641,12 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <input type="text" class="form-control" id="ip_pointing" name="ip_pointing" placeholder=" " value="<?= set_value('ip_pointing'); ?>" required>
-                                <label for="ip_pointing" class="form-label">IP Pointing</label>
+                                <label for="ip_pointing" class="form-label">IP Pointing
+                                </label>
                                 <div id="ipPointingFeedback" class="feedback"></div>
+                                <span class="position-absolute top-50 end-0 translate-middle-y me-3" data-bs-toggle="tooltip" title="IP pointing is the IP address that your subdomain points to. Example: 192.168.1.1">
+                                    <i class="fas fa-question-circle"></i>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -690,9 +698,15 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://www.google.com/recaptcha/api.js?render=6Lf0PEQqAAAAANCvF8-NRJwRcVHMZDMbSD84j7gZ"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
             const form = document.querySelector('form');
             const penanggungJawabInput = document.getElementById('penanggung_jawab');
             const penanggungJawabFeedback = document.getElementById('penanggungJawabFeedback');
@@ -768,10 +782,9 @@
             ipPointingInput.addEventListener('input', function() {
                 const ipPattern = /^(\d{1,3}\.){3}\d{1,3}$/;
                 if (ipPointingInput.value === '') {
-                    // Kosongkan feedback jika input kosong
                     ipPointingFeedback.textContent = '';
                 } else if (!ipPattern.test(ipPointingInput.value)) {
-                    ipPointingFeedback.textContent = 'Hanya boleh mengandung angka dan tanda titik.';
+                    ipPointingFeedback.textContent = 'Format tidak valid.';
                     ipPointingFeedback.className = 'feedback error';
                 } else {
                     ipPointingFeedback.textContent = '';
@@ -926,7 +939,7 @@
                     hasError = true;
                 }
 
-                if (ipPointingFeedback.textContent.includes('Hanya boleh mengandung angka dan tanda titik.')) {
+                if (ipPointingFeedback.textContent.includes('Format tidak valid.')) {
                     ipPointingInput.classList.add('shake', 'error-border');
                     document.querySelector('label[for="ip_pointing"]').classList.add('shake', 'error-border');
                     setTimeout(() => {
