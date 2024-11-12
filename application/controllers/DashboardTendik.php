@@ -6,6 +6,7 @@ class DashboardTendik extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        check_role([4]);
         // Load model
         $this->load->model('Dashboard_ModelAktor');
 
