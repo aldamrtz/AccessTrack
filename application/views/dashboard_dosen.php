@@ -120,6 +120,14 @@
                         <h3 class="card-title">Pengajuan Sub-Domain</h3>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="card text-center p-4 shadow-sm hover-card" onclick="selectCard(this, 2)">
+                        <div class="mx-auto mb-3">
+                            <img src="assets/img/history.png" class="card-icon" alt="Domain Icon">
+                        </div>
+                        <h3 class="card-title">Riwayat Pengajuan</h3>
+                    </div>
+                </div>
             </div>
         </div>
 

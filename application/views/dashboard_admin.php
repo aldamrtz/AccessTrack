@@ -94,39 +94,27 @@
 
     <!-- Begin Page Content -->
     <div class="container-fluid" style="padding-left: 20px; padding-right: 20px;">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Selamat Datang, <?= $nama_lengkap; ?></h1>
+        </div>
         <!-- Card Container -->
         <div class="container">
             <div class="row justify-content-center align-items-center" style="min-height: 60vh;">
                 <div class="col-md-4">
-                    <div class="card text-center p-4 shadow-sm hover-card" onclick="selectCard(this, 0)">
-                        <div class="mx-auto mb-3">
-                            <img src="assets/img/access.png" class="card-icon" alt="Access Card Icon">
-                        </div>
-                        <h3 class="card-title">Aprovel Kartu Akses</h3>
-                    </div>
-                </div>
-                <div class="col-md-4">
                     <div class="card text-center p-4 shadow-sm hover-card" onclick="selectCard(this, 1)">
                         <div class="mx-auto mb-3">
-                            <img src="assets/img/Report.png" class="card-icon" alt="Domain Icon">
+                            <img src="assets/img/report1.png" class="card-icon" alt="Domain Icon">
                         </div>
-                        <h3 class="card-title">Aprovel Keluhan/CSIRT</h3>
+                        <h3 class="card-title">Approval Kartu Akses & CSIRT</h3>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card text-center p-4 shadow-sm hover-card" onclick="selectCard(this, 2)">
                         <div class="mx-auto mb-3">
-                            <img src="assets/img/email.png" class="card-icon" alt="Domain Icon">
+                            <img src="assets/img/letter.png" class="card-icon" alt="Domain Icon">
                         </div>
-                        <h3 class="card-title">Aprovel Email</h3>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card text-center p-4 shadow-sm hover-card" onclick="selectCard(this, 3)">
-                        <div class="mx-auto mb-3">
-                            <img src="assets/img/domain.png" class="card-icon" alt="Domain Icon">
-                        </div>
-                        <h3 class="card-title">Aprovel Sub-Domain</h3>
+                        <h3 class="card-title">Approval Email & Sub-Domain</h3>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -135,6 +123,14 @@
                             <img src="assets/img/laporan.png" class="card-icon" alt="Domain Icon">
                         </div>
                         <h3 class="card-title">Rekap Laporan</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center p-4 shadow-sm hover-card" onclick="selectCard(this, 2)">
+                        <div class="mx-auto mb-3">
+                            <img src="assets/img/add-user.png" class="card-icon" alt="Domain Icon">
+                        </div>
+                        <h3 class="card-title">Menambahkan data User</h3>
                     </div>
                 </div>
             </div>

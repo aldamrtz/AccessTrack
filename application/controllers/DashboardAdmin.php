@@ -24,12 +24,18 @@ class DashboardAdmin extends CI_Controller
 
     public function index()
     {
-        if ($this->session->userdata('id_role') !== '1' && $this->session->userdata('id_role') !== '2' && $this->session->userdata('id_role') !== '3' && $this->session->userdata('id_role') !== '4' && $this->session->userdata('id_role') !== '5') {
+        // Validate user role
+        if (!in_array($this->session->userdata('id_role'), ['1', '2', '3', '4', '5'])) {
             redirect('login');
-          }
+        }
 
-        // Mengirim data ke view
-        $data['id_user'] = $this->session->userdata('id_user');
+        // Get user data
+        $id_user = $this->session->userdata('id_user');
+        $user_data = $this->Dashboard_ModelAktor->get_user_data($id_user);
+
+        // Send data to view
+        $data['id_user'] = $user_data->id_user;
+        $data['nama_lengkap'] = $user_data->nama_lengkap;
         $this->load->view('Dashboard_admin', $data);
     }
 
