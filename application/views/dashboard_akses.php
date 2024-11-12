@@ -129,7 +129,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="d-flex align-items-center">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small username-text"><?= $username; ?></span>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small username-text"><?= $id_user; ?></span>
                                     <img class="img-profile rounded-circle" src="assets/img/undraw_profile.svg" alt="Profile Picture">
                                 </div>
                             </a>
