@@ -9,10 +9,18 @@ class SubDomainModel extends CI_Model
         $this->load->database();
     }
 
+    public function get_user_data($id_user)
+    {
+        $this->db->select('id_user, nama_lengkap');
+        $this->db->where('id_user', $id_user);
+        $query = $this->db->get('users');
+        return $query->row();
+    }
+
     public function insert($data)
     {
         if (!isset($data['tgl_pengajuan'])) {
-            $data['tgl_pengajuan'] = date('Y-m-d');
+            $data['tgl_pengajuan'] = date('Y-m-d H:i:s');
         }
         return $this->db->insert('pengajuan_subdomain', $data);
     }
@@ -121,7 +129,7 @@ class SubDomainModel extends CI_Model
 
     public function updatePengajuan($id_pengajuan_subdomain, $nomor_induk, $unit_kerja, $penanggung_jawab, $email_penanggung_jawab, $kontak_penanggung_jawab, $sub_domain, $ip_pointing, $keterangan)
     {
-        $this->db->where('id_pengajuan_subdomain', $$id_pengajuan_subdomain);
+        $this->db->where('id_pengajuan_subdomain', $id_pengajuan_subdomain);
         $this->db->update('pengajuan_subdomain', [
             'id_pengajuan_subdomain' => $id_pengajuan_subdomain,
             'nomor_induk' => $nomor_induk,

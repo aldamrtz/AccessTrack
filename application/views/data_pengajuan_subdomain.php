@@ -75,27 +75,6 @@
             align-items: center;
         }
 
-        .admin-name {
-            margin-right: 8px;
-            display: inline;
-            font-size: 15px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .img-profile {
-            width: 30px !important;
-            height: 30px !important;
-            margin-left: 7px;
-            border-radius: 50%;
-            background-color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            font-size: 15px;
-        }
-
         #content {
             padding-top: 100px;
             background-color: #e0f5ec;
@@ -348,30 +327,15 @@
             font-weight: bold;
         }
 
-        .btn-ya {
-            background-color: #dc3545;
+        .btn-kembali {
+            margin-left: auto;
+            background-color: #333333;
             color: #ffffff;
-            width: 70px;
-            margin-top: 30px;
         }
 
-        .btn-ya:hover {
-            background-color: #c82333;
+        .btn-kembali:hover {
+            background-color: #555555;
             color: #ffffff;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-tidak {
-            background-color: #13855c;
-            color: #ffffff;
-            width: 70px;
-            margin-top: 30px;
-        }
-
-        .btn-tidak:hover {
-            background-color: #0e6b47;
-            color: #ffffff;
-            transition: background-color 0.3s ease;
         }
 
         .dataTables_filter input {
@@ -405,9 +369,21 @@
             transition: background-color 0.3s !important;
         }
 
-        .dataTables_paginate .paginate_button:hover {}
+        .modal-content .form-group label {
+            color: #0e6b47;
+            margin-bottom: 5px;
+        }
 
-        .dataTables_paginate .paginate_button.current {}
+        .modal-content .form-control,
+        .modal-content .form-select {
+            border: 1px solid #0e6b47;
+        }
+
+        .modal-content .form-control:focus,
+        .modal-content .form-select:focus {
+            border-color: #00aaff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 170, 255, 0.25);
+        }
 
         .form-group input.error-border,
         .form-group select.error-border {
@@ -439,6 +415,7 @@
         }
 
         .feedback.success {
+            margin-top: 7px !important;
             color: green;
         }
 
@@ -475,6 +452,27 @@
                 transform: translateX(-5px);
             }
         }
+
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            background-color: #333333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            width: 40px;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 99999 !important;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: #555555;
+        }
     </style>
 
 </head>
@@ -489,30 +487,30 @@
                 <div class="sidebar-brand-text">ACCESS TRACK</div>
             </a>
             <hr class="sidebar-divider">
-            <div class="sidebar-heading" style="font-size: 12px; margin-bottom: -7px;">DATA PENGAJUAN</div>
+            <div class="sidebar-heading" style="font-size: 12px; margin-bottom: -7px;">EMAIL</div>
             <li class="nav-item">
                 <a class="nav-link" href="<?= site_url('AdminPengajuanController/data_pengajuan_email'); ?>">
                     <i class="fas fa-envelope"></i>
                     <span>Pengajuan Email</span>
                 </a>
             </li>
-            <li class="nav-item active" style="margin-top: -10px;">
+            <li class="nav-item" style="margin-top: -10px;">
+                <a class="nav-link" href="<?= site_url('AdminPengajuanController/data_email_terdaftar'); ?>">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <span>Email Terdaftar</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading" style="font-size: 12px; margin-bottom: -7px;">SUBDOMAIN</div>
+            <li class="nav-item active">
                 <a class="nav-link" href="<?= site_url('AdminPengajuanController/data_pengajuan_subdomain'); ?>">
                     <i class="fas fa-globe"></i>
                     <span>Pengajuan Subdomain</span>
                 </a>
             </li>
-            <hr class="sidebar-divider">
-            <div class="sidebar-heading" style="font-size: 12px; margin-bottom: -7px;">DATA TERDAFTAR</div>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= site_url('AdminPengajuanController/data_email_terdaftar'); ?>">
-                    <i class="fas fa-envelope"></i>
-                    <span>Email Terdaftar</span>
-                </a>
-            </li>
             <li class="nav-item" style="margin-top: -10px;">
                 <a class="nav-link" href="<?= site_url('AdminPengajuanController/data_subdomain_terdaftar'); ?>">
-                    <i class="fas fa-globe"></i>
+                    <i class="fas fa-sitemap"></i>
                     <span>Subdomain Terdaftar</span>
                 </a>
             </li>
@@ -529,27 +527,14 @@
                     </button>
                     <ul class="navbar-nav ml-auto">
                         <div class="topbar-divider d-none d-sm-block"></div>
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="admin-name"><?= $this->session->userdata('admin_name'); ?></span>
-                                <div class="img-profile">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        <a href="<?= site_url('DashboardAdmin'); ?>" class="btn btn-kembali">
+                            <i class="fas fa-arrow-left"></i> Kembali ke Dashboard
+                        </a>
                     </ul>
                 </nav>
 
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">DASHBOARD</h1>
                         <div class="dropdown">
                             <button class="btn btn-cetak dropdown-toggle" type="button" id="dropdownCetakLaporan" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-download fa-sm" style="color: #ffffff; margin-right: 5px;"></i> Cetak Laporan
@@ -837,18 +822,14 @@
                 </div>
             </div>
         </div>
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
 
-        <!-- Modal Edit -->
         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document" style="width: 100%; max-width: 700px; margin-top: 87px; margin-bottom: 87px;">
+            <div class="modal-dialog" role="document" style="width: 100%; max-width: 700px; margin-top: 75px; margin-bottom: 75px;">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="background: linear-gradient(135deg, #13855c, #13855c, #1cc88a); color: #ffffff;">
                         <h5 class="modal-title" id="editModalLabel">Edit Pengajuan</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #ffffff;">
+                            <span aria-hidden=" true">&times;</span>
                         </button>
                     </div>
                     <form id="editForm" method="post" action="<?= site_url('AdminPengajuanController/editPengajuanSubdomain'); ?>">
@@ -899,7 +880,7 @@
                                         <label for="editSubDomain">Subdomain</label>
                                         <input type="text" class="form-control" id="editSubDomain" name="sub_domain" required>
                                         <div id="subdomainValidationFeedback" class="feedback"></div>
-                                        <div id="subdomainAvailabilityFeedback" class="feedback"></div>
+                                        <div id="subdomainAvailabilityFeedback" class="feedback" style="margin-top: 7px;"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -914,7 +895,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="editKeterangan">Keterangan</label>
-                                        <textarea type="text" class="form-control" id="editKeterangan" name="keterangan" rows="3" required></textarea>
+                                        <textarea type="text" class="form-control" id="editKeterangan" name="keterangan" rows="4" required></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -929,7 +910,7 @@
         </div>
 
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog" role="document" style="width: 430px; max-width: 430px;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
@@ -952,7 +933,7 @@
         </div>
 
         <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog" role="document" style="width: 450px; max-width: 450px;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="confirmModalLabel">Konfirmasi Aksi</h5>
@@ -971,20 +952,9 @@
             </div>
         </div>
 
-        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-            <div class="modal-dialog" style="max-width: 350px;">
-                <div class="modal-content">
-                    <div class="modal-body text-center">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <i class="fas fa-exclamation-circle" style="color: #dc3545; font-size: 100px; margin-top: 30px;"></i>
-                        <p class="status-text">Konfirmasi Logout</p>
-                        <p>Apakah Anda yakin ingin keluar dari halaman ini?</p>
-                        <a class="btn btn-ya" href="<?= site_url('LoginPengajuanController/logout'); ?>">Ya</a>
-                        <button type="button" class="btn btn-tidak" data-bs-dismiss="modal">Tidak</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <button id="scrollToTopBtn" title="Go to top" class="btn btn-primary">
+            <i class="fas fa-arrow-up"></i>
+        </button>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -996,6 +966,18 @@
 
         <script>
             $(document).ready(function() {
+                $(window).scroll(function() {
+                    if ($(this).scrollTop() > 200) {
+                        $('#scrollToTopBtn').fadeIn();
+                    } else {
+                        $('#scrollToTopBtn').fadeOut();
+                    }
+                });
+
+                $('#scrollToTopBtn').click(function() {
+                    $('html, body').scrollTop(0);
+                });
+
                 $('#deleteModal').on('show.bs.modal', function(event) {
                     var button = $(event.relatedTarget);
                     var id = button.data('id');
@@ -1068,7 +1050,7 @@
 
                 $('#diajukanTable, #diprosesTable, #diverifikasiTable, #dikirimTable').DataTable({
                     "pagingType": "simple_numbers",
-                    "lengthMenu": [5, 10, 25, 50, 100],
+                    "lengthMenu": [10, 25, 50, 100],
                     "language": {
                         "search": "Cari:",
                         "lengthMenu": "Tampilkan _MENU_ entri per halaman",

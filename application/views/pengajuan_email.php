@@ -16,7 +16,7 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #e0f5ec;
+            background: linear-gradient(135deg, #e0f5ec, #e0f5ec, #e0f5ec, #00aaff);
             background-size: cover;
             background-attachment: fixed;
             display: flex;
@@ -108,13 +108,32 @@
             font-weight: bold;
         }
 
+        .kembali-dashboard {
+            background-color: #ffffff;
+            color: #0e6b47 !important;
+            font-weight: bold;
+            border-radius: 5px;
+            width: 100%;
+            text-align: center;
+            margin-left: 1px !important;
+        }
+
+        .sidebar .nav-item:last-child {
+            justify-content: center;
+        }
+
+        .kembali-dashboard:hover {
+            color: #1cc88a;
+            text-decoration: none;
+        }
+
         .container-fluid {
             padding: 20px;
         }
 
         h2 {
             margin-bottom: 30px;
-            color: #333;
+            color: #0e6b47;
             font-size: 32px;
             font-weight: bold;
             text-align: center;
@@ -153,14 +172,14 @@
             font-size: 16px;
             transition: all 0.3s ease;
             pointer-events: none;
-            color: #003366;
+            color: #0e6b47;
             z-index: 1;
         }
 
         .form-group input,
         .form-group select {
             color: #333;
-            border-color: #003366;
+            border: 1.5px solid #13855c;
             padding: 10px 15px 10px 15px;
             border-radius: 5px;
             width: 100%;
@@ -176,7 +195,7 @@
 
         .form-group input:not(:focus):not(:placeholder-shown)+label,
         .form-group select:not(:focus)+label {
-            color: #003366;
+            color: #0e6b47;
         }
 
         .form-group input:focus+label,
@@ -193,7 +212,7 @@
         }
 
         .form-group select:not(:focus):valid+label {
-            color: #003366;
+            color: #0e6b47;
         }
 
         .form-group input.error-border,
@@ -219,9 +238,9 @@
         }
 
         .input-group-text {
-            background-color: rgba(0, 51, 102, 0.25);
-            border-color: #003366;
-            color: #003366;
+            background-color: #e0f5ec;
+            border: 1.5px solid #13855c;
+            color: #0e6b47;
         }
 
         .suggestion-radio {
@@ -231,17 +250,17 @@
         .suggestion-radio input[type="radio"] {
             cursor: pointer;
             appearance: none;
-            border-color: #003366;
+            border-color: #0e6b47;
             margin-right: 0.5rem;
         }
 
         .suggestion-radio input[type="radio"]:checked {
-            background-color: #003366;
-            border-color: #003366;
+            background-color: #0e6b47;
+            border-color: #0e6b47;
         }
 
         .suggestion-radio input[type="radio"]:focus {
-            box-shadow: 0 0 0 0.25rem rgba(0, 170, 255, 0.25);
+            box-shadow: 0 0 0 0.25rem rgba(14, 107, 71, 0.5);
         }
 
         .email-group {
@@ -268,7 +287,7 @@
         }
 
         .feedback.success {
-            color: green;
+            color: #0e6b47;
         }
 
         .feedback.error {
@@ -280,25 +299,25 @@
         }
 
         input[type="file"] {
-            border-color: #003366;
-            color: rgba(0, 51, 102, 0.35);
+            border: 1.5px solid #13855c;
+            color: rgba(19, 133, 92, 0.5);
             width: 100%;
         }
 
         input[type="file"]:focus {
             box-shadow: 0 0 0 0.25rem rgba(0, 170, 255, 0.25);
             border-color: #00aaff;
-            color: #003366;
+            color: #0e6b47;
         }
 
         input[type="file"]::-webkit-file-upload-button {
-            background-color: rgba(0, 51, 102, 0.25);
+            background-color: #e0f5ec;
             cursor: pointer;
             border-radius: 5px;
             padding: 1px 10px;
             margin-left: -7px;
             border: none;
-            color: #003366;
+            color: #0e6b47;
             transition: background-color 0.3s;
         }
 
@@ -337,7 +356,7 @@
         }
 
         .btn-form {
-            background: linear-gradient(135deg, #333, #003366, #00aaff);
+            background: linear-gradient(135deg, #13855c, #1cc88a, #00aaff);
             color: #ffffff;
             border: none;
             border-radius: 5px;
@@ -354,7 +373,7 @@
         .btn-form:hover,
         .btn-form:active,
         .btn-form:focus {
-            background: linear-gradient(135deg, #333, #333, #333);
+            background: linear-gradient(135deg, #00aaff, #00aaff, #00aaff);
             color: #ffffff;
             transform: scale(1.03);
         }
@@ -383,6 +402,11 @@
         .btn-form .spinner-border {
             position: absolute;
             transform: translate(-50%, -50%);
+        }
+
+        .disable-interaction {
+            pointer-events: none;
+            cursor: not-allowed;
         }
 
         .modal-dialog {
@@ -617,6 +641,13 @@
                     <a class="nav-link" href="<?= site_url('EmailController/status_pengajuan_email'); ?>" style="text-decoration: none;">
                         <i class="fas fa-tasks"></i>
                         <span>Status Pengajuan Email</span>
+                    </a>
+                </li>
+                <hr class="sidebar-divider">
+                <li class="nav-item">
+                    <a class="nav-link kembali-dashboard" href="<?= site_url('DashboardMahasiswa'); ?>" style="text-decoration: none;">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Kembali ke Dashboard</span>
                     </a>
                 </li>
                 <hr class="sidebar-divider">
@@ -954,6 +985,8 @@
 
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
+                form.classList.add('disable-interaction');
+
                 const emailAvailabilityFeedback = document.getElementById('emailAvailabilityFeedback');
                 const nimAvailabilityFeedback = nimFeedback.textContent
                 let hasError = false;
@@ -1039,6 +1072,8 @@
                     setTimeout(() => {
                         form.submit();
                     }, 1000);
+                } else {
+                    form.classList.remove('disable-interaction');
                 }
             });
 

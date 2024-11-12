@@ -14,12 +14,30 @@ class SubDomainController extends CI_Controller
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         $this->load->library('session');
-
         $this->recaptcha_secret = '6Lf0PEQqAAAAACRlO3K96wdEZqJlS8qSfeD3IPCq';
+
+        check_role([4, 5]);
+        $this->load->model('Dashboard_ModelAktor');
+        $this->load->helper('cookie');
+
+        if (!$this->session->userdata('id_user')) {
+            delete_cookie('user_session');
+            $this->session->set_flashdata('error', 'Anda harus login terlebih dahulu.');
+            redirect('login');
+        }
     }
 
     public function index()
     {
+        if (!in_array($this->session->userdata('id_role'), ['1', '2', '3', '4', '5'])) {
+            redirect('login');
+        }
+
+        $id_user = $this->session->userdata('id_user');
+        $user_data = $this->Dashboard_ModelAktor->get_user_data($id_user);
+
+        $data['id_user'] = $user_data->id_user;
+        $data['nama_lengkap'] = $user_data->nama_lengkap;
         $data['unit_kerja'] = $this->SubDomainModel->getUnitKerja();
         $this->load->view('pengajuan_subdomain', $data);
     }
@@ -113,28 +131,24 @@ class SubDomainController extends CI_Controller
         $this->email->initialize($config);
         $this->email->set_newline("\r\n");
 
-        $this->email->from($email_penanggung_jawab, 'Pengajuan Subdomain');
-        $this->email->to('aldaamorita@gmail.com'); // Ganti dengan email admin
+        $this->email->from($email_penanggung_jawab);
+        $this->email->to('aldaamorita21@if.unjani.ac.id');
         $this->email->subject('Pengajuan Pembuatan Subdomain Baru');
 
-        // Message with more details and a "View Details" button
-        $message = '<p>Halo Admin,</p>';
-        $message .= '<p style="font-size: 14px; color: #333;">Terdapat pengajuan baru untuk pembuatan sub domain dengan rincian sebagai berikut:</p>';
+        $message = '<p style="margin-top: 0; padding-top: 0;">Halo, Admin Staf Administrasi SISFO UNJANI!</p>';
+        $message .= '<p style="margin: 0; padding: 0;">Terdapat pengajuan baru untuk pembuatan sub domain dengan rincian sebagai berikut:</p>';
 
-        // Create table to align the colons
-        $message .= '<table style="font-size: 14px; color: #333;">';
+        $message .= '<table>';
         $message .= '<tr><td style="padding-right: 20px;"><strong>Nama Penanggung Jawab</strong></td><td>:</td><td>' . $data['penanggung_jawab'] . '</td></tr>';
         $message .= '<tr><td style="padding-right: 20px;"><strong>Nomor Induk</strong></td><td>:</td><td>' . $data['nomor_induk'] . '</td></tr>';
         $message .= '<tr><td style="padding-right: 20px;"><strong>Unit Kerja</strong></td><td>:</td><td>' . $data['unit_kerja'] . '</td></tr>';
         $message .= '</table>';
 
-        // View Details button linking to the admin dashboard
-        $message .= '<p>Untuk meninjau lebih lanjut, silakan klik tombol di bawah ini:</p>';
-        $message .= '<p><a href="' . base_url('AdminPengajuanController/data_pengajuan_subdomain') . '" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: #fff; text-decoration: none; border-radius: 5px;">Lihat Selengkapnya</a></p>';
+        $message .= '<p style="margin-bottom: 0; padding-bottom: 0;">Untuk meninjau lebih lanjut, silakan klik tombol di bawah ini:</p>';
+        $message .= '<p style="margin-bottom: 3px; padding-bottom: 3px; margin-top: 3px; padding-top: 3px;"><a href="' . base_url('AdminPengajuanController/data_pengajuan_subdomain') . '" style="display: inline-block; padding: 10px 20px; background-color: #13855c; color: #fff; text-decoration: none; border-radius: 5px; width: 155px; text-align: center;">Lihat Selengkapnya</a></p>';
+        $message .= '<p style="margin: 0; padding: 0;">Terima kasih atas perhatian Anda.</p>';
 
-        // Footer
-        $message .= '<p>Terima kasih atas perhatian Anda.</p>';
-        $message .= '<p style="font-size: 12px; color: #888;">Email ini dikirim secara otomatis. Mohon untuk tidak membalas email ini.</p>';
+        $message .= '<p style="margin-bottom: 0; padding-bottom: 0; font-size: 12px; color: #888;">Email ini dikirim secara otomatis. Mohon untuk tidak membalas email ini.</p>';
 
         $this->email->message($message);
 
@@ -162,16 +176,18 @@ class SubDomainController extends CI_Controller
         $this->email->initialize($config);
         $this->email->set_newline("\r\n");
 
-        $this->email->from('aldaamorita@gmail.com', 'Pengajuan Subdomain');
+        $this->email->from('aldaamorita21@if.unjani.ac.id');
         $this->email->to($email_penanggung_jawab);
         $this->email->subject('Pengajuan Subdomain Anda Telah Dikirim');
 
-        $message = '<p>Halo ' . $data['penanggung_jawab'] . ',</p>';
-        $message .= '<p>Pengajuan pembuatan subdomain Anda telah berhasil dikirim!</p>';
-        $message .= '<p>Gunakan kode berikut untuk memeriksa status pengajuan Anda: <strong>' . $random_code . '</strong></p>';
-        $message .= '<p>Silakan kunjungi <a href="' . base_url('SubdomainController/status_pengajuan_subdomain') . '">halaman status pengajuan</a> untuk informasi lebih lanjut.</p>';
-        $message .= '<p>Terima kasih.</p>';
-        $message .= '<p style="font-size: 12px; color: #888;">Email ini dikirim secara otomatis. Mohon untuk tidak membalas email ini.</p>';
+        $message = '<p style="margin-top: 0; padding-top: 0;">Halo, ' . $data['penanggung_jawab'] . '!</p>';
+        $message .= '<p style="margin: 0; padding: 0;">Pengajuan pembuatan subdomain Anda telah berhasil dikirim.</p>';
+        $message .= '<p style="margin: 0; padding: 0;">Gunakan kode berikut untuk memeriksa status pengajuan Anda: <strong>' . $random_code . '</strong></p>';
+        $message .= '<p style="margin-bottom: 0; padding-bottom: 0;">Silakan klik tombol di bawah ini untuk informasi lebih lanjut:</p>';
+        $message .= '<p style="margin-bottom: 3px; padding-bottom: 3px; margin-top: 3px; padding-top: 3px;"><a href="' . base_url('SubdomainController/status_pengajuan_subdomain_login') . '" style="display: inline-block; padding: 10px 20px; background-color: #00aaff; color: #fff; text-decoration: none; border-radius: 5px; width: 155px; text-align: center;">Lihat Status Pengajuan</a></p>';
+        $message .= '<p style="margin: 0; padding: 0;">Terima kasih atas perhatian Anda.</p>';
+
+        $message .= '<p style="margin-bottom: 0; padding-bottom: 0; font-size: 12px; color: #888;">Email ini dikirim secara otomatis. Mohon untuk tidak membalas email ini.</p>';
 
         $this->email->message($message);
         if ($this->email->send()) {
@@ -217,12 +233,6 @@ class SubDomainController extends CI_Controller
         }
     }
 
-    public function logout()
-    {
-        $this->session->sess_destroy();
-        redirect('SubDomainController/status_pengajuan_subdomain_login');
-    }
-
     public function status_pengajuan_subdomain()
     {
         if (!$this->session->userdata('pengajuan_subdomain')) {
@@ -236,6 +246,13 @@ class SubDomainController extends CI_Controller
         $data['status_history_subdomain'] = $this->SubDomainModel->getStatusHistory($id_pengajuan_subdomain);
 
         $this->load->view('status_pengajuan_subdomain', $data);
+    }
+
+    public function logoutStatus()
+    {
+        $this->session->unset_userdata('pengajuan_subdomain');
+        $this->session->set_flashdata('success', 'Anda berhasil keluar dari halaman status pengajuan.');
+        redirect('SubDomainController/status_pengajuan_subdomain_login');
     }
 
     public function updateStatus($id, $status)
@@ -344,5 +361,15 @@ class SubDomainController extends CI_Controller
         }
 
         return json_decode($result, true);
+    }
+
+    public function logout()
+    {
+        $this->load->helper('cookie');
+        $this->session->unset_userdata('id_user');
+        delete_cookie('user_session');
+
+        $this->session->set_flashdata('success', 'Anda berhasil logout.');
+        redirect('login');
     }
 }

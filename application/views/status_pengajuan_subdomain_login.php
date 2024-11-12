@@ -109,6 +109,25 @@
             font-weight: bold;
         }
 
+        .kembali-dashboard {
+            background-color: #ffffff;
+            color: #0e6b47 !important;
+            font-weight: bold;
+            border-radius: 5px;
+            width: 100%;
+            text-align: center;
+            margin-left: 1px !important;
+        }
+
+        .sidebar .nav-item:last-child {
+            justify-content: center;
+        }
+
+        .kembali-dashboard:hover {
+            color: #1cc88a;
+            text-decoration: none;
+        }
+
         .container-fluid {
             padding: 20px;
         }
@@ -488,6 +507,23 @@
                     <a class="nav-link" href="<?= site_url('SubDomainController/status_pengajuan_subdomain'); ?>" style="text-decoration: none;">
                         <i class="fas fa-tasks"></i>
                         <span>Status Pengajuan Subdomain</span>
+                    </a>
+                </li>
+                <hr class="sidebar-divider">
+                <li class="nav-item">
+                    <?php
+                    $user_role = $this->session->userdata('id_role');
+                    $dashboard_url = '';
+
+                    if (in_array($user_role, ['4'])) {
+                        $dashboard_url = site_url('DashboardTendik');
+                    } elseif (in_array($user_role, ['5'])) {
+                        $dashboard_url = site_url('DashboardDosen');
+                    }
+                    ?>
+                    <a class="nav-link kembali-dashboard" href="<?= $dashboard_url; ?>" style="text-decoration: none;">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Kembali ke Dashboard</span>
                     </a>
                 </li>
                 <hr class="sidebar-divider">

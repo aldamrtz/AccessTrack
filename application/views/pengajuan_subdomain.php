@@ -15,7 +15,7 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #e0f5ec;
+            background: linear-gradient(135deg, #e0f5ec, #e0f5ec, #e0f5ec, #00aaff);
             background-size: cover;
             background-attachment: fixed;
             display: flex;
@@ -108,13 +108,32 @@
             font-weight: bold;
         }
 
+        .kembali-dashboard {
+            background-color: #ffffff;
+            color: #0e6b47 !important;
+            font-weight: bold;
+            border-radius: 5px;
+            width: 100%;
+            text-align: center;
+            margin-left: 1px !important;
+        }
+
+        .sidebar .nav-item:last-child {
+            justify-content: center;
+        }
+
+        .kembali-dashboard:hover {
+            color: #1cc88a;
+            text-decoration: none;
+        }
+
         .container-fluid {
             padding: 20px;
         }
 
         h2 {
             margin-bottom: 30px;
-            color: #333;
+            color: #0e6b47;
             font-size: 32px;
             font-weight: bold;
             text-align: center;
@@ -153,26 +172,26 @@
             font-size: 16px;
             transition: all 0.3s ease;
             pointer-events: none;
-            color: #003366;
+            color: #0e6b47;
             z-index: 1;
         }
 
         .form-group .keterangan-label {
             position: absolute;
-            top: 25%;
+            top: 20%;
             left: 15px;
             transform: translateY(-50%);
             font-size: 16px;
             transition: all 0.3s ease;
             pointer-events: none;
-            color: #003366;
+            color: #0e6b47;
             z-index: 1;
         }
 
         .form-group input,
         .form-group textarea {
             color: #333;
-            border-color: #003366;
+            border: 1.5px solid #13855c;
             padding: 10px 15px 10px 15px;
             border-radius: 7px;
             width: 100%;
@@ -189,7 +208,7 @@
         .form-group input:not(:focus):not(:placeholder-shown)+label,
         .form-group select:not(:focus)+label,
         .form-group textarea:not(:focus):not(:placeholder-shown)+label {
-            color: #003366;
+            color: #0e6b47;
         }
 
         .form-group input:focus+label,
@@ -238,9 +257,9 @@
         }
 
         .input-group-text {
-            background-color: rgba(0, 51, 102, 0.25);
-            border-color: #003366;
-            color: #003366;
+            background-color: #e0f5ec;
+            border: 1.5px solid #13855c;
+            color: #0e6b47;
         }
 
         .feedback {
@@ -249,15 +268,17 @@
         }
 
         .feedback.success {
-            color: green;
+            color: #0e6b47;
         }
 
         .feedback.error {
             color: #d9534f;
         }
 
-        .feedback.error+.position-absolute {
-            margin-top: -11px;
+        .position-absolute {
+            color: #0e6b47;
+            top: 23px;
+            transform: none;
         }
 
         .error-border {
@@ -291,7 +312,7 @@
         }
 
         .btn-form {
-            background: linear-gradient(135deg, #333, #003366, #00aaff);
+            background: linear-gradient(135deg, #13855c, #1cc88a, #00aaff);
             color: #ffffff;
             border: none;
             border-radius: 5px;
@@ -337,6 +358,11 @@
         .btn-form .spinner-border {
             position: absolute;
             transform: translate(-50%, -50%);
+        }
+
+        .disable-interaction {
+            pointer-events: none;
+            cursor: not-allowed;
         }
 
         .modal-dialog {
@@ -552,8 +578,6 @@
                 </button>
             </div>
         </nav>
-
-        <!-- Sidebar -->
         <div class="sidebar d-md-block" id="sidebar">
             <a class="sidebar-brand" href="<?= site_url('SubDomainController'); ?>" style="text-decoration: none;">
                 <div class="sidebar-brand-icon">
@@ -574,6 +598,23 @@
                     <a class="nav-link" href="<?= site_url('SubDomainController/status_pengajuan_subdomain'); ?>" style="text-decoration: none;">
                         <i class="fas fa-tasks"></i>
                         <span>Status Pengajuan Subdomain</span>
+                    </a>
+                </li>
+                <hr class="sidebar-divider">
+                <li class="nav-item">
+                    <?php
+                    $user_role = $this->session->userdata('id_role');
+                    $dashboard_url = '';
+
+                    if (in_array($user_role, ['4'])) {
+                        $dashboard_url = site_url('DashboardTendik');
+                    } elseif (in_array($user_role, ['5'])) {
+                        $dashboard_url = site_url('DashboardDosen');
+                    }
+                    ?>
+                    <a class="nav-link kembali-dashboard" href="<?= $dashboard_url; ?>" style="text-decoration: none;">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Kembali ke Dashboard</span>
                     </a>
                 </li>
                 <hr class="sidebar-divider">
@@ -627,9 +668,9 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-text" style="width: 75px">https://</span>
+                                    <span class="input-group-text" style="width: 75px;">https://</span>
                                     <input type="text" class="form-control" id="sub_domain" name="sub_domain" style="z-index: 0;" placeholder=" " value="<?= set_value('sub_domain'); ?>" required>
-                                    <label for="sub_domain" class="form-label" style="margin-left: 75px;">Subdomain</label>
+                                    <label for="sub_domain" class="form-label" style="margin-left: 73px;">Subdomain</label>
                                     <span class="input-group-text">.unjani.ac.id</span>
                                 </div>
                                 <div id="subdomainValidationFeedback" class="feedback"></div>
@@ -644,7 +685,7 @@
                                 <label for="ip_pointing" class="form-label">IP Pointing
                                 </label>
                                 <div id="ipPointingFeedback" class="feedback"></div>
-                                <span class="position-absolute top-50 end-0 translate-middle-y me-3" data-bs-toggle="tooltip" title="IP pointing is the IP address that your subdomain points to. Example: 192.168.1.1">
+                                <span class="position-absolute end-0 translate-middle-y me-3" data-bs-toggle="tooltip" title="IP Pointing adalah alamat IP yang digunakan untuk menghubungkan subdomain Anda ke server yang sesuai. Contoh: 192.168.1.1">
                                     <i class="fas fa-question-circle"></i>
                                 </span>
                             </div>
@@ -653,8 +694,11 @@
                     <div class="row mb-3">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <textarea class="form-control" id="keterangan" rows="3" name="keterangan" placeholder=" " required><?= set_value('keterangan'); ?></textarea>
+                                <textarea class="form-control" id="keterangan" rows="4" name="keterangan" placeholder=" " required><?= set_value('keterangan'); ?></textarea>
                                 <label for="keterangan" class="form-label keterangan-label">Keterangan</label>
+                                <span class="position-absolute end-0 translate-middle-y me-3" data-bs-toggle="tooltip" title="Isi kolom ini dengan informasi tambahan atau penjelasan terkait permintaan subdomain Anda. Contoh: Deskripsi penggunaan subdomain atau tujuan permintaan.">
+                                    <i class="fas fa-question-circle"></i>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -707,6 +751,7 @@
             var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
+
             const form = document.querySelector('form');
             const penanggungJawabInput = document.getElementById('penanggung_jawab');
             const penanggungJawabFeedback = document.getElementById('penanggungJawabFeedback');
@@ -870,8 +915,9 @@
 
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
-                const subdomainAvailabilityFeedback = document.getElementById('subdomainAvailabilityFeedback');
+                form.classList.add('disable-interaction');
 
+                const subdomainAvailabilityFeedback = document.getElementById('subdomainAvailabilityFeedback');
                 let hasError = false;
 
                 if (subdomainAvailabilityFeedback.textContent.includes('Subdomain sudah terdaftar')) {
@@ -956,6 +1002,8 @@
                     setTimeout(() => {
                         form.submit();
                     }, 1000);
+                } else {
+                    form.classList.remove('disable-interaction');
                 }
             });
         });
@@ -975,6 +1023,20 @@
             }).then(function(token) {
                 document.getElementById('recaptcha-token').value = token;
             });
+        });
+
+        const toggler = document.querySelector('.navbar-toggler');
+        const sidebar = document.getElementById('sidebar');
+
+        toggler.addEventListener('click', function(event) {
+            sidebar.classList.toggle('show');
+            event.stopPropagation();
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!sidebar.contains(event.target) && !toggler.contains(event.target)) {
+                sidebar.classList.remove('show');
+            }
         });
 
         document.getElementById('whatsappButton').addEventListener('click', function() {
