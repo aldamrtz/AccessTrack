@@ -5,9 +5,9 @@ class Dashboard_model extends CI_Model
 {
 
     // Konstanta untuk status CSIRT dan Pengajuan Kartu Akses
-    const STATUS_REJECTED = 'rejected'; 
-    const STATUS_PENDING = 'pending';   
-    const STATUS_APPROVED = 'approved'; 
+    const STATUS_REJECTED = 'rejected';
+    const STATUS_PENDING = 'pending';
+    const STATUS_APPROVED = 'approved';
 
     // Konstanta untuk status pengajuan email
     const STATUS_SUBMITTED_EMAIL = 'Email Diajukan';
@@ -20,7 +20,7 @@ class Dashboard_model extends CI_Model
     const STATUS_PENDING_DOMAIN = 'Domain Diproses';
     const STATUS_APPROVED_DOMAIN = 'Domain Dikirim';
     const STATUS_SEND_DOMAIN = 'Domain Diverifikasi';
-    
+
     public function __construct()
     {
         parent::__construct();
@@ -131,30 +131,4 @@ class Dashboard_model extends CI_Model
         return $query->row()->total_pengajuan_domain;
     }
 
-    // Method untuk mengambil semua fakultas yang unik
-    public function get_all_fakultas()
-    {
-        $this->db->distinct();
-        $this->db->select('faculty_department');
-        $query = $this->db->get('pengajuan_ka');
-        if ($query === FALSE) {
-            log_message('error', 'Database query failed: ' . $this->db->last_query());
-            return array();
-        }
-        return $query->result();
-    }
-
-    // Method untuk mengambil semua jurusan yang unik berdasarkan fakultas
-    public function get_jurusan_by_fakultas($fakultas)
-    {
-        $this->db->distinct();
-        $this->db->select('program_studi');
-        $this->db->where('faculty_department', $fakultas);
-        $query = $this->db->get('pengajuan_ka');
-        if ($query === FALSE) {
-            log_message('error', 'Database query failed: ' . $this->db->last_query());
-            return array();
-        }
-        return $query->result();
-    }
 }

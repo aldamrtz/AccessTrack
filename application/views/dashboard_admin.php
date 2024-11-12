@@ -51,14 +51,32 @@
                 Access Track (Admin)
             </div>
         </a>
-
+        <!-- Logout Modal -->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Apakah Anda Yakin Untuk Keluar ?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Pilih "Keluar" di bawah jika Anda siap mengakhiri sesi Anda saat ini.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                        <a class="btn btn-primary" href="<?= base_url('login/logout'); ?>">Keluar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="d-flex align-items-center">
-                        <span class="mr-2 d-none d-lg-inline text-white-600 small username-text">NIP</span>
+                        <span class="mr-2 d-none d-lg-inline text-white-600 small username-text"><?= $id_user; ?></span>
                         <img class="img-profile rounded-circle" src="assets/img/undraw_profile.svg" alt="Profile Picture">
                     </div>
                 </a>
@@ -76,12 +94,6 @@
 
     <!-- Begin Page Content -->
     <div class="container-fluid" style="padding-left: 20px; padding-right: 20px;">
-
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Selamat Datang, Nama</h1>
-        </div>
-
         <!-- Card Container -->
         <div class="container">
             <div class="row justify-content-center align-items-center" style="min-height: 60vh;">

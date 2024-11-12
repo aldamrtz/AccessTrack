@@ -6,32 +6,32 @@ class Login extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        // Load necessary libraries and helpers
+        // Load necessary libraries, helpers, and model
         $this->load->library('form_validation');
-        $this->load->helper('cookie'); // Load the cookie helper
+        $this->load->helper('cookie');
         $this->load->model('LoginModel');
     }
 
     public function index()
     {
-        // Ambil site_key untuk reCAPTCHA
+        // Load reCAPTCHA site key
         $data['site_key'] = $this->config->item('recaptcha_site_key');
         $this->load->view('auth/login', $data);
     }
 
     public function authenticate()
     {
-        // Aturan validasi form
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        // Form validation rules
+        $this->form_validation->set_rules('id_user', 'Id_user', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
         $this->form_validation->set_rules('g-recaptcha-response', 'Recaptcha', 'required');
 
-        // Verifikasi reCAPTCHA
+        // Verify reCAPTCHA
         $recaptcha_response = $this->input->post('g-recaptcha-response');
         $response = $this->verifyRecaptcha($recaptcha_response);
 
         if ($this->form_validation->run() == FALSE || !$response['success']) {
-            // Jika validasi atau reCAPTCHA gagal, tampilkan pesan error
+            // Display error message if validation or reCAPTCHA fails
             $error_message = validation_errors();
             if (!$response['success']) {
                 $error_message .= ' Verifikasi reCAPTCHA gagal.';
@@ -39,34 +39,48 @@ class Login extends CI_Controller
             $this->session->set_flashdata('error', $error_message);
             redirect('login');
         } else {
-            $email = $this->input->post('email');
+            $id_user = $this->input->post('id_user');
             $password = $this->input->post('password');
 
-            // Validasi login melalui LoginModel
-            $user = $this->LoginModel->validate($email, $password);
+            // Validate login with LoginModel
+            $user = $this->LoginModel->validate($id_user, $password);
 
-            if ($user) {
-                // Set session jika login berhasil
-                $this->session->set_userdata('username', $user->username);
-                $this->session->set_userdata('email', $user->email);
+            if ($user !== false) {
+                // Set session data on successful login
+                $this->session->set_userdata('id_user', $user->id_user);
+                $this->session->set_userdata('id_role', $user->id_role);
 
-                // Set cookie untuk sesi login
-                $cookie = array(
-                    'name'   => 'user_session',
-                    'value'  => 'logged_in',
-                    'expire' => '3600', // 1 jam
-                    'secure' => FALSE,  // TRUE jika menggunakan HTTPS
-                    'httponly' => TRUE, // Mencegah akses dari JavaScript
-                    'samesite' => 'Lax' // Mengatur SameSite menjadi Lax
-                );
-
-                $this->input->set_cookie($cookie);
-
-                // Redirect ke dashboard jika login berhasil
-                redirect('dashboard');
+                // Set session data based on user role
+                if ($user->id_role === '1' || $user->id_role === '2' || $user->id_role === '3' || $user->id_role === '4' || $user->id_role === '5') {
+                    $this->session->set_userdata('login', true);
+                    $this->session->set_userdata('Nama', $user->nama_lengkap);
+                }
+                // Redirect based on id_role
+                switch ($user->id_role) {
+                    case 1: // Kepala Sisfo
+                        redirect('dashboard');
+                        break;
+                    case 2: // Mahasiswa
+                        redirect('dashboardmahasiswa');
+                        break;
+                    case 3: // Admin
+                        redirect('dashboardadmin');
+                        break;
+                    case 4: // Tenaga Pendidik
+                        redirect('dashboardtendik');
+                        break;
+                    case 5: // Dosen
+                        redirect('dashboarddosen');
+                        break;
+                    default:
+                        // If role is undefined, redirect to login with error
+                        $this->session->set_flashdata('error', 'Role tidak valid.');
+                        redirect('login');
+                        break;
+                }
             } else {
-                // Tampilkan pesan error jika email atau password salah
-                $this->session->set_flashdata('error', 'Email atau Password salah');
+                // Display error if user id or password is incorrect
+                $this->session->set_flashdata('error', 'user id atau Password salah');
                 redirect('login');
             }
         }
@@ -74,15 +88,12 @@ class Login extends CI_Controller
 
     public function logout()
     {
-        // Load Cookie Helper (should be already loaded in constructor)
-        // Hapus cookie saat logout
+        // Delete login session and cookie
         delete_cookie('user_session');
+        $this->session->unset_userdata('id_user');
+        $this->session->unset_userdata('id_role');
 
-        // Hapus session data
-        $this->session->unset_userdata('user_id');
-        $this->session->unset_userdata('email');
-
-        // Tampilkan pesan sukses logout
+        // Redirect to login with logout message
         $this->session->set_flashdata('success', 'Anda berhasil logout');
         redirect('login');
     }

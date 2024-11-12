@@ -1,16 +1,16 @@
 <?php
 class LoginModel extends CI_Model {
     
-    public function validate($email, $password) {
-        // Hashing password dengan MD5
+    public function validate($id_user, $password) {
+        // Hash the password with MD5
         $hashed_password = md5($password);
 
-        // Cek di database apakah ada user dengan email dan password yang cocok
-        $this->db->where('email', $email);
+        // Query the users table with username and hashed password
+        $this->db->where('id_user', $id_user);
         $this->db->where('password', $hashed_password);
-        $query = $this->db->get('login_admin'); // Asumsikan tabel login
+        $query = $this->db->get('users'); // Assuming the table name is `users`
 
-        // Jika ada hasil yang cocok, kembalikan data user
+        // If a match is found, return the user data
         if ($query->num_rows() == 1) {
             return $query->row();
         } else {

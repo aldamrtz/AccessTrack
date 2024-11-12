@@ -32,7 +32,7 @@
             <?php endif; ?>
             <form action="<?= base_url('login/authenticate'); ?>" method="POST">
                 <div class="input-group">
-                    <input type="email" id="email" name="email" placeholder="Masukkan Email" required>
+                    <input type="text" id="id_user" name="id_user" placeholder="Masukkan ID User" required>
                 </div>
                 <div class="input-group">
                     <input type="password" id="password" name="password" placeholder="Masukkan Password" required>

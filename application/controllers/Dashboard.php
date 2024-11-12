@@ -13,7 +13,7 @@ class Dashboard extends CI_Controller
         $this->load->helper('cookie');
 
         // Cek apakah pengguna sudah login menggunakan username atau email
-        if (!$this->session->userdata('username') && !$this->session->userdata('email')) {
+        if (!$this->session->userdata('id_user')) {
             // Jika belum login, hapus cookie dan redirect ke halaman login
             delete_cookie('user_session'); // Hapus cookie
             $this->session->set_flashdata('error', 'Anda harus login terlebih dahulu.');
@@ -23,13 +23,12 @@ class Dashboard extends CI_Controller
 
     public function index()
     {
-        // Mengambil data dari model
-        $data['dashboard_data'] = $this->Dashboard_model->get_dashboard_data();
-
-        // Ambil username atau email dari session
-        $data['username'] = $this->session->userdata('username') ? $this->session->userdata('username') : $this->session->userdata('email');
-
+        if ($this->session->userdata('id_role') !== '1' && $this->session->userdata('id_role') !== '2' && $this->session->userdata('id_role') !== '3' && $this->session->userdata('id_role') !== '4' && $this->session->userdata('id_role') !== '5') {
+            redirect('login');
+          }
         // Mengirim data ke view
+        $data['id_user'] = $this->session->userdata('id_user');
+        $data['dashboard_data'] = $this->Dashboard_model->get_dashboard_data();
         $this->load->view('dashboard_view', $data);
     }
 
@@ -39,8 +38,7 @@ class Dashboard extends CI_Controller
         $this->load->helper('cookie');
 
         // Hapus session dan cookie saat logout
-        $this->session->unset_userdata('username'); // Hapus session username
-        $this->session->unset_userdata('email'); // Hapus session email
+        $this->session->unset_userdata('id_user'); // Hapus session username
         delete_cookie('user_session'); // Hapus cookie
 
         // Redirect ke halaman login
