@@ -62,7 +62,7 @@ class SubDomainModel extends CI_Model
 
     public function getAllPengajuan()
     {
-        $this->db->order_by('tgl_pengajuan', 'DESC');
+        $this->db->order_by('tgl_pengajuan', 'ASC');
         $query = $this->db->get('pengajuan_subdomain');
         return $query->result_array();
     }
@@ -70,7 +70,7 @@ class SubDomainModel extends CI_Model
     public function getPengajuanByStatus($status)
     {
         $this->db->where('status_pengajuan', $status);
-        $this->db->order_by('tgl_pengajuan', 'DESC');
+        $this->db->order_by('tgl_pengajuan', 'ASC');
         return $this->db->get('pengajuan_subdomain')->result_array();
     }
 
@@ -84,7 +84,7 @@ class SubDomainModel extends CI_Model
     public function getStatusHistory($id_pengajuan_subdomain)
     {
         $this->db->where('id_pengajuan_subdomain', $id_pengajuan_subdomain);
-        $this->db->order_by('tgl_update', 'DESC'); // pastikan ada kolom tgl_update di tabel
+        $this->db->order_by('tgl_update', 'ASC'); // pastikan ada kolom tgl_update di tabel
         return $this->db->get('status_history_subdomain')->result_array();
     }
 

@@ -772,8 +772,8 @@
             penanggungJawabInput.addEventListener('input', function() {
                 if (penanggungJawabInput.value === '') {
                     penanggungJawabFeedback.textContent = '';
-                } else if (!/^[A-Za-z\s]+$/.test(penanggungJawabInput.value)) {
-                    penanggungJawabFeedback.textContent = 'Hanya boleh berisi huruf.';
+                } else if (!/^[A-Za-z\s.,]+$/.test(penanggungJawabInput.value)) {
+                    penanggungJawabFeedback.textContent = 'Hanya boleh berisi huruf, karakter (.), dan (,).';
                     penanggungJawabFeedback.className = 'feedback error';
                 } else {
                     penanggungJawabFeedback.textContent = '';
@@ -951,7 +951,7 @@
                     hasError = true;
                 }
 
-                if (penanggungJawabFeedback.textContent.includes('Hanya boleh berisi huruf.')) {
+                if (penanggungJawabFeedback.textContent.includes('Hanya boleh berisi huruf, karakter (.), dan (,).')) {
                     penanggungJawabInput.classList.add('shake', 'error-border');
                     document.querySelector('label[for="penanggung_jawab"]').classList.add('shake', 'error-border');
 

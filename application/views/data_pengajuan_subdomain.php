@@ -416,7 +416,7 @@
 
         .feedback.success {
             margin-top: 7px !important;
-            color: green;
+            color: #0e6b47;
         }
 
         .feedback.error {
@@ -472,6 +472,54 @@
 
         #scrollToTopBtn:hover {
             background-color: #555555;
+        }
+
+        .not-allowed {
+            cursor: not-allowed !important;
+            pointer-events: none !important;
+        }
+
+        .not-allowed {
+            cursor: not-allowed !important;
+            pointer-events: none !important;
+        }
+
+        .loading {
+            position: relative;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border: 3px solid transparent;
+            border-top: 3px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .loading span {
+            opacity: 0;
+        }
+
+        .loading.btn {
+            background-color: #1cc88a;
+            color: #1cc88a;
         }
     </style>
 
@@ -1025,12 +1073,17 @@
                 });
 
                 var formToSubmit;
+                var clickedButton;
+                var actionConfirmed = false;
 
                 $('.custom-process-btn, .custom-verify-btn, .custom-send-btn').on('click', function(e) {
                     e.preventDefault();
-                    formToSubmit = $(this).closest('form');
 
+                    formToSubmit = $(this).closest('form');
                     var actionText = '';
+                    clickedButton = $(this);
+                    actionConfirmed = false;
+
                     if ($(this).hasClass('custom-process-btn')) {
                         actionText = 'Apakah anda yakin ingin memproses pengajuan ini?';
                     } else if ($(this).hasClass('custom-verify-btn')) {
@@ -1044,8 +1097,21 @@
                 });
 
                 $('#confirmActionBtn').on('click', function() {
+                    actionConfirmed = true;
                     formToSubmit.submit();
                     $('#confirmModal').modal('hide');
+                });
+
+                $('#confirmModal').on('hidden.bs.modal', function() {
+                    $('.custom-process-btn, .custom-verify-btn, .custom-send-btn, .btn-warning, .btn-danger').addClass('not-allowed');
+
+                    if (actionConfirmed && clickedButton) {
+                        clickedButton.addClass('loading not-allowed');
+                    }
+
+                    if (!actionConfirmed && clickedButton) {
+                        clickedButton.removeClass('loading not-allowed');
+                    }
                 });
 
                 $('#diajukanTable, #diprosesTable, #diverifikasiTable, #dikirimTable').DataTable({
