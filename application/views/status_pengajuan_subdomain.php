@@ -41,13 +41,13 @@
 
         .btn-keluar {
             margin-left: auto;
-            background-color: #00aaff;
+            background-color: #0e6b47;
             color: #ffffff;
             margin-top: -13px !important;
         }
 
         .btn-keluar:hover {
-            background-color: #003366;
+            background-color: #13855c;
             color: #ffffff;
         }
 
@@ -191,6 +191,25 @@
             font-weight: bold;
         }
 
+        .kembali-dashboard {
+            background-color: #ffffff;
+            color: #0e6b47 !important;
+            font-weight: bold;
+            border-radius: 5px;
+            width: 100%;
+            text-align: center;
+            margin-left: 1px !important;
+        }
+
+        .sidebar .nav-item:last-child {
+            justify-content: center;
+        }
+
+        .kembali-dashboard:hover {
+            color: #1cc88a;
+            text-decoration: none;
+        }
+
         .container-fluid {
             padding: 20px;
         }
@@ -224,7 +243,7 @@
             font-size: 16px;
             transition: all 0.3s ease;
             pointer-events: none;
-            color: #003366;
+            color: #0e6b47;
             z-index: 1;
         }
 
@@ -236,14 +255,14 @@
             font-size: 16px;
             transition: all 0.3s ease;
             pointer-events: none;
-            color: #003366;
+            color: #0e6b47;
             z-index: 1;
         }
 
         .form-group input,
         .form-group textarea {
             color: #333;
-            border-color: #003366;
+            border-color: #0e6b47;
             padding: 10px 15px 10px 15px;
             border-radius: 5px;
             width: 100%;
@@ -253,7 +272,7 @@
 
         .form-group input:not(:focus):not(:placeholder-shown)+label,
         .form-group textarea:not(:focus):not(:placeholder-shown)+label {
-            color: #003366;
+            color: #0e6b47;
         }
 
         .form-group input:focus+label,
@@ -266,12 +285,13 @@
             background-color: #ffffff;
             padding: 0 5px;
             transform: translateY(0);
-            color: #00aaff;
+            color: #0e6b47;
         }
 
         .form-group input:disabled,
         .form-group textarea:disabled {
             background-color: white;
+            pointer-events: none;
             cursor: not-allowed;
         }
 
@@ -281,12 +301,12 @@
             justify-content: flex-start;
             margin-bottom: 35px;
             margin-top: 10px;
-            border-color: #003366;
+            border-color: #0e6b47;
         }
 
         .nav-tabs .nav-link {
             margin-left: -1px;
-            color: #003366;
+            color: #0e6b47;
             font-size: 15px;
             font-weight: bold;
             width: 100px;
@@ -294,16 +314,16 @@
         }
 
         .nav-tabs .nav-link.active {
-            border-color: #003366;
-            border-top: 5px solid #003366;
-            color: #003366 !important;
+            border-color: #0e6b47;
+            border-top: 5px solid #0e6b47;
+            color: #0e6b47 !important;
             opacity: 1;
             border-bottom-color: white;
         }
 
         .nav-tabs .nav-link:hover {
-            color: #003366;
-            border-color: #003366;
+            color: #0e6b47;
+            border-color: #0e6b47;
         }
 
         .status-box {
@@ -454,8 +474,8 @@
                 <button class="navbar-toggler" type="button" aria-label="Toggle sidebar">
                     <span class="navbar-toggler-icon"></span> <!-- Icon burger -->
                 </button>
-                <a data-bs-toggle="modal" data-bs-target="#logoutModal" href="<?= site_url('EmailController/logout'); ?>" class="btn btn-keluar">
-                    Keluar
+                <a data-bs-toggle="modal" data-bs-target="#logoutModal" href="<?= site_url('EmailController/logoutStatus'); ?>" class="btn btn-keluar">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw"></i> Keluar
                 </a>
             </div>
         </nav>
@@ -481,6 +501,23 @@
                     <a class="nav-link" href="<?= site_url('SubDomainController/status_pengajuan_subdomain'); ?>" style="text-decoration: none;">
                         <i class="fas fa-tasks"></i>
                         <span>Status Pengajuan Subdomain</span>
+                    </a>
+                </li>
+                <hr class="sidebar-divider">
+                <li class="nav-item">
+                    <?php
+                    $user_role = $this->session->userdata('id_role');
+                    $dashboard_url = '';
+
+                    if (in_array($user_role, ['4'])) {
+                        $dashboard_url = site_url('DashboardTendik');
+                    } elseif (in_array($user_role, ['5'])) {
+                        $dashboard_url = site_url('DashboardDosen');
+                    }
+                    ?>
+                    <a class="nav-link kembali-dashboard" href="<?= $dashboard_url; ?>" style="text-decoration: none;">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Kembali ke Dashboard</span>
                     </a>
                 </li>
                 <hr class="sidebar-divider">
@@ -612,7 +649,7 @@
                     <i class="fas fa-exclamation-circle" style="color: #dc3545; font-size: 100px; margin-top: 30px;"></i>
                     <p class="status-text">Konfirmasi Logout</p>
                     <p>Apakah Anda yakin ingin keluar dari halaman ini?</p>
-                    <a class="btn btn-ya" href="<?= site_url('SubDomainController/logout'); ?>">Ya</a>
+                    <a class="btn btn-ya" href="<?= site_url('SubDomainController/logoutStatus'); ?>">Ya</a>
                     <button type="button" class="btn btn-tidak" data-bs-dismiss="modal">Tidak</button>
                 </div>
             </div>

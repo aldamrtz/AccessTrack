@@ -7,6 +7,15 @@ class EmailModel extends CI_Model
     {
         parent::__construct();
         $this->load->database();
+        date_default_timezone_set('Asia/Jakarta');
+    }
+
+    public function get_user_data($id_user)
+    {
+        $this->db->select('id_user, nama_lengkap');
+        $this->db->where('id_user', $id_user);
+        $query = $this->db->get('users');
+        return $query->row();
     }
 
     public function insert($data)
@@ -15,7 +24,7 @@ class EmailModel extends CI_Model
             return FALSE;
         } else {
             if (!isset($data['tgl_Pengajuan'])) {
-                $data['tgl_pengajuan'] = date('Y-m-d');
+                $data['tgl_pengajuan'] = date('Y-m-d H:i:s');
             }
             return $this->db->insert('pengajuan_email', $data);
         }
@@ -58,7 +67,7 @@ class EmailModel extends CI_Model
 
     public function getAllPengajuan()
     {
-        $this->db->order_by('tgl_pengajuan', 'DESC');
+        $this->db->order_by('tgl_pengajuan', 'ASC');
         $query = $this->db->get('pengajuan_email');
         return $query->result_array();
     }
@@ -66,7 +75,7 @@ class EmailModel extends CI_Model
     public function getPengajuanByStatus($status)
     {
         $this->db->where('status_pengajuan', $status);
-        $this->db->order_by('tgl_pengajuan', 'DESC');
+        $this->db->order_by('tgl_pengajuan', 'ASC');
         return $this->db->get('pengajuan_email')->result_array();
     }
 
@@ -80,7 +89,7 @@ class EmailModel extends CI_Model
     public function getStatusHistory($nim)
     {
         $this->db->where('nim', $nim);
-        $this->db->order_by('tgl_update', 'DESC'); // pastikan ada kolom tgl_update di tabel
+        $this->db->order_by('tgl_update', 'ASC'); // pastikan ada kolom tgl_update di tabel
         return $this->db->get('status_history_email')->result_array();
     }
 

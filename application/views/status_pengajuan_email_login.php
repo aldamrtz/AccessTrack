@@ -109,6 +109,25 @@
             font-weight: bold;
         }
 
+        .kembali-dashboard {
+            background-color: #ffffff;
+            color: #0e6b47 !important;
+            font-weight: bold;
+            border-radius: 5px;
+            width: 100%;
+            text-align: center;
+            margin-left: 1px !important;
+        }
+
+        .sidebar .nav-item:last-child {
+            justify-content: center;
+        }
+
+        .kembali-dashboard:hover {
+            color: #1cc88a;
+            text-decoration: none;
+        }
+
         .container-fluid {
             padding: 20px;
         }
@@ -488,6 +507,13 @@
                     <a class="nav-link" href="<?= site_url('EmailController/status_pengajuan_email'); ?>" style="text-decoration: none;">
                         <i class="fas fa-tasks"></i>
                         <span>Status Pengajuan Email</span>
+                    </a>
+                </li>
+                <hr class="sidebar-divider">
+                <li class="nav-item">
+                    <a class="nav-link kembali-dashboard" href="<?= site_url('DashboardMahasiswa'); ?>" style="text-decoration: none;">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Kembali ke Dashboard</span>
                     </a>
                 </li>
                 <hr class="sidebar-divider">

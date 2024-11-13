@@ -41,13 +41,13 @@
 
         .btn-keluar {
             margin-left: auto;
-            background-color: #00aaff;
+            background-color: #0e6b47;
             color: #ffffff;
             margin-top: -13px !important;
         }
 
         .btn-keluar:hover {
-            background-color: #003366;
+            background-color: #13855c;
             color: #ffffff;
         }
 
@@ -191,20 +191,27 @@
             font-weight: bold;
         }
 
+        .kembali-dashboard {
+            background-color: #ffffff;
+            color: #0e6b47 !important;
+            font-weight: bold;
+            border-radius: 5px;
+            width: 100%;
+            text-align: center;
+            margin-left: 1px !important;
+        }
+
+        .sidebar .nav-item:last-child {
+            justify-content: center;
+        }
+
+        .kembali-dashboard:hover {
+            color: #1cc88a;
+            text-decoration: none;
+        }
+
         .container-fluid {
             padding: 20px;
-        }
-
-        h2 {
-            margin-bottom: 30px;
-            color: #333;
-            font-size: 32px;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        h2 i {
-            margin-right: 15px;
         }
 
         .form-wrapper {
@@ -236,14 +243,14 @@
             font-size: 16px;
             transition: all 0.3s ease;
             pointer-events: none;
-            color: #003366;
+            color: #0e6b47;
             z-index: 1;
         }
 
         .form-group input,
         .form-group button {
             color: #333;
-            border-color: #003366;
+            border-color: #0e6b47;
             padding: 10px 15px 10px 15px;
             border-radius: 5px;
             width: 100%;
@@ -253,7 +260,7 @@
 
         .form-group input:not(:focus):not(:placeholder-shown)+label,
         .form-group button:not(:focus)+label {
-            color: #003366;
+            color: #0e6b47;
         }
 
         .form-group input:focus+label,
@@ -266,30 +273,24 @@
             background-color: #ffffff;
             padding: 0 5px;
             transform: translateY(0);
-            color: #00aaff;
+            color: #0e6b47;
         }
 
         .form-group button:not(:focus):valid+label {
-            color: #003366;
-        }
-
-        .form-group input.shake+label,
-        .form-group button.shake+label {
-            color: #d9534f !important;
-            box-shadow: none;
+            color: #0e6b47;
         }
 
         .input-group-text {
-            background-color: #003366;
-            border-color: #003366;
+            background-color: #0e6b47;
+            border-color: #0e6b47;
             color: #ffffff;
             width: 100px;
         }
 
         .input-group-text:hover {
             background-color: #ffffff;
-            border-color: #003366;
-            color: #003366;
+            border-color: #0e6b47;
+            color: #0e6b47;
             width: 100px;
         }
 
@@ -300,6 +301,7 @@
 
         .form-group input:disabled {
             background-color: white;
+            pointer-events: none;
             cursor: not-allowed;
         }
 
@@ -313,12 +315,12 @@
             justify-content: flex-start;
             margin-bottom: 35px;
             margin-top: 10px;
-            border-color: #003366;
+            border-color: #0e6b47;
         }
 
         .nav-tabs .nav-link {
             margin-left: -1px;
-            color: #003366;
+            color: #0e6b47;
             font-size: 15px;
             font-weight: bold;
             width: 100px;
@@ -326,16 +328,16 @@
         }
 
         .nav-tabs .nav-link.active {
-            border-color: #003366;
-            border-top: 5px solid #003366;
-            color: #003366 !important;
+            border-color: #0e6b47;
+            border-top: 5px solid #0e6b47;
+            color: #0e6b47 !important;
             opacity: 1;
             border-bottom-color: white;
         }
 
         .nav-tabs .nav-link:hover {
-            color: #003366;
-            border-color: #003366;
+            color: #0e6b47;
+            border-color: #0e6b47;
         }
 
         .status-box {
@@ -384,6 +386,41 @@
             transition: transform 0.3s ease;
             position: relative;
             cursor: default;
+        }
+
+        .modal-ktm .modal-header .dropdown-toggle,
+        .modal-ktm .modal-footer .btn {
+            color: #fff;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        #dropdownDownload {
+            background-color: #0e6b47;
+        }
+
+        #dropdownDownload:hover {
+            background-color: #1cc88a;
+        }
+
+        #zoomIn,
+        #zoomOut {
+            background-color: #0e6b47;
+        }
+
+        #zoomIn:hover,
+        #zoomOut:hover {
+            background-color: #1cc88a;
+        }
+
+        #rotateLeft,
+        #rotateRight {
+            background-color: #0e6b47;
+        }
+
+        #rotateLeft:hover,
+        #rotateRight:hover {
+            background-color: #1cc88a;
         }
 
         .modal.fade {
@@ -519,8 +556,8 @@
                 <button class="navbar-toggler" type="button" aria-label="Toggle sidebar">
                     <span class="navbar-toggler-icon"></span> <!-- Icon burger -->
                 </button>
-                <a data-bs-toggle="modal" data-bs-target="#logoutModal" href="<?= site_url('EmailController/logout'); ?>" class="btn btn-keluar">
-                    Keluar
+                <a data-bs-toggle="modal" data-bs-target="#logoutModal" href="<?= site_url('EmailController/logoutStatus'); ?>" class="btn btn-keluar">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw"></i> Keluar
                 </a>
             </div>
         </nav>
@@ -546,6 +583,13 @@
                     <a class="nav-link" href="<?= site_url('EmailController/status_pengajuan_email'); ?>" style="text-decoration: none;">
                         <i class="fas fa-tasks"></i>
                         <span>Status Pengajuan Email</span>
+                    </a>
+                </li>
+                <hr class="sidebar-divider">
+                <li class="nav-item">
+                    <a class="nav-link kembali-dashboard" href="<?= site_url('DashboardMahasiswa'); ?>" style="text-decoration: none;">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Kembali ke Dashboard</span>
                     </a>
                 </li>
                 <hr class="sidebar-divider">
@@ -700,7 +744,7 @@
                     <i class="fas fa-exclamation-circle" style="color: #dc3545; font-size: 100px; margin-top: 30px;"></i>
                     <p class="status-text">Konfirmasi Logout</p>
                     <p>Apakah Anda yakin ingin keluar dari halaman ini?</p>
-                    <a class="btn btn-ya" href="<?= site_url('EmailController/logout'); ?>">Ya</a>
+                    <a class="btn btn-ya" href="<?= site_url('EmailController/logoutStatus'); ?>">Ya</a>
                     <button type="button" class="btn btn-tidak" data-bs-dismiss="modal">Tidak</button>
                 </div>
             </div>

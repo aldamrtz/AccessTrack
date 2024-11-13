@@ -75,27 +75,6 @@
             align-items: center;
         }
 
-        .admin-name {
-            margin-right: 8px;
-            display: inline;
-            font-size: 15px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .img-profile {
-            width: 30px !important;
-            height: 30px !important;
-            margin-left: 7px;
-            border-radius: 50%;
-            background-color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            font-size: 15px;
-        }
-
         #content {
             padding-top: 100px;
             background-color: #e0f5ec;
@@ -348,6 +327,41 @@
             cursor: default;
         }
 
+        .modal-ktm .modal-header .dropdown-toggle,
+        .modal-ktm .modal-footer .btn {
+            color: #fff;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        #dropdownDownload {
+            background-color: #0e6b47;
+        }
+
+        #dropdownDownload:hover {
+            background-color: #1cc88a;
+        }
+
+        #zoomIn,
+        #zoomOut {
+            background-color: #0e6b47;
+        }
+
+        #zoomIn:hover,
+        #zoomOut:hover {
+            background-color: #1cc88a;
+        }
+
+        #rotateLeft,
+        #rotateRight {
+            background-color: #0e6b47;
+        }
+
+        #rotateLeft:hover,
+        #rotateRight:hover {
+            background-color: #1cc88a;
+        }
+
         .modal-dialog {
             display: flex;
             align-items: center;
@@ -392,30 +406,15 @@
             font-weight: bold;
         }
 
-        .btn-ya {
-            background-color: #dc3545;
+        .btn-kembali {
+            margin-left: auto;
+            background-color: #333333;
             color: #ffffff;
-            width: 70px;
-            margin-top: 30px;
         }
 
-        .btn-ya:hover {
-            background-color: #c82333;
+        .btn-kembali:hover {
+            background-color: #555555;
             color: #ffffff;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-tidak {
-            background-color: #13855c;
-            color: #ffffff;
-            width: 70px;
-            margin-top: 30px;
-        }
-
-        .btn-tidak:hover {
-            background-color: #0e6b47;
-            color: #ffffff;
-            transition: background-color 0.3s ease;
         }
 
         .dataTables_filter input {
@@ -449,9 +448,28 @@
             transition: background-color 0.3s !important;
         }
 
-        .dataTables_paginate .paginate_button:hover {}
+        .modal-content .form-group label {
+            color: #0e6b47;
+            margin-bottom: 5px;
+        }
 
-        .dataTables_paginate .paginate_button.current {}
+        .modal-content .form-control,
+        .modal-content .form-select {
+            border: 1px solid #0e6b47;
+        }
+
+        .modal-content .form-control:focus,
+        .modal-content .form-select:focus {
+            border-color: #00aaff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 170, 255, 0.25);
+        }
+
+        input[type="file"]::-webkit-file-upload-button {
+            background-color: #e0f5ec;
+            cursor: pointer;
+            color: #0e6b47;
+            transition: background-color 0.3s;
+        }
 
         .form-group input.error-border,
         .form-group select.error-border {
@@ -483,7 +501,8 @@
         }
 
         .feedback.success {
-            color: green;
+            margin-top: 7px !important;
+            color: #0e6b47;
         }
 
         .feedback.error {
@@ -523,6 +542,75 @@
                 transform: translateX(-5px);
             }
         }
+
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            background-color: #333333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            width: 40px;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 99999 !important;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: #555555;
+        }
+
+        .not-allowed {
+            cursor: not-allowed !important;
+            pointer-events: none !important;
+        }
+
+        .not-allowed {
+            cursor: not-allowed !important;
+            pointer-events: none !important;
+        }
+
+        .loading {
+            position: relative;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border: 3px solid transparent;
+            border-top: 3px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .loading span {
+            opacity: 0;
+        }
+
+        .loading.btn {
+            background-color: #1cc88a;
+            color: #1cc88a;
+        }
     </style>
 </head>
 
@@ -536,7 +624,7 @@
                 <div class="sidebar-brand-text">ACCESS TRACK</div>
             </a>
             <hr class="sidebar-divider">
-            <div class="sidebar-heading" style="font-size: 12px; margin-bottom: -7px;">DATA PENGAJUAN</div>
+            <div class="sidebar-heading" style="font-size: 12px; margin-bottom: -7px;">EMAIL</div>
             <li class="nav-item active">
                 <a class="nav-link" href="<?= site_url('AdminPengajuanController/data_pengajuan_email'); ?>">
                     <i class="fas fa-envelope"></i>
@@ -544,22 +632,22 @@
                 </a>
             </li>
             <li class="nav-item" style="margin-top: -10px;">
+                <a class="nav-link" href="<?= site_url('AdminPengajuanController/data_email_terdaftar'); ?>">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <span>Email Terdaftar</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading" style="font-size: 12px; margin-bottom: -7px;">SUBDOMAIN</div>
+            <li class="nav-item">
                 <a class="nav-link" href="<?= site_url('AdminPengajuanController/data_pengajuan_subdomain'); ?>">
                     <i class="fas fa-globe"></i>
                     <span>Pengajuan Subdomain</span>
                 </a>
             </li>
-            <hr class="sidebar-divider">
-            <div class="sidebar-heading" style="font-size: 12px; margin-bottom: -7px;">DATA TERDAFTAR</div>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= site_url('AdminPengajuanController/data_email_terdaftar'); ?>">
-                    <i class="fas fa-envelope"></i>
-                    <span>Email Terdaftar</span>
-                </a>
-            </li>
             <li class="nav-item" style="margin-top: -10px;">
                 <a class="nav-link" href="<?= site_url('AdminPengajuanController/data_subdomain_terdaftar'); ?>">
-                    <i class="fas fa-globe"></i>
+                    <i class="fas fa-sitemap"></i>
                     <span>Subdomain Terdaftar</span>
                 </a>
             </li>
@@ -576,27 +664,14 @@
                     </button>
                     <ul class="navbar-nav ml-auto">
                         <div class="topbar-divider d-none d-sm-block"></div>
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="admin-name"><?= $this->session->userdata('admin_name'); ?></span>
-                                <div class="img-profile">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        <a href="<?= site_url('DashboardAdmin'); ?>" class="btn btn-kembali">
+                            <i class="fas fa-arrow-left"></i> Kembali ke Dashboard
+                        </a>
                     </ul>
                 </nav>
 
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">DASHBOARD</h1>
                         <div class="dropdown">
                             <button class="btn btn btn-cetak dropdown-toggle" type="button" id="dropdownCetakLaporan" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-download fa-sm" style="color: #ffffff; margin-right: 5px;"></i> Cetak Laporan
@@ -887,10 +962,6 @@
             </div>
         </div>
 
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
-
         <div class="modal fade" id="ktmModal" tabindex="-1" aria-labelledby="ktmModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-ktm modal-md">
                 <div class="modal-content">
@@ -931,11 +1002,11 @@
         </div>
 
         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm" role="document" style="width: 100%; max-width: 700px; margin-top: 130px; margin-bottom: 130px;">
+            <div class="modal-dialog modal-sm" role="document" style="width: 100%; max-width: 700px; margin-top: 150px; margin-bottom: 150px;">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="background: linear-gradient(135deg, #13855c, #13855c, #1cc88a); color: #ffffff;">
                         <h5 class="modal-title" id="editModalLabel">Edit Pengajuan</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #ffffff;">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -945,7 +1016,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="editNim">Nomor Induk Mahasiswa (NIM)</label>
-                                        <input type="text" class="form-control" id="editNim" disabled>
+                                        <input type="text" class="form-control" id="editNim" disabled style="background-color: #e0f5ec;">
                                         <input type="hidden" name="nim" id="hiddenEditNim">
                                     </div>
                                 </div>
@@ -976,7 +1047,7 @@
                                         <label for="editEmail">Email yang Diajukan</label>
                                         <input type="email" class="form-control" id="editEmail" name="email_diajukan" required>
                                         <div id="emailValidationFeedback" class="feedback"></div>
-                                        <div id="emailAvailabilityFeedback" class="feedback"></div>
+                                        <div id="emailAvailabilityFeedback" class="feedback" style="margin-top: 10px;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -995,7 +1066,7 @@
                                         <label for="ktmPreview">KTM Saat Ini</label>
                                         <input type="hidden" name="current_ktm" id="hiddenEditKtm">
                                         <div id="ktmPreviewContainer">
-                                            <img id="ktmPreview" src="" alt="KTM Preview" class="img-thumbnail" style="max-width: 300px;">
+                                            <img id="ktmPreview" src="" alt="KTM Preview" class="img-thumbnail" style="max-width: 300px; border-color: #0e6b47;">
                                         </div>
                                     </div>
                                 </div>
@@ -1018,7 +1089,7 @@
         </div>
 
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog" role="document" style="width: 430px; max-width: 430px;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
@@ -1042,7 +1113,7 @@
 
         <!-- Modal Konfirmasi Aksi -->
         <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog" role="document" style="width: 450px; max-width: 450px;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="confirmModalLabel">Konfirmasi Aksi</h5>
@@ -1061,22 +1132,9 @@
             </div>
         </div>
 
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
-            <div class="modal-dialog" style="max-width: 350px;">
-                <div class="modal-content">
-                    <div class="modal-body text-center">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <i class="fas fa-exclamation-circle" style="color: #dc3545; font-size: 100px; margin-top: 30px;"></i>
-                        <p class="status-text">Konfirmasi Logout</p>
-                        <p>Apakah Anda yakin ingin keluar dari halaman ini?</p>
-                        <a class="btn btn-ya" href="<?= site_url('LoginPengajuanController/logout'); ?>">Ya</a>
-                        <button type="button" class="btn btn-tidak" data-bs-dismiss="modal">Tidak</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <button id="scrollToTopBtn" title="Go to top" class="btn btn-primary">
+            <i class="fas fa-arrow-up"></i>
+        </button>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -1088,6 +1146,18 @@
 
         <script>
             $(document).ready(function() {
+                $(window).scroll(function() {
+                    if ($(this).scrollTop() > 200) {
+                        $('#scrollToTopBtn').fadeIn();
+                    } else {
+                        $('#scrollToTopBtn').fadeOut();
+                    }
+                });
+
+                $('#scrollToTopBtn').click(function() {
+                    $('html, body').scrollTop(0);
+                });
+
                 $('#deleteModal').on('show.bs.modal', function(event) {
                     var button = $(event.relatedTarget);
                     var id = button.data('id');
@@ -1137,33 +1207,77 @@
                     $('#editEmail').removeClass('error-border');
                     $('#editEmailPengguna').removeClass('error-border');
                     $('#editKtm').removeClass('error-border');
+
+                    $('#ktmPreview').attr('src', '');
+                    $('#editKtm').val('');
                 });
 
                 var formToSubmit;
-
-                $('.custom-process-btn, .custom-verify-btn, .send-btn').on('click', function(e) {
+                var clickedButton;
+                var actionConfirmed = false;
+                $('.custom-process-btn, .custom-verify-btn').on('click', function(e) {
                     e.preventDefault();
+
                     formToSubmit = $(this).closest('form');
                     var actionText = '';
+                    clickedButton = $(this);
+                    actionConfirmed = false;
+
                     if ($(this).hasClass('custom-process-btn')) {
                         actionText = 'Apakah anda yakin ingin memproses pengajuan ini?';
                     } else if ($(this).hasClass('custom-verify-btn')) {
                         actionText = 'Apakah anda yakin ingin memverifikasi pengajuan ini?';
-                    } else if ($(this).hasClass('send-btn')) {
-                        actionText = 'Apakah Anda yakin ingin mengirimkan email ini?';
                     }
                     $('#modalBody').text(actionText);
                     $('#confirmModal').modal('show');
                 });
 
+                $('.send-btn').on('click', function(e) {
+                    formToSubmit = $(this).closest('form');
+                    var passwordField = formToSubmit.find('input[name="password"]');
+                    var password = passwordField.val().trim();
+                    if (password === '') {
+                        e.stopImmediatePropagation();
+                        return;
+                    }
+
+                    e.preventDefault();
+                    var actionText = 'Apakah Anda yakin ingin mengirimkan email ini?';
+                    $('#modalBody').text(actionText);
+                    $('#confirmModal').modal('show');
+
+                    clickedButton = $(this);
+                    actionConfirmed = false;
+                });
+
                 $('#confirmActionBtn').on('click', function() {
+                    actionConfirmed = true;
                     formToSubmit.submit();
                     $('#confirmModal').modal('hide');
                 });
 
+                $('#confirmModal').on('hidden.bs.modal', function() {
+                    var passwordField = $('.send-btn').closest('form').find('input[name="password"]');
+                    passwordField.val('');
+
+                    $('.custom-process-btn, .custom-verify-btn, .send-btn, .btn-warning, .btn-danger').addClass('not-allowed');
+
+                    if (actionConfirmed && clickedButton) {
+                        passwordField.prop('disabled', true);
+                        clickedButton.addClass('loading not-allowed');
+                    }
+
+                    if (!actionConfirmed && clickedButton) {
+                        clickedButton.removeClass('loading not-allowed');
+                        passwordField.prop('disabled', false);
+                    }
+
+                    actionConfirmed = false;
+                });
+
                 $('#diajukanTable, #diprosesTable, #diverifikasiTable, #dikirimTable').DataTable({
                     "pagingType": "simple_numbers",
-                    "lengthMenu": [5, 10, 25, 50, 100],
+                    "lengthMenu": [10, 25, 50, 100],
                     "language": {
                         "search": "Cari:",
                         "lengthMenu": "Tampilkan _MENU_ entri per halaman",
@@ -1557,7 +1671,7 @@
                 });
 
                 function checkEmailAvailability(email) {
-                    const emailInput = document.getElementById('editEmail'); // Define emailInput here
+                    const emailInput = document.getElementById('editEmail');
                     const emailPrefix = email.split('@')[0];
                     const prodi = document.getElementById('editProdi').value;
                     const availabilityFeedback = document.getElementById('emailAvailabilityFeedback');

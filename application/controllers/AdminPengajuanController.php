@@ -7,23 +7,37 @@ class AdminPengajuanController extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        date_default_timezone_set('Asia/Jakarta');
         $this->load->model('EmailModel');
         $this->load->model('SubDomainModel');
         $this->load->model('AdminPengajuanModel');
         $this->load->helper('url');
         $this->load->library('session');
-        $this->checkLogin();
-    }
 
-    private function checkLogin()
-    {
-        if (!$this->session->userdata('admin_logged_in')) {
-            redirect('LoginPengajuanController');
+        check_role([3]);
+        $this->load->model('Dashboard_ModelAktor');
+        $this->load->helper('cookie');
+
+        if (!$this->session->userdata('id_user')) {
+            delete_cookie('user_session');
+            $this->session->set_flashdata('error', 'Anda harus login terlebih dahulu.');
+            redirect('login');
         }
     }
 
     public function index()
     {
+        if ($this->session->userdata('id_role') !== '1' && $this->session->userdata('id_role') !== '2' && $this->session->userdata('id_role') !== '3' && $this->session->userdata('id_role') !== '4' && $this->session->userdata('id_role') !== '5') {
+            redirect('login');
+        }
+
+        $id_user = $this->session->userdata('id_user');
+        $user_data = $this->Dashboard_ModelAktor->get_user_data($id_user);
+        $data['id_user'] = $user_data->id_user;
+        $data['nama_lengkap'] = $user_data->nama_lengkap;
+
+        // Mengirim data ke view
+        $data['id_user'] = $this->session->userdata('id_user');
         $data['program_studi'] = $this->EmailModel->getProgramStudi();
         $data['admin_name'] = $this->session->userdata('admin_name');
         $data['profile_image'] = $this->session->userdata('profile_image');
@@ -264,19 +278,21 @@ class AdminPengajuanController extends CI_Controller
 
         if ($status == 'Diproses') {
             $subject = 'Pembaruan Status Pengajuan Email';
-            $message = '<p>Halo, ' . $nama_lengkap . ',</p>';
-            $message .= '<p>Ada pembaruan terbaru terkait pengajuan pembuatan akun email Anda.</p>';
-            $message .= '<p>Silakan cek halaman berikut untuk mengetahui status terbaru: <a href="' . base_url('EmailController/status_pengajuan_email') . '">cek status pengajuan</a>.</p>';
-            $message .= '<p>Salam hormat,</p>';
-            $message .= '<p>Tim Admin</p>';
+            $message = '<p style="margin-top: 0; padding-top: 0;">Halo, ' . $nama_lengkap . '!</p>';
+            $message .= '<p style="margin: 0; padding: 0;">Ada pembaruan terbaru terkait pengajuan pembuatan akun email Anda.</p>';
+            $message .= '<p style="margin-bottom: 0; padding-bottom: 0;">Silakan klik tombol di bawah ini untuk melihat status terbaru dari pengajuan Anda:</p>';
+            $message .= '<p style="margin-bottom: 3px; padding-bottom: 3px; margin-top: 3px; padding-top: 3px;"><a href="' . base_url('EmailController/status_pengajuan_email_login') . '" style="display: inline-block; padding: 10px 20px; background-color: #00aaff; color: #fff; text-decoration: none; border-radius: 5px; width: 155px; text-align: center;">Lihat Status Pengajuan</a></p>';
+            $message .= '<p style="margin: 0; padding: 0;">Terima kasih atas perhatian Anda.</p>';
+            $message .= '<p style="margin-bottom: 0; padding-bottom: 0; font-size: 12px; color: #888;">Email ini dikirim secara otomatis. Mohon untuk tidak membalas email ini.</p>';
             $this->sendEmail($pengajuan->email_pengguna, $subject, $message);
         } elseif ($status == 'Diverifikasi') {
             $subject = 'Pembaruan Status Pengajuan Email';
-            $message = '<p>Halo, ' . $nama_lengkap . ',</p>';
-            $message .= '<p>Ada pembaruan terbaru terkait pengajuan pembuatan akun email Anda.</p>';
-            $message .= '<p>Silakan cek halaman berikut untuk mengetahui status terbaru: <a href="' . base_url('EmailController/status_pengajuan_email') . '">cek status pengajuan</a>.</p>';
-            $message .= '<p>Salam hormat,</p>';
-            $message .= '<p>Tim Admin</p>';
+            $message = '<p style="margin-top: 0; padding-top: 0;">Halo, ' . $nama_lengkap . '!</p>';
+            $message .= '<p style="margin: 0; padding: 0;">Ada pembaruan terbaru terkait pengajuan pembuatan akun email Anda.</p>';
+            $message .= '<p style="margin-bottom: 0; padding-bottom: 0;">Silakan klik tombol di bawah ini untuk melihat status terbaru dari pengajuan Anda:</p>';
+            $message .= '<p style="margin-bottom: 3px; padding-bottom: 3px; margin-top: 3px; padding-top: 3px;"><a href="' . base_url('EmailController/status_pengajuan_email_login') . '" style="display: inline-block; padding: 10px 20px; background-color: #00aaff; color: #fff; text-decoration: none; border-radius: 5px; width: 155px; text-align: center;">Lihat Status Pengajuan</a></p>';
+            $message .= '<p style="margin: 0; padding: 0;">Terima kasih atas perhatian Anda.</p>';
+            $message .= '<p style="margin-bottom: 0; padding-bottom: 0; font-size: 12px; color: #888;">Email ini dikirim secara otomatis. Mohon untuk tidak membalas email ini.</p>';
             $this->sendEmail($pengajuan->email_pengguna, $subject, $message);
         }
         redirect('AdminPengajuanController/data_pengajuan_email');
@@ -286,7 +302,7 @@ class AdminPengajuanController extends CI_Controller
     {
         $id = $this->input->post('id');
         $password = $this->input->post('password');
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        // $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         $this->EmailModel->updateStatus($id, 'Selesai');
         $pengajuan = $this->EmailModel->getPengajuanById($id);
@@ -294,24 +310,24 @@ class AdminPengajuanController extends CI_Controller
 
         $to = $pengajuan->email_pengguna;
         $subject = 'Akun Email Anda Telah Dibuat';
-        $message = '<p>Halo, ' . $nama_lengkap . ',</p>';
+        $message = '<p style="margin-top: 0; padding-top: 0;">Halo, ' . $nama_lengkap . '!</p>';
         $message .= '<p>Kami menginformasikan bahwa akun email Anda telah berhasil dibuat.</p>';
-        $message .= '<p><strong>Detail Akun:</strong></p>';
-        $message .= '<p>Email: <strong>' . $pengajuan->email_diajukan . '</strong></p>';
-        $message .= '<p>Password: <strong>' . $password . '</strong></p>';
-        $message .= '<p>Silakan gunakan informasi ini untuk mengakses akun email Anda.</p>';
-        $message .= '<p>Jika Anda memiliki pertanyaan lebih lanjut atau memerlukan bantuan, jangan ragu untuk menghubungi kami.</p>';
-        $message .= '<p>Salam hormat,</p>';
-        $message .= '<p>Tim Admin</p>';
+        $message .= '<p style="margin: 0; padding: 0;"><strong>Detail Akun:</strong></p>';
+        $message .= '<p style="margin: 0; padding: 0;">Email: <strong>' . $pengajuan->email_diajukan . '</strong></p>';
+        $message .= '<p style="margin: 0; padding: 0;">Password: <strong>' . $password . '</strong></p>';
+        $message .= '<p style="margin-bottom: 0; padding-bottom: 0;">Silakan gunakan informasi ini untuk mengakses akun email Anda.</p>';
+        $message .= '<p style="margin: 0; padding: 0;">Terima kasih atas perhatian Anda.</p>';
+
+        $message .= '<p style="margin-bottom: 0; padding-bottom: 0; font-size: 12px; color: #888;">Email ini dikirim secara otomatis. Mohon untuk tidak membalas email ini.</p>';
         $this->sendEmail($to, $subject, $message);
 
-        $tgl_selesai = date('Y-m-d');
+        $tgl_selesai = date('Y-m-d H:i:s');
         $registered_email_data = [
             'nim' => $pengajuan->nim,
             'prodi' => $pengajuan->prodi,
             'nama_lengkap' => $pengajuan->nama_lengkap,
             'email' => $pengajuan->email_diajukan,
-            'password' => $hashedPassword,
+            'password' => $password,
             'tgl_selesai' => $tgl_selesai
         ];
 
@@ -430,32 +446,34 @@ class AdminPengajuanController extends CI_Controller
 
         if ($status == 'Diproses') {
             $subject = 'Pembaruan Status Pengajuan Subdomain';
-            $message = '<p>Halo, ' . $penanggung_jawab . ',</p>';
-            $message .= '<p>Ada pembaruan terbaru terkait pengajuan pembuatan subdomain Anda.</p>';
-            $message .= '<p>Silakan cek halaman berikut untuk mengetahui status terbaru: <a href="' . base_url('SubdomainController/status_pengajuan_subdomain') . '">cek status pengajuan</a>.</p>';
-            $message .= '<p>Salam hormat,</p>';
-            $message .= '<p>Tim Admin</p>';
+            $message = '<p style="margin-top: 0; padding-top: 0;">Halo, ' . $penanggung_jawab . '!</p>';
+            $message .= '<p style="margin: 0; padding: 0;">Ada pembaruan terbaru terkait pengajuan pembuatan subdomain Anda.</p>';
+            $message .= '<p style="margin-bottom: 0; padding-bottom: 0;">Silakan klik tombol di bawah ini untuk melihat status terbaru dari pengajuan Anda:</p>';
+            $message .= '<p style="margin-bottom: 3px; padding-bottom: 3px; margin-top: 3px; padding-top: 3px;"><a href="' . base_url('SubdomainController/status_pengajuan_subdomain_login') . '" style="display: inline-block; padding: 10px 20px; background-color: #00aaff; color: #fff; text-decoration: none; border-radius: 5px; width: 155px; text-align: center;">Lihat Status Pengajuan</a></p>';
+            $message .= '<p style="margin: 0; padding: 0;">Terima kasih atas perhatian Anda.</p>';
+            $message .= '<p style="margin-bottom: 0; padding-bottom: 0; font-size: 12px; color: #888;">Email ini dikirim secara otomatis. Mohon untuk tidak membalas email ini.</p>';
             $this->sendEmail($pengajuan->email_penanggung_jawab, $subject, $message);
         } elseif ($status == 'Diverifikasi') {
             $subject = 'Pembaruan Status Pengajuan Subdomain';
-            $message = '<p>Halo, ' . $penanggung_jawab . ',</p>';
-            $message .= '<p>Ada pembaruan terbaru terkait pengajuan pembuatan subdomain Anda.</p>';
-            $message .= '<p>Silakan cek halaman berikut untuk mengetahui status terbaru: <a href="' . base_url('SubdomainController/status_pengajuan_subdomain') . '">cek status pengajuan</a>.</p>';
-            $message .= '<p>Salam hormat,</p>';
-            $message .= '<p>Tim Admin</p>';
+            $message = '<p style="margin-top: 0; padding-top: 0;">Halo, ' . $penanggung_jawab . '!</p>';
+            $message .= '<p style="margin: 0; padding: 0;">Ada pembaruan terbaru terkait pengajuan pembuatan subdomain Anda.</p>';
+            $message .= '<p style="margin-bottom: 0; padding-bottom: 0;">Silakan klik tombol di bawah ini untuk melihat status terbaru dari pengajuan Anda:</p>';
+            $message .= '<p style="margin-bottom: 3px; padding-bottom: 3px; margin-top: 3px; padding-top: 3px;"><a href="' . base_url('SubdomainController/status_pengajuan_subdomain_login') . '" style="display: inline-block; padding: 10px 20px; background-color: #00aaff; color: #fff; text-decoration: none; border-radius: 5px; width: 155px; text-align: center;">Lihat Status Pengajuan</a></p>';
+            $message .= '<p style="margin: 0; padding: 0;">Terima kasih atas perhatian Anda.</p>';
+            $message .= '<p style="margin-bottom: 0; padding-bottom: 0; font-size: 12px; color: #888;">Email ini dikirim secara otomatis. Mohon untuk tidak membalas email ini.</p>';
             $this->sendEmail($pengajuan->email_penanggung_jawab, $subject, $message);
         } elseif ($status == 'Selesai') {
             $subject = 'Subdomain Anda Telah Dibuat';
-            $message = '<p>Halo, ' . $penanggung_jawab . ',</p>';
+            $message = '<p style="margin-top: 0; padding-top: 0;">Halo, ' . $penanggung_jawab . '!</p>';
             $message .= '<p>Kami menginformasikan bahwa subdomain Anda telah berhasil dibuat.</p>';
-            $message .= '<p><strong>Detail:</strong></p>';
-            $message .= '<p>Subdomain: <strong>' . $pengajuan->sub_domain . '</strong></p>';
-            $message .= '<p>Jika Anda memiliki pertanyaan lebih lanjut atau memerlukan bantuan, jangan ragu untuk menghubungi kami.</p>';
-            $message .= '<p>Salam hormat,</p>';
-            $message .= '<p>Tim Admin</p>';
+            $message .= '<p style="margin: 0; padding: 0;"><strong>Detail:</strong></p>';
+            $message .= '<p style="margin: 0; padding: 0;">Subdomain: <strong>' . $pengajuan->sub_domain . '</strong></p>';
+            $message .= '<p style="margin-bottom: 0; padding-bottom: 0;">Terima kasih atas perhatian Anda.</p>';
+
+            $message .= '<p style="margin-bottom: 0; padding-bottom: 0; font-size: 12px; color: #888;">Email ini dikirim secara otomatis. Mohon untuk tidak membalas email ini.</p>';
             $this->sendEmail($pengajuan->email_penanggung_jawab, $subject, $message);
 
-            $tgl_selesai = date('Y-m-d');
+            $tgl_selesai = date('Y-m-d H:i:s');
             $registered_subdomain_data = [
                 'nomor_induk' => $pengajuan->nomor_induk,
                 'unit_kerja' => $pengajuan->unit_kerja,
@@ -499,8 +517,7 @@ class AdminPengajuanController extends CI_Controller
         $ip_pointing = $this->input->post('ip_pointing');
         $keterangan = $this->input->post('keterangan');
 
-        // Update data di database
-        $this->subDomainModel->updatePengajuan($id_pengajuan_subdomain, $nomor_induk, $unit_kerja, $penanggung_jawab, $email_penanggung_jawab, $kontak_penanggung_jawab, $sub_domain, $ip_pointing, $keterangan);
+        $this->SubDomainModel->updatePengajuan($id_pengajuan_subdomain, $nomor_induk, $unit_kerja, $penanggung_jawab, $email_penanggung_jawab, $kontak_penanggung_jawab, $sub_domain, $ip_pointing, $keterangan);
 
         redirect('AdminPengajuanController/data_pengajuan_subdomain');
     }
@@ -523,7 +540,7 @@ class AdminPengajuanController extends CI_Controller
         $this->email->initialize($config);
         $this->email->set_newline("\r\n");
 
-        $this->email->from('aldaamorita@gmail.com', 'Admin Unjani');
+        $this->email->from('aldaamorita21@if.unjani.ac.id', 'Admin Unjani');
         $this->email->to($to);
         $this->email->subject($subject);
         $this->email->message($message);
@@ -533,5 +550,15 @@ class AdminPengajuanController extends CI_Controller
         } else {
             return false;
         }
+    }
+
+    public function logout()
+    {
+        $this->load->helper('cookie');
+        $this->session->unset_userdata('id_user');
+        delete_cookie('user_session');
+
+        $this->session->set_flashdata('success', 'Anda berhasil logout.');
+        redirect('login');
     }
 }

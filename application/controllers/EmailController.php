@@ -14,10 +14,26 @@ class EmailController extends CI_Controller
         $this->load->library('form_validation');
         $this->load->library('session');
         $this->recaptcha_secret = '6Lf0PEQqAAAAACRlO3K96wdEZqJlS8qSfeD3IPCq';
+        check_role([2]);
+        $this->load->model('Dashboard_ModelAktor');
+        $this->load->helper('cookie');
+        if (!$this->session->userdata('id_user')) {
+            delete_cookie('user_session');
+            $this->session->set_flashdata('error', 'Anda harus login terlebih dahulu.');
+            redirect('login');
+        }
     }
 
     public function index()
     {
+        if (!in_array($this->session->userdata('id_role'), ['1', '2', '3', '4', '5'])) {
+            redirect('login');
+        }
+        $id_user = $this->session->userdata('id_user');
+        $user_data = $this->Dashboard_ModelAktor->get_user_data($id_user);
+        $data['id_user'] = $user_data->id_user;
+        $data['nama_lengkap'] = $user_data->nama_lengkap;
+
         $data['program_studi'] = $this->EmailModel->getProgramStudi();
         $this->load->view('pengajuan_email', $data);
     }
@@ -147,24 +163,24 @@ class EmailController extends CI_Controller
         $this->email->initialize($config);
         $this->email->set_newline("\r\n");
 
-        $this->email->from($email_pengguna, 'Pengajuan Email');
-        $this->email->to('aldaamorita@gmail.com');
+        $this->email->from($email_pengguna);
+        $this->email->to('aldaamorita21@if.unjani.ac.id');
         $this->email->subject('Pengajuan Pembuatan Akun Email Baru');
 
-        $message = '<p>Halo Admin,</p>';
-        $message .= '<p style="font-size: 14px; color: #333;">Terdapat pengajuan baru untuk pembuatan akun email dari seorang mahasiswa dengan rincian sebagai berikut:</p>';
+        $message = '<p style="margin-top: 0; padding-top: 0;">Halo, Admin Staf Administrasi SISFO UNJANI!</p>';
+        $message .= '<p style="margin: 0; padding: 0;">Terdapat pengajuan baru untuk pembuatan akun email dari seorang mahasiswa dengan rincian sebagai berikut:</p>';
 
-        $message .= '<table style="font-size: 14px; color: #333;">';
+        $message .= '<table>';
         $message .= '<tr><td style="padding-right: 20px;"><strong>Nama</strong></td><td>:</td><td>' . $data['nama_lengkap'] . '</td></tr>';
         $message .= '<tr><td style="padding-right: 20px;"><strong>NIM</strong></td><td>:</td><td>' . $data['nim'] . '</td></tr>';
         $message .= '<tr><td style="padding-right: 20px;"><strong>Program Studi</strong></td><td>:</td><td>' . $data['prodi'] . '</td></tr>';
         $message .= '</table>';
 
-        $message .= '<p>Untuk meninjau lebih lanjut, silakan klik tombol di bawah ini:</p>';
-        $message .= '<p><a href="' . base_url('AdminPengajuanController/data_pengajuan_email') . '" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: #fff; text-decoration: none; border-radius: 5px;">Lihat Selengkapnya</a></p>';
+        $message .= '<p style="margin-bottom: 0; padding-bottom: 0;">Untuk meninjau lebih lanjut, silakan klik tombol di bawah ini:</p>';
+        $message .= '<p style="margin-bottom: 3px; padding-bottom: 3px; margin-top: 3px; padding-top: 3px;"><a href="' . base_url('AdminPengajuanController/data_pengajuan_email') . '" style="display: inline-block; padding: 10px 20px; background-color: #13855c; color: #fff; text-decoration: none; border-radius: 5px; width: 155px; text-align: center;">Lihat Selengkapnya</a></p>';
+        $message .= '<p style="margin: 0; padding: 0;">Terima kasih atas perhatian Anda.</p>';
 
-        $message .= '<p>Terima kasih atas perhatian Anda.</p>';
-        $message .= '<p style="font-size: 12px; color: #888;">Email ini dikirim secara otomatis. Mohon untuk tidak membalas email ini.</p>';
+        $message .= '<p style="margin-bottom: 0; padding-bottom: 0; font-size: 12px; color: #888;">Email ini dikirim secara otomatis. Mohon untuk tidak membalas email ini.</p>';
 
         $this->email->message($message);
         if ($this->email->send()) {
@@ -191,16 +207,18 @@ class EmailController extends CI_Controller
         $this->email->initialize($config);
         $this->email->set_newline("\r\n");
 
-        $this->email->from('aldaamorita@gmail.com', 'Pengajuan Email');
+        $this->email->from('aldaamorita21@if.unjani.ac.id');
         $this->email->to($email_pengguna);
         $this->email->subject('Pengajuan Email Anda Telah Dikirim');
 
-        $message = '<p>Halo ' . $data['nama_lengkap'] . ',</p>';
-        $message .= '<p>Pengajuan pembuatan akun email Anda telah berhasil dikirim!</p>';
-        $message .= '<p>Gunakan kode berikut untuk memeriksa status pengajuan Anda: <strong>' . $random_code . '</strong></p>';
-        $message .= '<p>Silakan kunjungi <a href="' . base_url('EmailController/status_pengajuan_email') . '">halaman status pengajuan</a> untuk informasi lebih lanjut.</p>';
-        $message .= '<p>Terima kasih.</p>';
-        $message .= '<p style="font-size: 12px; color: #888;">Email ini dikirim secara otomatis. Mohon untuk tidak membalas email ini.</p>';
+        $message = '<p style="margin-top: 0; padding-top: 0;">Halo, ' . $data['nama_lengkap'] . '!</p>';
+        $message .= '<p style="margin: 0; padding: 0;">Pengajuan pembuatan akun email Anda telah berhasil dikirim.</p>';
+        $message .= '<p style="margin: 0; padding: 0;">Gunakan kode berikut untuk memeriksa status pengajuan Anda: <strong>' . $random_code . '</strong></p>';
+        $message .= '<p style="margin-bottom: 0; padding-bottom: 0;">Silakan klik tombol di bawah ini untuk informasi lebih lanjut:</p>';
+        $message .= '<p style="margin-bottom: 3px; padding-bottom: 3px; margin-top: 3px; padding-top: 3px;"><a href="' . base_url('EmailController/status_pengajuan_email_login') . '" style="display: inline-block; padding: 10px 20px; background-color: #00aaff; color: #fff; text-decoration: none; border-radius: 5px; width: 155px; text-align: center;">Lihat Status Pengajuan</a></p>';
+        $message .= '<p style="margin: 0; padding: 0;">Terima kasih atas perhatian Anda.</p>';
+
+        $message .= '<p style="margin-bottom: 0; padding-bottom: 0; font-size: 12px; color: #888;">Email ini dikirim secara otomatis. Mohon untuk tidak membalas email ini.</p>';
 
         $this->email->message($message);
         if ($this->email->send()) {
@@ -246,12 +264,6 @@ class EmailController extends CI_Controller
         }
     }
 
-    public function logout()
-    {
-        $this->session->sess_destroy();
-        redirect('EmailController/status_pengajuan_email_login');
-    }
-
     public function status_pengajuan_email()
     {
         if (!$this->session->userdata('pengajuan_email')) {
@@ -265,6 +277,13 @@ class EmailController extends CI_Controller
         $data['status_history_email'] = $this->EmailModel->getStatusHistory($nim);
 
         $this->load->view('status_pengajuan_email', $data);
+    }
+
+    public function logoutStatus()
+    {
+        $this->session->unset_userdata('pengajuan_email');
+        $this->session->set_flashdata('success', 'Anda berhasil keluar dari halaman status pengajuan.');
+        redirect('EmailController/status_pengajuan_email_login');
     }
 
     public function updateStatus($id, $status)
@@ -573,5 +592,15 @@ class EmailController extends CI_Controller
         }
 
         return json_decode($result, true);
+    }
+
+    public function logout()
+    {
+        $this->load->helper('cookie');
+        $this->session->unset_userdata('id_user');
+        delete_cookie('user_session');
+
+        $this->session->set_flashdata('success', 'Anda berhasil logout.');
+        redirect('login');
     }
 }
