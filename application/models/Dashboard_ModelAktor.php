@@ -15,7 +15,7 @@ class Dashboard_ModelAktor extends CI_Model
     {
         $this->db->select('id_user, nama_lengkap');
         $this->db->where('id_user', $id_user);
-        $query = $this->db->get('users'); // Make sure 'users' table contains 'nama_lengkap'
+        $query = $this->db->get('user'); 
         return $query->row();
     }
 }
