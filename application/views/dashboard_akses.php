@@ -211,7 +211,7 @@
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Kartu
                                                 Terverifikasi
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="VerifiedCount">0</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="ApprovedCount">0</div>
                                             <div class="text-xs">Total
                                             </div>
                                         </div>
@@ -234,7 +234,7 @@
                                 </div>
                                 <div class="card-body">
                                     <!-- Buttons Container -->
-                                    <div class="header-buttons-container">
+                                    <!-- <div class="header-buttons-container">
                                         <div class="header-buttons">
                                             <div class="header-buttons">
                                                 <button class="btn btn-success" id="showDosen">Dosen</button>
@@ -243,35 +243,31 @@
                                                 <button class="btn btn-success" id="showAll">Semua Data</button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>Nama Lengkap</th>
-                                                    <th>NIM/NID/NIP</th>
-                                                    <th>Fakultas</th>
-                                                    <th>Program Studi</th>
-                                                    <th>Email</th>
-                                                    <th>Keterangan Pengajuan</th>
-                                                    <th>Role</th>
+                                                    <th>Alasan Ganti Kartu</th>
+                                                    <th>Tanggal Pengajuan</th>
                                                     <th>Status</th>
+                                                    <th>Alasan Ditolak</th>
+                                                    <th>Keterangan Kartu</th>
+                                                    <th>ID User</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php $no = 1;
                                                 foreach ($kartu_akses as $data) : ?>
-                                                    <tr class="<?php echo strtolower($data['applicant_type']); ?>">
+                                                    <tr class="<?php echo strtolower($data['status']); ?>">
                                                         <td><?= $no++; ?></td>
-                                                        <td><?php echo $data['nama_lengkap']; ?></td>
-                                                        <td><?php echo $data['identity_number']; ?></td>
-                                                        <td><?php echo $data['faculty_department']; ?></td>
-                                                        <td><?php echo $data['program_studi']; ?></td>
-                                                        <td><?php echo $data['email']; ?></td>
-                                                        <td><?php echo $data['keterangan_pengajuan']; ?></td>
-                                                        <td><?php echo $data['applicant_type']; ?></td>
+                                                        <td><?php echo $data['alasan_ganti_kartu']; ?></td>
+                                                        <td><?php echo $data['tanggal_pengajuan']; ?></td>
                                                         <td><?php echo $data['status']; ?></td>
+                                                        <td><?php echo $data['alasan_ditolak']; ?></td>
+                                                        <td><?php echo $data['keterangan_kartu']; ?></td>
+                                                        <td><?php echo $data['id_user']; ?></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
@@ -375,35 +371,28 @@
                         }
                     }
 
-                    // Fungsi untuk memperbarui jumlah card berdasarkan status dan role
                     function updateCardCounts() {
-                        let verifiedCount = 0;
-                        let processCount = 0;
-                        let submitCount = 0;
+                        let SubmitCount = 0;
+                        let ProcessCount = 0;
+                        let ApprovedCount = 0;
 
-                        // Iterasi melalui setiap baris di tabel
+                        // Iterate through each row in the table
                         table.rows().nodes().to$().each(function(index, tr) {
-                            const status = $(tr).find('td').eq(8).text().trim(); // Status ada di kolom ke-9
-                            const role = $(tr).find('td').eq(7).text().trim(); // Role ada di kolom ke-8
+                            const status = $(tr).find('td').eq(5).text().trim();
 
-                            // Periksa role sesuai dengan filter
-                            if (currentRole && role !== currentRole) {
-                                return; // Lewati baris yang tidak sesuai dengan role yang difilter
-                            }
-
-                            if (status === 'approved') {
-                                verifiedCount++;
-                            } else if (status === 'pending') {
-                                processCount++;
-                            } else if (status === 'rejected') {
-                                submitCount++;
+                            if (status === 'Rejected') {
+                                SubmitCount++;
+                            } else if (status === 'Pending') {
+                                ProcessCount++;
+                            } else if (status === 'Approved') {
+                                ApprovedCount++;
                             }
                         });
 
-                        // Perbarui jumlah card
-                        $('#VerifiedCount').text(verifiedCount);
-                        $('#ProcessCount').text(processCount);
-                        $('#SubmitCount').text(submitCount);
+                        // Update card counts
+                        $('#SubmitCount').text(SubmitCount);
+                        $('#ProcessCount').text(ProcessCount);
+                        $('#ApprovedCount').text(ApprovedCount);
                     }
 
                     // Event Listener untuk pencarian
@@ -430,53 +419,53 @@
                         }
                     });
 
-                    // Fungsionalitas tombol
-                    $('#showDosen').on('click', function() {
-                        // Hapus kelas 'active' dari semua tombol
-                        $('#showDosen').addClass('active');
-                        $('#showStaff').removeClass('active');
-                        $('#showMahasiswa').removeClass('active');
-                        $('#showAll').removeClass('active');
+                    // // Fungsionalitas tombol
+                    // $('#showDosen').on('click', function() {
+                    //     // Hapus kelas 'active' dari semua tombol
+                    //     $('#showDosen').addClass('active');
+                    //     $('#showStaff').removeClass('active');
+                    //     $('#showMahasiswa').removeClass('active');
+                    //     $('#showAll').removeClass('active');
 
-                        currentRole = 'Dosen'; // Set role yang difilter
-                        table.column(7).search('Dosen').draw(); // Filter berdasarkan Dosen
-                    });
+                    //     currentRole = 'Dosen'; // Set role yang difilter
+                    //     table.column(7).search('Dosen').draw(); // Filter berdasarkan Dosen
+                    // });
 
-                    $('#showStaff').on('click', function() {
-                        // Hapus kelas 'active' dari semua tombol
-                        $('#showDosen').removeClass('active');
-                        $('#showStaff').addClass('active');
-                        $('#showMahasiswa').removeClass('active');
-                        $('#showAll').removeClass('active');
+                    // $('#showStaff').on('click', function() {
+                    //     // Hapus kelas 'active' dari semua tombol
+                    //     $('#showDosen').removeClass('active');
+                    //     $('#showStaff').addClass('active');
+                    //     $('#showMahasiswa').removeClass('active');
+                    //     $('#showAll').removeClass('active');
 
-                        currentRole = 'Staff'; // Set role yang difilter
-                        table.column(7).search('Staff').draw(); // Filter berdasarkan Dosen
-                    });
+                    //     currentRole = 'Staff'; // Set role yang difilter
+                    //     table.column(7).search('Staff').draw(); // Filter berdasarkan Dosen
+                    // });
 
-                    $('#showMahasiswa').on('click', function() {
-                        // Hapus kelas 'active' dari semua tombol
-                        $('#showDosen').removeClass('active');
-                        $('#showStaff').removeClass('active');
-                        $('#showMahasiswa').addClass('active');
-                        $('#showAll').removeClass('active');
+                    // $('#showMahasiswa').on('click', function() {
+                    //     // Hapus kelas 'active' dari semua tombol
+                    //     $('#showDosen').removeClass('active');
+                    //     $('#showStaff').removeClass('active');
+                    //     $('#showMahasiswa').addClass('active');
+                    //     $('#showAll').removeClass('active');
 
-                        currentRole = 'Mahasiswa'; // Set role yang difilter
-                        table.column(7).search('Mahasiswa').draw(); // Filter berdasarkan Mahasiswa
-                    });
+                    //     currentRole = 'Mahasiswa'; // Set role yang difilter
+                    //     table.column(7).search('Mahasiswa').draw(); // Filter berdasarkan Mahasiswa
+                    // });
 
-                    $('#showAll').on('click', function() {
-                        // Hapus kelas 'active' dari semua tombol
-                        $('#showDosen').removeClass('active');
-                        $('#showStaff').removeClass('active');
-                        $('#showMahasiswa').removeClass('active');
-                        $('#showAll').addClass('active');
+                    // $('#showAll').on('click', function() {
+                    //     // Hapus kelas 'active' dari semua tombol
+                    //     $('#showDosen').removeClass('active');
+                    //     $('#showStaff').removeClass('active');
+                    //     $('#showMahasiswa').removeClass('active');
+                    //     $('#showAll').addClass('active');
 
-                        currentRole = ''; // Hapus filter role
-                        table.column(7).search('').draw(); // Tampilkan semua data
-                    });
+                    //     currentRole = ''; // Hapus filter role
+                    //     table.column(7).search('').draw(); // Tampilkan semua data
+                    // });
 
-                    // Perbarui card counts pada saat halaman dimuat
-                    updateCardCounts();
+                    // // Perbarui card counts pada saat halaman dimuat
+                    // updateCardCounts();
                 });
             </script>
 
@@ -553,7 +542,7 @@
                     });
                 });
             </script>
-           <script>
+            <script>
                 document.getElementById('printButton').addEventListener('click', function() {
                     // Get the table content to print
                     var contentToPrint = document.querySelector('.dataTable').innerHTML;

@@ -259,7 +259,6 @@
                                                     <th>No</th>
                                                     <th>Nama</th>
                                                     <th>NIM</th>
-                                                    <th>Fakultas</th>
                                                     <th>Prodi</th>
                                                     <th>E-mail Pengguna</th>
                                                     <th>E-mail Diajukan</th>
@@ -272,9 +271,8 @@
                                                 foreach ($pengajuan_email as $data) : ?>
                                                     <tr>
                                                         <td><?= $no++; ?></td>
-                                                        <td><?php echo $data['nama_depan'] . ' ' . $data['nama_belakang']; ?></td>
+                                                        <td><?php echo $data['nama_lengkap'] ?></td>
                                                         <td><?php echo $data['nim']; ?></td>
-                                                        <td><?php echo $data['fakultas']; ?></td>
                                                         <td><?php echo $data['prodi']; ?></td>
                                                         <td><?php echo $data['email_pengguna']; ?></td>
                                                         <td><?php echo $data['email_diajukan']; ?></td>
@@ -417,15 +415,15 @@
 
                         // Iterate through each row in the table
                         table.rows().nodes().to$().each(function(index, tr) {
-                            const status = $(tr).find('td').eq(8).text().trim();
+                            const status = $(tr).find('td').eq(7).text().trim();
 
-                            if (status === 'Email Diajukan') {
+                            if (status === 'Diajukan') {
                                 SubmitCount++;
-                            } else if (status === 'Email Diproses') {
+                            } else if (status === 'Diproses') {
                                 ProcessCount++;
-                            } else if (status === 'Email Diverifikasi') {
+                            } else if (status === 'Diverifikasi') {
                                 ApprovedCount++;
-                            } else if (status === 'Email Dikirim') {
+                            } else if (status === 'Selesai') {
                                 SendCount++;
                             }
                         });

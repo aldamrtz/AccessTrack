@@ -10,16 +10,16 @@ class Dashboard_model extends CI_Model
     const STATUS_APPROVED = 'approved';
 
     // Konstanta untuk status pengajuan email
-    const STATUS_SUBMITTED_EMAIL = 'Email Diajukan';
-    const STATUS_PENDING_EMAIL = 'Email Diproses';
-    const STATUS_APPROVED_EMAIL = 'Email Dikirim';
-    const STATUS_SEND_EMAIL = 'Email Diverifikasi';
+    const STATUS_SUBMITTED_EMAIL = 'Diajukan';
+    const STATUS_PENDING_EMAIL = 'Diproses';
+    const STATUS_APPROVED_EMAIL = 'Selesai';
+    const STATUS_SEND_EMAIL = 'Diverifikasi';
 
     // Konstanta Untuk Status Pengajuan Domain
-    const STATUS_SUBMITTED_DOMAIN = 'Domain Diajukan';
-    const STATUS_PENDING_DOMAIN = 'Domain Diproses';
-    const STATUS_APPROVED_DOMAIN = 'Domain Dikirim';
-    const STATUS_SEND_DOMAIN = 'Domain Diverifikasi';
+    const STATUS_SUBMITTED_DOMAIN = 'Diajukan';
+    const STATUS_PENDING_DOMAIN = 'Diproses';
+    const STATUS_APPROVED_DOMAIN = 'Selesai';
+    const STATUS_SEND_DOMAIN = 'Diverifikasi';
 
     public function __construct()
     {
@@ -59,7 +59,7 @@ class Dashboard_model extends CI_Model
     // Method untuk mengambil semua data dari tabel
     public function get_all_data()
     {
-        $query = $this->db->get('pengajuan_ka');
+        $query = $this->db->get('pengajuan_kartu_akses');
         if ($query === FALSE) {
             log_message('error', 'Database query failed: ' . $this->db->last_query());
             return array();
@@ -71,7 +71,7 @@ class Dashboard_model extends CI_Model
     private function get_total_kartu_akses()
     {
         $this->db->select('COUNT(id_KA) as total_kartu_akses');
-        $query = $this->db->get('pengajuan_ka');
+        $query = $this->db->get('pengajuan_kartu_akses');
         return $query->row()->total_kartu_akses;
     }
 
@@ -79,7 +79,7 @@ class Dashboard_model extends CI_Model
     {
         $this->db->select('COUNT(id_KA) as total_kartu_akses');
         $this->db->where('status', $status);
-        $query = $this->db->get('pengajuan_ka');
+        $query = $this->db->get('pengajuan_kartu_akses');
         return $query->row()->total_kartu_akses;
     }
 
@@ -119,7 +119,7 @@ class Dashboard_model extends CI_Model
     private function get_total_pengajuan_domain()
     {
         $this->db->select('COUNT(nomor_induk) as total_pengajuan_domain');
-        $query = $this->db->get('pengajuan_domain');
+        $query = $this->db->get('pengajuan_subdomain');
         return $query->row()->total_pengajuan_domain;
     }
 
@@ -127,7 +127,7 @@ class Dashboard_model extends CI_Model
     {
         $this->db->select('COUNT(nomor_induk) as total_pengajuan_domain');
         $this->db->where('status_pengajuan', $status);
-        $query = $this->db->get('pengajuan_domain');
+        $query = $this->db->get('pengajuan_subdomain');
         return $query->row()->total_pengajuan_domain;
     }
 

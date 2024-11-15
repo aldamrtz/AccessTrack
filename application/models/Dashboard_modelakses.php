@@ -14,7 +14,7 @@ class Dashboard_modelakses extends CI_Model
     public function get_kartu_akses()
     {
         // Mengambil semua data dari tabel kartu akses
-        $query = $this->db->get('pengajuan_ka'); 
+        $query = $this->db->get('pengajuan_kartu_akses'); 
         return $query->result_array();
     }
 }
