@@ -230,11 +230,11 @@
                             <!-- DataTales -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                                    <h6 class="m-0 font-weight-bold text-success">Tabel Pengajuan Email</h6>
+                                    <h6 class="m-0 font-weight-bold text-success">Tabel Pengajuan Kartu Akses</h6>
                                 </div>
                                 <div class="card-body">
                                     <!-- Buttons Container -->
-                                    <!-- <div class="header-buttons-container">
+                                    <div class="header-buttons-container">
                                         <div class="header-buttons">
                                             <div class="header-buttons">
                                                 <button class="btn btn-success" id="showDosen">Dosen</button>
@@ -243,7 +243,7 @@
                                                 <button class="btn btn-success" id="showAll">Semua Data</button>
                                             </div>
                                         </div>
-                                    </div> -->
+                                    </div>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
@@ -378,7 +378,7 @@
 
                         // Iterate through each row in the table
                         table.rows().nodes().to$().each(function(index, tr) {
-                            const status = $(tr).find('td').eq(5).text().trim();
+                            const status = $(tr).find('td').eq(3).text().trim();
 
                             if (status === 'Rejected') {
                                 SubmitCount++;
@@ -419,53 +419,53 @@
                         }
                     });
 
-                    // // Fungsionalitas tombol
-                    // $('#showDosen').on('click', function() {
-                    //     // Hapus kelas 'active' dari semua tombol
-                    //     $('#showDosen').addClass('active');
-                    //     $('#showStaff').removeClass('active');
-                    //     $('#showMahasiswa').removeClass('active');
-                    //     $('#showAll').removeClass('active');
+                    // Fungsionalitas tombol
+                    $('#showDosen').on('click', function() {
+                        // Hapus kelas 'active' dari semua tombol
+                        $('#showDosen').addClass('active');
+                        $('#showStaff').removeClass('active');
+                        $('#showMahasiswa').removeClass('active');
+                        $('#showAll').removeClass('active');
 
-                    //     currentRole = 'Dosen'; // Set role yang difilter
-                    //     table.column(7).search('Dosen').draw(); // Filter berdasarkan Dosen
-                    // });
+                        currentRole = 'Dosen'; // Set role yang difilter
+                        table.column(7).search('Dosen').draw(); // Filter berdasarkan Dosen
+                    });
 
-                    // $('#showStaff').on('click', function() {
-                    //     // Hapus kelas 'active' dari semua tombol
-                    //     $('#showDosen').removeClass('active');
-                    //     $('#showStaff').addClass('active');
-                    //     $('#showMahasiswa').removeClass('active');
-                    //     $('#showAll').removeClass('active');
+                    $('#showStaff').on('click', function() {
+                        // Hapus kelas 'active' dari semua tombol
+                        $('#showDosen').removeClass('active');
+                        $('#showStaff').addClass('active');
+                        $('#showMahasiswa').removeClass('active');
+                        $('#showAll').removeClass('active');
 
-                    //     currentRole = 'Staff'; // Set role yang difilter
-                    //     table.column(7).search('Staff').draw(); // Filter berdasarkan Dosen
-                    // });
+                        currentRole = 'Staff'; // Set role yang difilter
+                        table.column(7).search('Staff').draw(); // Filter berdasarkan Dosen
+                    });
 
-                    // $('#showMahasiswa').on('click', function() {
-                    //     // Hapus kelas 'active' dari semua tombol
-                    //     $('#showDosen').removeClass('active');
-                    //     $('#showStaff').removeClass('active');
-                    //     $('#showMahasiswa').addClass('active');
-                    //     $('#showAll').removeClass('active');
+                    $('#showMahasiswa').on('click', function() {
+                        // Hapus kelas 'active' dari semua tombol
+                        $('#showDosen').removeClass('active');
+                        $('#showStaff').removeClass('active');
+                        $('#showMahasiswa').addClass('active');
+                        $('#showAll').removeClass('active');
 
-                    //     currentRole = 'Mahasiswa'; // Set role yang difilter
-                    //     table.column(7).search('Mahasiswa').draw(); // Filter berdasarkan Mahasiswa
-                    // });
+                        currentRole = 'Mahasiswa'; // Set role yang difilter
+                        table.column(7).search('Mahasiswa').draw(); // Filter berdasarkan Mahasiswa
+                    });
 
-                    // $('#showAll').on('click', function() {
-                    //     // Hapus kelas 'active' dari semua tombol
-                    //     $('#showDosen').removeClass('active');
-                    //     $('#showStaff').removeClass('active');
-                    //     $('#showMahasiswa').removeClass('active');
-                    //     $('#showAll').addClass('active');
+                    $('#showAll').on('click', function() {
+                        // Hapus kelas 'active' dari semua tombol
+                        $('#showDosen').removeClass('active');
+                        $('#showStaff').removeClass('active');
+                        $('#showMahasiswa').removeClass('active');
+                        $('#showAll').addClass('active');
 
-                    //     currentRole = ''; // Hapus filter role
-                    //     table.column(7).search('').draw(); // Tampilkan semua data
-                    // });
+                        currentRole = ''; // Hapus filter role
+                        table.column(7).search('').draw(); // Tampilkan semua data
+                    });
 
-                    // // Perbarui card counts pada saat halaman dimuat
-                    // updateCardCounts();
+                    // Perbarui card counts pada saat halaman dimuat
+                    updateCardCounts();
                 });
             </script>
 
