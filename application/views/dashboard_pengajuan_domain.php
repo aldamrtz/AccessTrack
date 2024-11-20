@@ -360,7 +360,7 @@
                     var dashboardDataLoad = new Promise((resolve, reject) => {
                         setTimeout(() => {
                             resolve();
-                        }, 2000);
+                        }, 500);
                     });
 
                     dashboardDataLoad.then(() => {
@@ -540,18 +540,6 @@
                 });
             </script>
 
-
-            <script>
-                // JavaScript untuk toggle sidebar
-                document.addEventListener('DOMContentLoaded', function() {
-                    var sidebarToggle = document.getElementById('sidebarToggle');
-                    var sidebar = document.getElementById('accordionSidebar');
-
-                    sidebarToggle.addEventListener('click', function() {
-                        sidebar.classList.toggle('toggled');
-                    });
-                });
-            </script>
             <script>
                 document.getElementById('printButton').addEventListener('click', function() {
                     // Get the table content to print

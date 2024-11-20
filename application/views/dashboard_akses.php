@@ -479,41 +479,6 @@
                 });
             </script>
 
-            <!-- Loading -->
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    // Fungsi untuk menghapus spinner setelah halaman selesai dimuat
-                    function hideLoadingSpinner() {
-                        document.getElementById('loading-spinner').style.display = 'none';
-                    }
-
-                    // Menunggu hingga semua data selesai dimuat
-                    var dashboardDataLoad = new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                            resolve();
-                        }, 2000);
-                    });
-
-                    dashboardDataLoad.then(() => {
-                        // Menghilangkan spinner setelah data selesai dimuat
-                        hideLoadingSpinner();
-                    }).catch((error) => {
-                        console.error('Error loading dashboard data:', error);
-                        hideLoadingSpinner();
-                    });
-                });
-            </script>
-            <script>
-                // JavaScript untuk toggle sidebar
-                document.addEventListener('DOMContentLoaded', function() {
-                    var sidebarToggle = document.getElementById('sidebarToggle');
-                    var sidebar = document.getElementById('accordionSidebar');
-
-                    sidebarToggle.addEventListener('click', function() {
-                        sidebar.classList.toggle('toggled');
-                    });
-                });
-            </script>
 
             <!-- Loading-->
             <script>
