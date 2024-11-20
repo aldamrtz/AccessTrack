@@ -414,52 +414,6 @@
                             alert('Gagal memperbarui highlight teks. Silakan coba lagi.');
                         }
                     });
-
-                    // Fungsionalitas tombol
-                    $('#showDosen').on('click', function() {
-                        // Hapus kelas 'active' dari semua tombol
-                        $('#showDosen').addClass('active');
-                        $('#showStaff').removeClass('active');
-                        $('#showMahasiswa').removeClass('active');
-                        $('#showAll').removeClass('active');
-
-                        currentRole = 'Dosen'; // Set role yang difilter
-                        table.column(7).search('Dosen').draw(); // Filter berdasarkan Dosen
-                    });
-
-                    $('#showStaff').on('click', function() {
-                        // Hapus kelas 'active' dari semua tombol
-                        $('#showDosen').removeClass('active');
-                        $('#showStaff').addClass('active');
-                        $('#showMahasiswa').removeClass('active');
-                        $('#showAll').removeClass('active');
-
-                        currentRole = 'Staff'; // Set role yang difilter
-                        table.column(7).search('Staff').draw(); // Filter berdasarkan Dosen
-                    });
-
-                    $('#showMahasiswa').on('click', function() {
-                        // Hapus kelas 'active' dari semua tombol
-                        $('#showDosen').removeClass('active');
-                        $('#showStaff').removeClass('active');
-                        $('#showMahasiswa').addClass('active');
-                        $('#showAll').removeClass('active');
-
-                        currentRole = 'Mahasiswa'; // Set role yang difilter
-                        table.column(7).search('Mahasiswa').draw(); // Filter berdasarkan Mahasiswa
-                    });
-
-                    $('#showAll').on('click', function() {
-                        // Hapus kelas 'active' dari semua tombol
-                        $('#showDosen').removeClass('active');
-                        $('#showStaff').removeClass('active');
-                        $('#showMahasiswa').removeClass('active');
-                        $('#showAll').addClass('active');
-
-                        currentRole = ''; // Hapus filter role
-                        table.column(7).search('').draw(); // Tampilkan semua data
-                    });
-
                     // Perbarui card counts pada saat halaman dimuat
                     updateCardCounts();
                 });
