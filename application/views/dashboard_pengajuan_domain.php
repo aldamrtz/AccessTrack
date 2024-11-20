@@ -250,6 +250,12 @@
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                                     <h6 class="m-0 font-weight-bold text-success">Tabel Pengajuan Domain</h6>
+                                    <div class="date-filter-buttons">
+                                        <button class="btn btn-success btn-sm" id="filterToday">Hari Ini</button>
+                                        <button class="btn btn-success btn-sm" id="filterWeek">7 Hari Terakhir</button>
+                                        <button class="btn btn-success btn-sm" id="filterMonth">30 Hari Terakhir</button>
+                                        <button class="btn btn-success btn-sm" id="filterAll">Semua Data</button>
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -258,7 +264,7 @@
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Nomor Induk</th>
-                                                    <th>Unit Kerja</th>                                               
+                                                    <th>Unit Kerja</th>
                                                     <th>Penanggung Jawab</th>
                                                     <th>Email Penanggung Jawab</th>
                                                     <th>Kontak Penanggung Jawab</th>
@@ -487,8 +493,66 @@
                     });
                 });
             </script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const buttons = {
+                        today: document.getElementById('filterToday'),
+                        week: document.getElementById('filterWeek'),
+                        month: document.getElementById('filterMonth'),
+                        all: document.getElementById('filterAll')
+                    };
 
-<script>
+                    const dataTable = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+
+                    function filterRows(range) {
+                        const rows = dataTable.getElementsByTagName('tr');
+                        const currentDate = new Date();
+
+                        for (let i = 0; i < rows.length; i++) {
+                            const dateCell = rows[i].getElementsByTagName('td')[9];
+                            const rowDate = new Date(dateCell.innerText);
+
+                            let shouldShow = true;
+
+                            switch (range) {
+                                case 'today':
+                                    shouldShow = currentDate.toDateString() === rowDate.toDateString();
+                                    break;
+                                case 'week':
+                                    shouldShow = (currentDate - rowDate) / (1000 * 60 * 60 * 24) <= 7;
+                                    break;
+                                case 'month':
+                                    shouldShow = (currentDate - rowDate) / (1000 * 60 * 60 * 24) <= 30;
+                                    break;
+                                case 'all':
+                                default:
+                                    shouldShow = true;
+                            }
+
+                            rows[i].style.display = shouldShow ? '' : 'none';
+                        }
+                    }
+
+                    buttons.today.addEventListener('click', () => filterRows('today'));
+                    buttons.week.addEventListener('click', () => filterRows('week'));
+                    buttons.month.addEventListener('click', () => filterRows('month'));
+                    buttons.all.addEventListener('click', () => filterRows('all'));
+                });
+            </script>
+
+
+            <script>
+                // JavaScript untuk toggle sidebar
+                document.addEventListener('DOMContentLoaded', function() {
+                    var sidebarToggle = document.getElementById('sidebarToggle');
+                    var sidebar = document.getElementById('accordionSidebar');
+
+                    sidebarToggle.addEventListener('click', function() {
+                        sidebar.classList.toggle('toggled');
+                    });
+                });
+            </script>
+            <script>
                 document.getElementById('printButton').addEventListener('click', function() {
                     // Get the table content to print
                     var contentToPrint = document.querySelector('.dataTable').innerHTML;
