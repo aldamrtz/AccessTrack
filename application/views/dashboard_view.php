@@ -254,7 +254,16 @@
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                                    <h6 class="m-0 font-weight-bold text-success">Total Laporan</h6>
+                                    <h6 class="m-0 font-weight-bold text-success">Total Data</h6>
+                                    <?php
+                                    // Jumlahkan data dari array $dashboard_data
+                                    $total_data = $dashboard_data['kartu_akses']
+                                        + $dashboard_data['laporan_keluhan']
+                                        + $dashboard_data['pengajuan_email']
+                                        + $dashboard_data['pengajuan_domain'];
+                                    ?>
+                                    <!-- Tampilkan Total Data -->
+                                    <span class="text-primary font-weight-bold">Total: <?= $total_data; ?></span>
                                 </div>
                                 <div class="card-body">
                                     <canvas id="my3DBarChart"></canvas>
@@ -359,7 +368,7 @@
                         plugins: {
                             title: {
                                 display: true,
-                                text: "Data Laporan",
+                                text: "Total Data",
                                 font: {
                                     size: 17
                                 }
@@ -533,7 +542,7 @@
                     e.preventDefault();
                     // Kembalikan chart ke data awal (semua data)
                     my3DBarChart.data = initialData;
-                    my3DBarChart.options.plugins.title.text = 'Data Laporan';
+                    my3DBarChart.options.plugins.title.text = 'Total Data';
                     my3DBarChart.update();
 
                     // Reset Fakultas dropdown
