@@ -562,6 +562,53 @@
                 margin-bottom: 1px !important;
             }
         }
+
+        #whatsappButton {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 2000;
+        }
+
+        #whatsappButton a {
+            position: relative;
+            display: inline-block;
+        }
+
+        #whatsappButton a img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            z-index: 1;
+        }
+
+        #whatsappButton a img:hover {
+            transform: scale(1.1);
+        }
+
+        #whatsappButton a .tooltip-text {
+            visibility: hidden;
+            position: absolute;
+            top: 50%;
+            left: 75px;
+            transform: translate(-20px, -50%);
+            opacity: 0;
+            background-color: rgba(255, 255, 255, 0.5);
+            color: #0e6b47;
+            padding: 5px 10px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        #whatsappButton a:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -614,25 +661,44 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="nim" name="nim" placeholder=" " value="<?= set_value('nim'); ?>" required pattern="\d*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                                <label for="nim" class="form-label">Nomor Induk Mahasiswa (NIM)</label>
-                                <div id="nimValidationFeedback" class="feedback feedback-spacing"></div>
+                                <select class="form-select" id="fakultas" name="fakultas" placeholder=" " required>
+                                    <option value=""></option>
+                                    <?php foreach ($fakultas as $value => $label): ?>
+                                        <option value="<?= $value; ?>" <?= set_select('fakultas', $value); ?>><?= $label; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <label for="fakultas" class="form-label">Fakultas</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <select class="form-select" id="prodi" name="prodi" placeholder=" " required>
                                     <option value=""></option>
-                                    <?php foreach ($program_studi as $value => $label): ?>
-                                        <option value="<?= $value; ?>" <?= set_select('prodi', $value); ?>><?= $label; ?></option>
-                                    <?php endforeach; ?>
+                                    <?php if (!empty($selected_fakultas) && isset($program_studi[$selected_fakultas])): ?>
+                                        <?php foreach ($program_studi[$selected_fakultas] as $value): ?>
+                                            <option value="<?= $value; ?>" <?= set_select('prodi', $value); ?>><?= $value; ?></option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </select>
                                 <label for="prodi" class="form-label">Program Studi</label>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="nim" name="nim" placeholder=" "
+                                    value="<?= set_value('nim') ? set_value('nim') : $id_user; ?>" required pattern="\d*" inputmode="numeric"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')" readonly>
+                                <label for="nim" class="form-label">Nomor Induk Mahasiswa (NIM)</label>
+                                <div id="nimValidationFeedback" class="feedback feedback-spacing">
+                                    <?php if ($nim_status === 'taken'): ?>
+                                        <span class="error">NIM sudah terdaftar</span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder=" " value="<?= set_value('nama_lengkap'); ?>" required>
                                 <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
@@ -705,11 +771,35 @@
         </div>
     </div>
 
+    <div id="whatsappButton">
+        <a href="https://wa.me/+6289671432393" target="_blank">
+            <img src="<?= base_url('assets/img/wa-icon.png') ?>" alt="Contact Us on WhatsApp">
+            <span class="tooltip-text">Hubungi Kami</span>
+        </a>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="https://www.google.com/recaptcha/api.js?render=6Lf0PEQqAAAAANCvF8-NRJwRcVHMZDMbSD84j7gZ"></script>
     <script>
+        const programStudi = <?= json_encode($program_studi); ?>;
+        document.getElementById('fakultas').addEventListener('change', function() {
+            const selectedFakultas = this.value;
+            const prodiDropdown = document.getElementById('prodi');
+
+            prodiDropdown.innerHTML = '<option value=""></option>'; // Reset opsi prodi
+
+            if (programStudi[selectedFakultas]) {
+                programStudi[selectedFakultas].forEach(function(prodi) {
+                    const option = document.createElement('option');
+                    option.value = prodi;
+                    option.textContent = prodi;
+                    prodiDropdown.appendChild(option);
+                });
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('form');
 
@@ -730,6 +820,11 @@
 
             const ktmInput = document.getElementById('ktm');
             const ktmFeedback = document.getElementById('ktmFeedback');
+
+            if (nimFeedback.textContent.includes('NIM sudah terdaftar')) {
+                nimInput.classList.add('error-border');
+                nimFeedback.classList.add('error');
+            }
 
             nimInput.addEventListener('input', function() {
                 const nimValue = nimInput.value;
@@ -753,6 +848,7 @@
                         if (response.status === 'taken') {
                             nimFeedback.textContent = 'NIM sudah terdaftar';
                             nimFeedback.className = 'feedback error';
+                            nimInput.classList.add('error-border');
                         } else {
                             nimFeedback.textContent = '';
                             nimInput.classList.remove('error-border');
@@ -1157,6 +1253,12 @@
                     case 'Kebidanan D-3':
                         domain = '@fts.unjani.ac.id';
                         break;
+                    case 'Teknologi Laboraturium Medis D-4':
+                        domain = '@student.unjani.ac.id';
+                        break;
+                    case 'Teknologi Laboraturium Medis D-3':
+                        domain = '@student.unjani.ac.id';
+                        break;
                     default:
                         domain = '@student.unjani.ac.id';
                         break;
@@ -1232,6 +1334,13 @@
                 if (!sidebar.contains(event.target) && !toggler.contains(event.target)) {
                     sidebar.classList.remove('show');
                 }
+            });
+
+            document.getElementById('whatsappButton').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
         });
     </script>

@@ -428,6 +428,53 @@
                 margin-bottom: 1px !important;
             }
         }
+
+        #whatsappButton {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 2000;
+        }
+
+        #whatsappButton a {
+            position: relative;
+            display: inline-block;
+        }
+
+        #whatsappButton a img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            z-index: 1;
+        }
+
+        #whatsappButton a img:hover {
+            transform: scale(1.1);
+        }
+
+        #whatsappButton a .tooltip-text {
+            visibility: hidden;
+            position: absolute;
+            top: 50%;
+            left: 75px;
+            transform: translate(-20px, -50%);
+            opacity: 0;
+            background-color: rgba(255, 255, 255, 0.5);
+            color: #0e6b47;
+            padding: 5px 10px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        #whatsappButton a:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -506,6 +553,13 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div id="whatsappButton">
+        <a href="https://wa.me/+6289671432393" target="_blank">
+            <img src="<?= base_url('assets/img/wa-icon.png') ?>" alt="Contact Us on WhatsApp">
+            <span class="tooltip-text">Hubungi Kami</span>
+        </a>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -619,6 +673,13 @@
                             document.getElementById('error-message').innerText = 'Terjadi kesalahan. Silakan coba lagi.';
                         });
                 });
+            });
+        });
+
+        document.getElementById('whatsappButton').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
         });
     </script>

@@ -94,12 +94,12 @@ class Login extends CI_Controller
             $new_password = password_hash($this->input->post('new_password'), PASSWORD_BCRYPT);
 
             // Panggil fungsi update_password yang sudah dimodifikasi
-            $this->LoginModel->update_password($id_user, $new_password); 
+            $this->LoginModel->update_password($id_user, $new_password);
 
             $this->session->set_flashdata('success', 'Password berhasil diubah, silakan login kembali.');
 
             // Redirect to login page 
-            redirect('login'); 
+            redirect('login');
         }
     }
 

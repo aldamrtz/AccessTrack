@@ -519,6 +519,53 @@
                 margin-bottom: 1px !important;
             }
         }
+
+        #whatsappButton {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 2000;
+        }
+
+        #whatsappButton a {
+            position: relative;
+            display: inline-block;
+        }
+
+        #whatsappButton a img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            z-index: 1;
+        }
+
+        #whatsappButton a img:hover {
+            transform: scale(1.1);
+        }
+
+        #whatsappButton a .tooltip-text {
+            visibility: hidden;
+            position: absolute;
+            top: 50%;
+            left: 75px;
+            transform: translate(-20px, -50%);
+            opacity: 0;
+            background-color: rgba(255, 255, 255, 0.5);
+            color: #0e6b47;
+            padding: 5px 10px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        #whatsappButton a:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -581,7 +628,9 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" placeholder=" " value="<?= set_value('nomor_induk'); ?>" required pattern="\d*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" placeholder=" "
+                                    value="<?= set_value('nomor_induk') ? set_value('nomor_induk') : $id_user; ?>" required pattern="\d*" inputmode="numeric"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')" readonly>
                                 <label for="nomor_induk" class="form-label">Nomor Induk (NIP/NID)</label>
                             </div>
                         </div>
@@ -685,6 +734,13 @@
         </div>
     </div>
 
+    <div id="whatsappButton">
+        <a href="https://wa.me/+6289671432393" target="_blank">
+            <img src="<?= base_url('assets/img/wa-icon.png') ?>" alt="Contact Us on WhatsApp">
+            <span class="tooltip-text">Hubungi Kami</span>
+        </a>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
@@ -718,7 +774,7 @@
             penanggungJawabInput.addEventListener('input', function() {
                 if (penanggungJawabInput.value === '') {
                     penanggungJawabFeedback.textContent = '';
-                } else if (!/^[A-Za-z\s.,]+$/.test(penanggungJawabInput.value)) {
+                } else if (!/^[A-Za-z\s.,']+$/.test(penanggungJawabInput.value)) {
                     penanggungJawabFeedback.textContent = 'Hanya boleh berisi huruf, karakter (.), dan (,).';
                     penanggungJawabFeedback.className = 'feedback error';
                 } else {
@@ -983,6 +1039,13 @@
             if (!sidebar.contains(event.target) && !toggler.contains(event.target)) {
                 sidebar.classList.remove('show');
             }
+        });
+
+        document.getElementById('whatsappButton').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     </script>
 </body>

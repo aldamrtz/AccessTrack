@@ -499,6 +499,53 @@
                 margin-bottom: 1px !important;
             }
         }
+
+        #whatsappButton {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 2000;
+        }
+
+        #whatsappButton a {
+            position: relative;
+            display: inline-block;
+        }
+
+        #whatsappButton a img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            z-index: 1;
+        }
+
+        #whatsappButton a img:hover {
+            transform: scale(1.1);
+        }
+
+        #whatsappButton a .tooltip-text {
+            visibility: hidden;
+            position: absolute;
+            top: 50%;
+            left: 75px;
+            transform: translate(-20px, -50%);
+            opacity: 0;
+            background-color: rgba(255, 255, 255, 0.5);
+            color: #0e6b47;
+            padding: 5px 10px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        #whatsappButton a:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -601,8 +648,8 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="number" min="7" class="form-control" id="nim" name="nim" placeholder=" " value="<?= $pengajuan_email->nim; ?>" disabled pattern="\d*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                                        <label for="nim" class="form-label">Nomor Induk Mahasiswa (NIM)</label>
+                                        <input type="text" class="form-control" id="fakultas" name="fakultas" placeholder=" " value="<?= $pengajuan_email->fakultas; ?>" disabled>
+                                        <label for="fakultas" class="form-label">Fakultas</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -613,7 +660,13 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="number" min="7" class="form-control" id="nim" name="nim" placeholder=" " value="<?= $pengajuan_email->nim; ?>" disabled pattern="\d*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                        <label for="nim" class="form-label">Nomor Induk Mahasiswa (NIM)</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder=" " value="<?= $pengajuan_email->nama_lengkap; ?>" disabled>
                                         <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
@@ -702,6 +755,13 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div id="whatsappButton">
+        <a href="https://wa.me/+6289671432393" target="_blank">
+            <img src="<?= base_url('assets/img/wa-icon.png') ?>" alt="Contact Us on WhatsApp">
+            <span class="tooltip-text">Hubungi Kami</span>
+        </a>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -864,6 +924,13 @@
             document.addEventListener('shown.bs.tab', function(event) {
                 const tabId = event.target.getAttribute('data-bs-target');
                 saveActiveTab(tabId);
+            });
+
+            document.getElementById('whatsappButton').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
         });
     </script>
