@@ -233,6 +233,12 @@
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                                     <h6 class="m-0 font-weight-bold text-success">Tabel Pelaporan CSIRT</h6>
+                                    <div class="date-filter-buttons">
+                                        <button class="btn btn-success btn-sm" id="filterToday">Hari Ini</button>
+                                        <button class="btn btn-success btn-sm" id="filterWeek">7 Hari Terakhir</button>
+                                        <button class="btn btn-success btn-sm" id="filterMonth">30 Hari Terakhir</button>
+                                        <button class="btn btn-success btn-sm" id="filterAll">Semua Data</button>
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -240,16 +246,12 @@
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>Nama Pelapor</th>
-                                                    <th>Email Pelapor</th>
-                                                    <th>NIP</th>
-                                                    <th>Fakultas</th>
-                                                    <th>Jurusan</th>
-                                                    <th>Bagian</th>
+                                                    <th>Id User</th>
                                                     <th>Nama Website</th>
                                                     <th>Deskripsi Masalah</th>
                                                     <th>Tanggal Pelaporan</th>
                                                     <th>Status</th>
+                                                    <th>Alasan Laporan Ditolak</th>
                                                 </tr>
                                             </thead>
 
@@ -258,16 +260,12 @@
                                                 foreach ($laporan_csirt as $data) : ?>
                                                     <tr>
                                                         <td><?= $no++; ?></td>
-                                                        <td><?php echo $data['nama_pelapor']; ?></td>
-                                                        <td><?php echo $data['email_pelapor']; ?></td>
-                                                        <td><?php echo $data['nip']; ?></td>
-                                                        <td><?php echo $data['fakultas']; ?></td>
-                                                        <td><?php echo $data['jurusan']; ?></td>
-                                                        <td><?php echo $data['bagian']; ?></td>
+                                                        <td><?php echo $data['id_user']; ?></td>
                                                         <td><?php echo $data['nama_website']; ?></td>
                                                         <td><?php echo $data['deskripsi_masalah']; ?></td>
-                                                        <td><?php echo $data['tanggal_pelaporan']; ?></td>
+                                                        <td><?php echo $data['tanggal_laporan']; ?></td>
                                                         <td><?php echo $data['status']; ?></td>
+                                                        <td><?php echo $data['alasan_laporan_ditolak']; ?></td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
@@ -460,6 +458,58 @@
                         console.error('Error loading dashboard data:', error);
                         hideLoadingSpinner();
                     });
+                });
+            </script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const buttons = {
+                        today: document.getElementById('filterToday'),
+                        week: document.getElementById('filterWeek'),
+                        month: document.getElementById('filterMonth'),
+                        all: document.getElementById('filterAll')
+                    };
+
+                    const dataTable = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+
+                    function filterRows(range) {
+                        const rows = dataTable.getElementsByTagName('tr');
+                        const currentDate = new Date();
+
+                        for (let i = 0; i < rows.length; i++) {
+                            const dateCell = rows[i].getElementsByTagName('td')[11]; // Ganti indeks sesuai kolom tanggal
+                            const rowDate = new Date(dateCell.textContent.trim()); // Gunakan textContent dan trim()
+
+                            let shouldShow = true;
+
+                            if (!isNaN(rowDate)) { // Pastikan tanggal valid
+                                switch (range) {
+                                    case 'today':
+                                        shouldShow = currentDate.toDateString() === rowDate.toDateString();
+                                        break;
+                                    case 'week':
+                                        const diffInDaysWeek = (currentDate - rowDate) / (1000 * 60 * 60 * 24);
+                                        shouldShow = diffInDaysWeek >= 0 && diffInDaysWeek <= 7;
+                                        break;
+                                    case 'month':
+                                        const diffInDaysMonth = (currentDate - rowDate) / (1000 * 60 * 60 * 24);
+                                        shouldShow = diffInDaysMonth >= 0 && diffInDaysMonth <= 30;
+                                        break;
+                                    case 'all':
+                                    default:
+                                        shouldShow = true;
+                                }
+                            } else {
+                                shouldShow = false; // Sembunyikan baris jika tanggal tidak valid
+                            }
+
+                            rows[i].style.display = shouldShow ? '' : 'none';
+                        }
+                    }
+
+                    if (buttons.today) buttons.today.addEventListener('click', () => filterRows('today'));
+                    if (buttons.week) buttons.week.addEventListener('click', () => filterRows('week'));
+                    if (buttons.month) buttons.month.addEventListener('click', () => filterRows('month'));
+                    if (buttons.all) buttons.all.addEventListener('click', () => filterRows('all'));
                 });
             </script>
             <script>

@@ -240,17 +240,6 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <!-- Buttons Container -->
-                                    <div class="header-buttons-container">
-                                        <div class="header-buttons">
-                                            <div class="header-buttons">
-                                                <button class="btn btn-success" id="showDosen">Dosen</button>
-                                                <button class="btn btn-success" id="showStaff">Staff</button>
-                                                <button class="btn btn-success" id="showMahasiswa">Mahasiswa</button>
-                                                <button class="btn btn-success" id="showAll">Semua Data</button>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
@@ -425,52 +414,6 @@
                             alert('Gagal memperbarui highlight teks. Silakan coba lagi.');
                         }
                     });
-
-                    // Fungsionalitas tombol
-                    $('#showDosen').on('click', function() {
-                        // Hapus kelas 'active' dari semua tombol
-                        $('#showDosen').addClass('active');
-                        $('#showStaff').removeClass('active');
-                        $('#showMahasiswa').removeClass('active');
-                        $('#showAll').removeClass('active');
-
-                        currentRole = 'Dosen'; // Set role yang difilter
-                        table.column(7).search('Dosen').draw(); // Filter berdasarkan Dosen
-                    });
-
-                    $('#showStaff').on('click', function() {
-                        // Hapus kelas 'active' dari semua tombol
-                        $('#showDosen').removeClass('active');
-                        $('#showStaff').addClass('active');
-                        $('#showMahasiswa').removeClass('active');
-                        $('#showAll').removeClass('active');
-
-                        currentRole = 'Staff'; // Set role yang difilter
-                        table.column(7).search('Staff').draw(); // Filter berdasarkan Dosen
-                    });
-
-                    $('#showMahasiswa').on('click', function() {
-                        // Hapus kelas 'active' dari semua tombol
-                        $('#showDosen').removeClass('active');
-                        $('#showStaff').removeClass('active');
-                        $('#showMahasiswa').addClass('active');
-                        $('#showAll').removeClass('active');
-
-                        currentRole = 'Mahasiswa'; // Set role yang difilter
-                        table.column(7).search('Mahasiswa').draw(); // Filter berdasarkan Mahasiswa
-                    });
-
-                    $('#showAll').on('click', function() {
-                        // Hapus kelas 'active' dari semua tombol
-                        $('#showDosen').removeClass('active');
-                        $('#showStaff').removeClass('active');
-                        $('#showMahasiswa').removeClass('active');
-                        $('#showAll').addClass('active');
-
-                        currentRole = ''; // Hapus filter role
-                        table.column(7).search('').draw(); // Tampilkan semua data
-                    });
-
                     // Perbarui card counts pada saat halaman dimuat
                     updateCardCounts();
                 });
@@ -536,41 +479,6 @@
                 });
             </script>
 
-            <!-- Loading -->
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    // Fungsi untuk menghapus spinner setelah halaman selesai dimuat
-                    function hideLoadingSpinner() {
-                        document.getElementById('loading-spinner').style.display = 'none';
-                    }
-
-                    // Menunggu hingga semua data selesai dimuat
-                    var dashboardDataLoad = new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                            resolve();
-                        }, 2000);
-                    });
-
-                    dashboardDataLoad.then(() => {
-                        // Menghilangkan spinner setelah data selesai dimuat
-                        hideLoadingSpinner();
-                    }).catch((error) => {
-                        console.error('Error loading dashboard data:', error);
-                        hideLoadingSpinner();
-                    });
-                });
-            </script>
-            <script>
-                // JavaScript untuk toggle sidebar
-                document.addEventListener('DOMContentLoaded', function() {
-                    var sidebarToggle = document.getElementById('sidebarToggle');
-                    var sidebar = document.getElementById('accordionSidebar');
-
-                    sidebarToggle.addEventListener('click', function() {
-                        sidebar.classList.toggle('toggled');
-                    });
-                });
-            </script>
 
             <!-- Loading-->
             <script>
