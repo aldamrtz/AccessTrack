@@ -628,7 +628,9 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" placeholder=" " value="<?= set_value('nomor_induk'); ?>" required pattern="\d*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                <input type="text" class="form-control" id="nomor_induk" name="nomor_induk" placeholder=" "
+                                    value="<?= set_value('nomor_induk') ? set_value('nomor_induk') : $id_user; ?>" required pattern="\d*" inputmode="numeric"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')" readonly>
                                 <label for="nomor_induk" class="form-label">Nomor Induk (NIP/NID)</label>
                             </div>
                         </div>
@@ -772,7 +774,7 @@
             penanggungJawabInput.addEventListener('input', function() {
                 if (penanggungJawabInput.value === '') {
                     penanggungJawabFeedback.textContent = '';
-                } else if (!/^[A-Za-z\s.,]+$/.test(penanggungJawabInput.value)) {
+                } else if (!/^[A-Za-z\s.,']+$/.test(penanggungJawabInput.value)) {
                     penanggungJawabFeedback.textContent = 'Hanya boleh berisi huruf, karakter (.), dan (,).';
                     penanggungJawabFeedback.className = 'feedback error';
                 } else {

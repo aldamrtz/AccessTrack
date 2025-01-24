@@ -661,25 +661,44 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="nim" name="nim" placeholder=" " value="<?= set_value('nim'); ?>" required pattern="\d*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                                <label for="nim" class="form-label">Nomor Induk Mahasiswa (NIM)</label>
-                                <div id="nimValidationFeedback" class="feedback feedback-spacing"></div>
+                                <select class="form-select" id="fakultas" name="fakultas" placeholder=" " required>
+                                    <option value=""></option>
+                                    <?php foreach ($fakultas as $value => $label): ?>
+                                        <option value="<?= $value; ?>" <?= set_select('fakultas', $value); ?>><?= $label; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <label for="fakultas" class="form-label">Fakultas</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <select class="form-select" id="prodi" name="prodi" placeholder=" " required>
                                     <option value=""></option>
-                                    <?php foreach ($program_studi as $value => $label): ?>
-                                        <option value="<?= $value; ?>" <?= set_select('prodi', $value); ?>><?= $label; ?></option>
-                                    <?php endforeach; ?>
+                                    <?php if (!empty($selected_fakultas) && isset($program_studi[$selected_fakultas])): ?>
+                                        <?php foreach ($program_studi[$selected_fakultas] as $value): ?>
+                                            <option value="<?= $value; ?>" <?= set_select('prodi', $value); ?>><?= $value; ?></option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </select>
                                 <label for="prodi" class="form-label">Program Studi</label>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="nim" name="nim" placeholder=" "
+                                    value="<?= set_value('nim') ? set_value('nim') : $id_user; ?>" required pattern="\d*" inputmode="numeric"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')" readonly>
+                                <label for="nim" class="form-label">Nomor Induk Mahasiswa (NIM)</label>
+                                <div id="nimValidationFeedback" class="feedback feedback-spacing">
+                                    <?php if ($nim_status === 'taken'): ?>
+                                        <span class="error">NIM sudah terdaftar</span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder=" " value="<?= set_value('nama_lengkap'); ?>" required>
                                 <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
@@ -764,6 +783,23 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="https://www.google.com/recaptcha/api.js?render=6Lf0PEQqAAAAANCvF8-NRJwRcVHMZDMbSD84j7gZ"></script>
     <script>
+        const programStudi = <?= json_encode($program_studi); ?>;
+        document.getElementById('fakultas').addEventListener('change', function() {
+            const selectedFakultas = this.value;
+            const prodiDropdown = document.getElementById('prodi');
+
+            prodiDropdown.innerHTML = '<option value=""></option>'; // Reset opsi prodi
+
+            if (programStudi[selectedFakultas]) {
+                programStudi[selectedFakultas].forEach(function(prodi) {
+                    const option = document.createElement('option');
+                    option.value = prodi;
+                    option.textContent = prodi;
+                    prodiDropdown.appendChild(option);
+                });
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('form');
 
@@ -784,6 +820,11 @@
 
             const ktmInput = document.getElementById('ktm');
             const ktmFeedback = document.getElementById('ktmFeedback');
+
+            if (nimFeedback.textContent.includes('NIM sudah terdaftar')) {
+                nimInput.classList.add('error-border');
+                nimFeedback.classList.add('error');
+            }
 
             nimInput.addEventListener('input', function() {
                 const nimValue = nimInput.value;
@@ -807,6 +848,7 @@
                         if (response.status === 'taken') {
                             nimFeedback.textContent = 'NIM sudah terdaftar';
                             nimFeedback.className = 'feedback error';
+                            nimInput.classList.add('error-border');
                         } else {
                             nimFeedback.textContent = '';
                             nimInput.classList.remove('error-border');
@@ -1211,6 +1253,12 @@
                     case 'Kebidanan D-3':
                         domain = '@fts.unjani.ac.id';
                         break;
+                    case 'Teknologi Laboraturium Medis D-4':
+                        domain = '@student.unjani.ac.id';
+                        break;
+                    case 'Teknologi Laboraturium Medis D-3':
+                        domain = '@student.unjani.ac.id';
+                        break;
                     default:
                         domain = '@student.unjani.ac.id';
                         break;
@@ -1287,12 +1335,12 @@
                     sidebar.classList.remove('show');
                 }
             });
-        });
 
-        document.getElementById('whatsappButton').addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+            document.getElementById('whatsappButton').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
         });
     </script>

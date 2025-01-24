@@ -39,6 +39,7 @@ class SubDomainController extends CI_Controller
         $data['id_user'] = $user_data->id_user;
         $data['nama_lengkap'] = $user_data->nama_lengkap;
         $data['unit_kerja'] = $this->SubDomainModel->getUnitKerja();
+
         $this->load->view('pengajuan_subdomain', $data);
     }
 
@@ -122,7 +123,7 @@ class SubDomainController extends CI_Controller
             'smtp_host' => 'ssl://smtp.googlemail.com',
             'smtp_port' => 465,
             'smtp_user' => 'aldaamorita@gmail.com',
-            'smtp_pass' => 'iftxvtcfydxwalsy',
+            'smtp_pass' => 'tlqxvlackebtocaz',
             'mailtype'  => 'html',
             'charset'   => 'iso-8859-1',
             'wordwrap'  => TRUE
@@ -167,7 +168,7 @@ class SubDomainController extends CI_Controller
             'smtp_host' => 'ssl://smtp.googlemail.com',
             'smtp_port' => 465,
             'smtp_user' => 'aldaamorita@gmail.com',
-            'smtp_pass' => 'iftxvtcfydxwalsy',
+            'smtp_pass' => 'tlqxvlackebtocaz',
             'mailtype'  => 'html',
             'charset'   => 'iso-8859-1',
             'wordwrap'  => TRUE

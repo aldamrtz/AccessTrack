@@ -60,7 +60,7 @@ class EmailModel extends CI_Model
 
     public function getAllRegisteredEmails()
     {
-        $this->db->select('nim, prodi, nama_lengkap, email, password, tgl_selesai');
+        $this->db->select('nim, fakultas, prodi, nama_lengkap, email, password, tgl_selesai');
         $query = $this->db->get('email_terdaftar');
         return $query->result_array();
     }
@@ -131,9 +131,10 @@ class EmailModel extends CI_Model
         return $query->row();
     }
 
-    public function updatePengajuan($nim, $prodi, $nama_lengkap, $email_diajukan, $email_pengguna, $ktm)
+    public function updatePengajuan($nim, $fakultas, $prodi, $nama_lengkap, $email_diajukan, $email_pengguna, $ktm)
     {
         $data = [
+            'fakultas' => $fakultas,
             'prodi' => $prodi,
             'nama_lengkap' => $nama_lengkap,
             'email_diajukan' => $email_diajukan,
@@ -171,51 +172,87 @@ class EmailModel extends CI_Model
         return $this->db->delete('email_terdaftar');
     }
 
+    public function getFakultas()
+    {
+        return [
+            'Fakultas Teknik' => 'Fakultas Teknik',
+            'Fakultas Sains dan Informatika' => 'Fakultas Sains dan Informatika',
+            'Fakultas Ekonomi dan Bisnis' => 'Fakultas Ekonomi dan Bisnis',
+            'Fakultas Ilmu Sosial dan Ilmu Politik' => 'Fakultas Ilmu Sosial dan Ilmu Politik',
+            'Fakultas Kedokteran' => 'Fakultas Kedokteran',
+            'Fakultas Psikologi' => 'Fakultas Psikologi',
+            'Fakultas Farmasi' => 'Fakultas Farmasi',
+            'Fakultas Teknologi Manufaktur' => 'Fakultas Teknologi Manufaktur',
+            'Fakultas Kedokteran Gigi' => 'Fakultas Kedokteran Gigi',
+            'Fakultas Ilmu dan Teknologi Kesehatan' => 'Fakultas Ilmu dan Teknologi Kesehatan'
+        ];
+    }
+
     public function getProgramStudi()
     {
         return [
-            'Teknik Elektro S-1' => 'Teknik Elektro S-1',
-            'Teknik Kimia S-1' => 'Teknik Kimia S-1',
-            'Teknik Sipil S-1' => 'Teknik Sipil S-1',
-            'Magister Teknik Sipil S-2' => 'Magister Teknik Sipil S-2',
-            'Teknik Geomatika S-1' => 'Teknik Geomatika S-1',
-            'Teknik Mesin S-1' => 'Teknik Mesin S-1',
-            'Teknik Industri S-1' => 'Teknik Industri S-1',
-            'Teknik Metalurgi S-1' => 'Teknik Metalurgi S-1',
-            'Magister Manajemen Teknologi S-2' => 'Magister Manajemen Teknologi S-2',
-            'Akuntansi S-1' => 'Akuntansi S-1',
-            'Manajemen S-1' => 'Manajemen S-1',
-            'Magister Manajemen S-2' => 'Magister Manajemen S-2',
-            'Ilmu Pemerintahan S-1' => 'Ilmu Pemerintahan S-1',
-            'Ilmu Hubungan Internasional S-1' => 'Ilmu Hubungan Internasional S-1',
-            'Magister Hubungan Internasional S-2' => 'Magister Hubungan Internasional S-2',
-            'Ilmu Hukum S-1' => 'Ilmu Hukum S-1',
-            'Magister Ilmu Pemerintahan S-2' => 'Magister Ilmu Pemerintahan S-2',
-            'Kimia S-1' => 'Kimia S-1',
-            'Magister Kimia S-2' => 'Magister Kimia S-2',
-            'Informatika S-1' => 'Informatika S-1',
-            'Sistem Informasi S-1' => 'Sistem Informasi S-1',
-            'Psikologi S-1' => 'Psikologi S-1',
-            'Farmasi S-1' => 'Farmasi S-1',
-            'Profesi Apoteker' => 'Profesi Apoteker',
-            'Magister Farmasi S-2' => 'Magister Farmasi S-2',
-            'Pendidikan Dokter S-1' => 'Pendidikan Dokter S-1',
-            'Profesi Dokter' => 'Profesi Dokter',
-            'Administrasi Rumah Sakit S-1' => 'Administrasi Rumah Sakit S-1',
-            'Magister Penuaan Kulit dan Estetika S-2' => 'Magister Penuaan Kulit dan Estetika S-2',
-            'Kedokteran Gigi S-1' => 'Kedokteran Gigi S-1',
-            'Profesi Dokter Gigi' => 'Profesi Dokter Gigi',
-            'Magister Keperawatan S-2' => 'Magister Keperawatan S-2',
-            'Profesi Ners' => 'Profesi Ners',
-            'Ilmu Keperawatan S-1' => 'Ilmu Keperawatan S-1',
-            'Keperawatan D-3' => 'Keperawatan D-3',
-            'Kesehatan Masyarakat S-1' => 'Kesehatan Masyarakat S-1',
-            'Magister Kesehatan Masyarakat S-2' => 'Magister Kesehatan Masyarakat S-2',
-            'Teknologi Laboratorium Medis D-4' => 'Teknologi Laboratorium Medis D-4',
-            'Teknologi Laboratorium Medis D-3' => 'Teknologi Laboratorium Medis D-3',
-            'Kebidanan S-1' => 'Kebidanan S-1',
-            'Profesi Bidan' => 'Profesi Bidan',
-            'Kebidanan D-3' => 'Kebidanan D-3'
+            'Fakultas Teknik' => [
+                'Teknik Elektro S-1',
+                'Teknik Kimia S-1',
+                'Teknik Sipil S-1',
+                'Magister Teknik Sipil S-2',
+                'Teknik Geomatika S-1'
+            ],
+            'Fakultas Sains dan Informatika' => [
+                'Kimia S-1',
+                'Magister Kimia S-2',
+                'Informatika S-1',
+                'Sistem Informasi S-1'
+            ],
+            'Fakultas Ekonomi dan Bisnis' => [
+                'Akuntansi S-1',
+                'Manajemen S-1',
+                'Magister Manajemen S-2'
+            ],
+            'Fakultas Ilmu Sosial dan Ilmu Politik' => [
+                'Ilmu Pemerintahan S-1',
+                'Ilmu Hubungan Internasional S-1',
+                'Magister Hubungan Internasional S-2',
+                'Ilmu Hukum S-1',
+                'Magister Ilmu Pemerintahan S-2'
+            ],
+            'Fakultas Kedokteran' => [
+                'Pendidikan Dokter S-1',
+                'Profesi Dokter',
+                'Administrasi Rumah Sakit S-1',
+                'Magister Penuaan Kulit dan Estetika S-2'
+            ],
+            'Fakultas Psikologi' => [
+                'Psikologi S-1'
+            ],
+            'Fakultas Farmasi' => [
+                'Farmasi S-1',
+                'Profesi Apoteker',
+                'Magister Farmasi S-2'
+            ],
+            'Fakultas Teknologi Manufaktur' => [
+                'Teknik Mesin S-1',
+                'Teknik Industri S-1',
+                'Teknik Metalurgi S-1',
+                'Magister Manajemen Teknologi S-2'
+            ],
+            'Fakultas Kedokteran Gigi' => [
+                'Kedokteran Gigi S-1',
+                'Profesi Dokter Gigi'
+            ],
+            'Fakultas Ilmu dan Teknologi Kesehatan' => [
+                'Magister Keperawatan S-2',
+                'Profesi Ners',
+                'Ilmu Keperawatan S-1',
+                'Keperawatan D-3',
+                'Kesehatan Masyarakat S-1',
+                'Teknologi Laboraturium Medis D-4',
+                'Teknologi Laboraturium Medis D-3',
+                'Kebidanan S-1',
+                'Profesi Bidan',
+                'Kebidanan D-3',
+                'Magister Kesehatan Masyarakat S-2'
+            ],
         ];
     }
 }

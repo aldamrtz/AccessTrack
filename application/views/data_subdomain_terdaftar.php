@@ -19,6 +19,7 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
+            background-color: #e0f5ec;
         }
 
         .sidebar {
@@ -26,7 +27,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            height: 100%;
+            height: 1500px;
             z-index: 1000;
         }
 
@@ -687,7 +688,7 @@
             }
 
             function printAllTables(monthYear) {
-                const table = $('#emailterdaftarTable').DataTable();
+                const table = $('#subdomainterdaftarTable').DataTable();
                 const data = prepareDataForPrint(table, monthYear);
 
                 data.sort((a, b) => new Date(b.tanggalPengajuan) - new Date(a.tanggalPengajuan));
@@ -707,7 +708,7 @@
                     const selectedMonth = monthYear.split(" ")[0];
 
                     data.each((row, index) => {
-                        const tanggalPengajuan = new Date(row[6]); // Index 6 untuk tgl_selesai
+                        const tanggalPengajuan = new Date(row[5]);
                         const year = tanggalPengajuan.getFullYear();
                         const month = tanggalPengajuan.toLocaleString('default', {
                             month: 'long'
@@ -757,7 +758,7 @@
     <p>Kampus Cimahi: Jl. Terusan Jend. Sudirman, Cimahi Telp: (022) 1663186 - 6656, Fax: (022) 6652069</p>
     <p>Kampus Bandung: Jl. Gatot Subroto, Bandung Telp: (022) 7312741, Fax: (022) 7312741</p>
     <hr style="font-weight: bold;"/>
-    <h4 style="margin-top: 35px; margin-bottom: 35px;">Data Email Terdaftar- ${title} Pada Bulan ${monthYear}</h4>
+    <h4 style="margin-top: 35px; margin-bottom: 35px;">Data Subdomain Terdaftar- ${title} Pada Bulan ${monthYear}</h4>
 </div>
 <table border="1" style="width: 100%; border-collapse: collapse;">
     <thead>

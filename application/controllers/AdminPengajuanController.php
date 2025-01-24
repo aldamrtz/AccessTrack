@@ -38,6 +38,7 @@ class AdminPengajuanController extends CI_Controller
 
         // Mengirim data ke view
         $data['id_user'] = $this->session->userdata('id_user');
+        $data['fakultas'] = $this->EmailModel->getFakultas();
         $data['program_studi'] = $this->EmailModel->getProgramStudi();
         $data['admin_name'] = $this->session->userdata('admin_name');
         $data['profile_image'] = $this->session->userdata('profile_image');
@@ -63,6 +64,8 @@ class AdminPengajuanController extends CI_Controller
     public function data_pengajuan_email()
     {
         $data['program_studi'] = $this->EmailModel->getProgramStudi();
+        $data['fakultas'] = $this->EmailModel->getFakultas();
+
         if (empty($data['email_diajukan'])) {
             $data['email_diajukan'] = [];
         }
@@ -324,6 +327,7 @@ class AdminPengajuanController extends CI_Controller
         $tgl_selesai = date('Y-m-d H:i:s');
         $registered_email_data = [
             'nim' => $pengajuan->nim,
+            'fakultas' => $pengajuan->fakultas,
             'prodi' => $pengajuan->prodi,
             'nama_lengkap' => $pengajuan->nama_lengkap,
             'email' => $pengajuan->email_diajukan,
@@ -356,9 +360,8 @@ class AdminPengajuanController extends CI_Controller
 
     public function editPengajuanEmail()
     {
-        $data['program_studi'] = $this->EmailModel->getProgramStudi();
-
         $nim = $this->input->post('nim');
+        $fakultas = $this->input->post('fakultas');
         $prodi = $this->input->post('prodi');
         $nama_lengkap = $this->input->post('nama_lengkap');
         $email_diajukan = $this->input->post('email_diajukan');
@@ -375,7 +378,7 @@ class AdminPengajuanController extends CI_Controller
             }
         }
 
-        $this->EmailModel->updatePengajuan($nim, $prodi, $nama_lengkap, $email_diajukan, $email_pengguna, $ktm);
+        $this->EmailModel->updatePengajuan($nim, $fakultas, $prodi, $nama_lengkap, $email_diajukan, $email_pengguna, $ktm);
         redirect('AdminPengajuanController/data_pengajuan_email');
     }
 
@@ -531,7 +534,7 @@ class AdminPengajuanController extends CI_Controller
             'smtp_host' => 'ssl://smtp.googlemail.com',
             'smtp_port' => 465,
             'smtp_user' => 'aldaamorita@gmail.com', // Ganti dengan email kamu
-            'smtp_pass' => 'iftxvtcfydxwalsy',        // Ganti dengan password email kamu
+            'smtp_pass' => 'tlqxvlackebtocaz',        // Ganti dengan password email kamu
             'mailtype'  => 'html',
             'charset'   => 'iso-8859-1',
             'wordwrap'  => TRUE

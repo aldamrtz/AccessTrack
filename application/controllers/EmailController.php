@@ -31,10 +31,14 @@ class EmailController extends CI_Controller
         }
         $id_user = $this->session->userdata('id_user');
         $user_data = $this->Dashboard_ModelAktor->get_user_data($id_user);
+
         $data['id_user'] = $user_data->id_user;
         $data['nama_lengkap'] = $user_data->nama_lengkap;
-
+        $data['fakultas'] = $this->EmailModel->getFakultas();
         $data['program_studi'] = $this->EmailModel->getProgramStudi();
+        $data['selected_fakultas'] = $this->input->post('fakultas');
+        $data['nim_status'] = $this->EmailModel->isNimTaken($user_data->id_user) ? 'taken' : 'available';
+
         $this->load->view('pengajuan_email', $data);
     }
 
@@ -55,6 +59,7 @@ class EmailController extends CI_Controller
         $random_code = substr(str_shuffle($characters), 0, 7);
 
         $email_diajukan = $this->input->post('email_diajukan');
+        $fakultas = $this->input->post('fakultas');
         $program_studi = $this->input->post('prodi');
         $domain = $this->getDomainByProdi($program_studi); // Mendapatkan domain sesuai program studi
 
@@ -70,6 +75,7 @@ class EmailController extends CI_Controller
         $this->form_validation->set_rules('email_diajukan', 'Email yang Diajukan', 'required|valid_email|callback_checkEmailExistence');
         $this->form_validation->set_rules('nama_lengkap', 'Nama Lengkap', 'required');
         $this->form_validation->set_rules('nim', 'Nomor Induk Mahasiswa', 'required');
+        $this->form_validation->set_rules('fakultas', 'Fakultas', 'required');
         $this->form_validation->set_rules('prodi', 'Program Studi', 'required');
         $this->form_validation->set_rules('email_pengguna', 'Email Pengguna', 'required|valid_email');
 
@@ -116,6 +122,7 @@ class EmailController extends CI_Controller
             $data = array(
                 'nama_lengkap' => $this->input->post('nama_lengkap'),
                 'nim' => $this->input->post('nim'),
+                'fakultas' => $this->input->post('fakultas'),
                 'prodi' => $this->input->post('prodi'),
                 'email_diajukan' => $email_diajukan,
                 'email_pengguna' => $this->input->post('email_pengguna'),
@@ -154,7 +161,7 @@ class EmailController extends CI_Controller
             'smtp_host' => 'ssl://smtp.googlemail.com',
             'smtp_port' => 465,
             'smtp_user' => 'aldaamorita@gmail.com',
-            'smtp_pass' => 'iftxvtcfydxwalsy',
+            'smtp_pass' => 'tlqxvlackebtocaz',
             'mailtype'  => 'html',
             'charset'   => 'iso-8859-1',
             'wordwrap'  => TRUE
@@ -173,6 +180,7 @@ class EmailController extends CI_Controller
         $message .= '<table>';
         $message .= '<tr><td style="padding-right: 20px;"><strong>Nama</strong></td><td>:</td><td>' . $data['nama_lengkap'] . '</td></tr>';
         $message .= '<tr><td style="padding-right: 20px;"><strong>NIM</strong></td><td>:</td><td>' . $data['nim'] . '</td></tr>';
+        $message .= '<tr><td style="padding-right: 20px;"><strong>Fakultas</strong></td><td>:</td><td>' . $data['fakultas'] . '</td></tr>';
         $message .= '<tr><td style="padding-right: 20px;"><strong>Program Studi</strong></td><td>:</td><td>' . $data['prodi'] . '</td></tr>';
         $message .= '</table>';
 
@@ -198,7 +206,7 @@ class EmailController extends CI_Controller
             'smtp_host' => 'ssl://smtp.googlemail.com',
             'smtp_port' => 465,
             'smtp_user' => 'aldaamorita@gmail.com',
-            'smtp_pass' => 'iftxvtcfydxwalsy',
+            'smtp_pass' => 'tlqxvlackebtocaz',
             'mailtype'  => 'html',
             'charset'   => 'iso-8859-1',
             'wordwrap'  => TRUE

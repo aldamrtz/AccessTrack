@@ -26,7 +26,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            height: 100%;
+            height: 1500px;
             z-index: 1000;
         }
 
@@ -214,8 +214,7 @@
         }
 
         .table td:nth-child(1),
-        .table td:nth-child(7),
-        .table td:nth-child(9),
+        .table td:nth-child(8),
         .table td:nth-child(10) {
             text-align: center;
         }
@@ -717,6 +716,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>Fakultas</th>
                                         <th>Program Studi</th>
                                         <th>NIM</th>
                                         <th>Nama</th>
@@ -735,6 +735,7 @@
                                     foreach ($email_diajukan as $email): ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
+                                            <td><?= $email['fakultas']; ?></td>
                                             <td><?= $email['prodi']; ?></td>
                                             <td><?= $email['nim']; ?></td>
                                             <td><?= $email['nama_lengkap']; ?></td>
@@ -757,6 +758,7 @@
                                             <td>
                                                 <button class="btn btn-warning" style="color: #ffffff;" data-toggle="modal" data-target="#editModal"
                                                     data-id="<?= $email['nim']; ?>"
+                                                    data-fakultas="<?= $email['fakultas']; ?>"
                                                     data-prodi="<?= $email['prodi']; ?>"
                                                     data-nama-lengkap="<?= $email['nama_lengkap']; ?>"
                                                     data-email="<?= $email['email_diajukan']; ?>"
@@ -777,6 +779,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>Fakultas</th>
                                         <th>Program Studi</th>
                                         <th>NIM</th>
                                         <th>Nama</th>
@@ -795,6 +798,7 @@
                                     foreach ($email_diproses as $email): ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
+                                            <td><?= $email['fakultas']; ?></td>
                                             <td><?= $email['prodi']; ?></td>
                                             <td><?= $email['nim']; ?></td>
                                             <td><?= $email['nama_lengkap']; ?></td>
@@ -817,6 +821,7 @@
                                             <td>
                                                 <button class="btn btn-warning" style="color: #ffffff;" data-toggle="modal" data-target="#editModal"
                                                     data-id="<?= $email['nim']; ?>"
+                                                    data-fakultas="<?= $email['fakultas']; ?>"
                                                     data-prodi="<?= $email['prodi']; ?>"
                                                     data-nama-lengkap="<?= $email['nama_lengkap']; ?>"
                                                     data-email="<?= $email['email_diajukan']; ?>"
@@ -837,6 +842,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>Fakultas</th>
                                         <th>Program Studi</th>
                                         <th>NIM</th>
                                         <th>Nama</th>
@@ -855,6 +861,7 @@
                                     foreach ($email_diverifikasi as $email): ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
+                                            <td><?= $email['fakultas']; ?></td>
                                             <td><?= $email['prodi']; ?></td>
                                             <td><?= $email['nim']; ?></td>
                                             <td><?= $email['nama_lengkap']; ?></td>
@@ -891,6 +898,7 @@
                                             <td>
                                                 <button class="btn btn-warning" style="color: #ffffff;" data-toggle="modal" data-target="#editModal"
                                                     data-id="<?= $email['nim']; ?>"
+                                                    data-fakultas="<?= $email['fakultas']; ?>"
                                                     data-prodi="<?= $email['prodi']; ?>"
                                                     data-nama-lengkap="<?= $email['nama_lengkap']; ?>"
                                                     data-email="<?= $email['email_diajukan']; ?>"
@@ -911,6 +919,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>Fakultas</th>
                                         <th>Program Studi</th>
                                         <th>NIM</th>
                                         <th>Nama</th>
@@ -928,6 +937,7 @@
                                     foreach ($email_dikirim as $email): ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
+                                            <td><?= $email['fakultas']; ?></td>
                                             <td><?= $email['prodi']; ?></td>
                                             <td><?= $email['nim']; ?></td>
                                             <td><?= $email['nama_lengkap']; ?></td>
@@ -946,6 +956,7 @@
                                                     data-nama-lengkap="<?= $email['nama_lengkap']; ?>"
                                                     data-email="<?= $email['email_diajukan']; ?>"
                                                     data-email-pengguna="<?= $email['email_pengguna']; ?>"
+                                                    data-fakultas="<?= $email['fakultas']; ?>"
                                                     data-prodi="<?= $email['prodi']; ?>"
                                                     data-ktm="<?= $email['ktm']; ?>">Edit</button>
                                             </td>
@@ -1015,9 +1026,13 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="editNim">Nomor Induk Mahasiswa (NIM)</label>
-                                        <input type="text" class="form-control" id="editNim" disabled style="background-color: #e0f5ec;">
-                                        <input type="hidden" name="nim" id="hiddenEditNim">
+                                        <label for="editFakultas">Fakultas</label>
+                                        <select class="form-select" id="editFakultas" name="fakultas" required>
+                                            <option value=""></option>
+                                            <?php foreach ($fakultas as $value => $label): ?>
+                                                <option value="<?= $value; ?>" <?= set_select('fakultas', $value); ?>><?= $label; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -1026,14 +1041,21 @@
                                         <select class="form-select" id="editProdi" name="prodi" required>
                                             <option value=""></option>
                                             <?php foreach ($program_studi as $value => $label): ?>
-                                                <option value="<?= $value; ?>"><?= $label; ?></option>
+                                                <option value="<?= $value; ?>" <?= set_select('prodi', $value); ?>><?= $label; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="editNim">Nomor Induk Mahasiswa (NIM)</label>
+                                        <input type="text" class="form-control" id="editNim" disabled style="background-color: #e0f5ec;">
+                                        <input type="hidden" name="nim" id="hiddenEditNim">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="editNamaLengkap">Nama Lengkap</label>
                                         <input type="text" class="form-control" id="editNamaLengkap" name="nama_lengkap" required>
@@ -1165,9 +1187,27 @@
                     modal.find('#deleteId').val(id);
                 });
 
+                const programStudi = <?= json_encode($program_studi); ?>;
+                document.getElementById('editFakultas').addEventListener('change', function() {
+                    const selectedFakultas = this.value;
+                    const prodiDropdown = document.getElementById('editProdi');
+
+                    prodiDropdown.innerHTML = '<option value=""></option>';
+
+                    if (programStudi[selectedFakultas]) {
+                        programStudi[selectedFakultas].forEach(function(prodi) {
+                            const option = document.createElement('option');
+                            option.value = prodi;
+                            option.textContent = prodi;
+                            prodiDropdown.appendChild(option);
+                        });
+                    }
+                });
+
                 $('#editModal').on('show.bs.modal', function(event) {
                     var button = $(event.relatedTarget);
                     var nim = button.data('id');
+                    var fakultas = button.data('fakultas');
                     var prodi = button.data('prodi');
                     var nama_lengkap = button.data('nama-lengkap');
                     var email = button.data('email');
@@ -1177,6 +1217,21 @@
                     var modal = $(this);
                     modal.find('#editNim').val(nim);
                     modal.find('#hiddenEditNim').val(nim);
+                    modal.find('#editFakultas').val(fakultas);
+                    var prodiDropdown = modal.find('#editProdi');
+                    prodiDropdown.empty().append('<option value=""></option>'); // Kosongkan opsi sebelumnya
+
+                    // Menambahkan program studi sesuai dengan fakultas yang dipilih
+                    if (programStudi[fakultas]) {
+                        programStudi[fakultas].forEach(function(prodiOption) {
+                            var option = $('<option></option>').val(prodiOption).text(prodiOption);
+                            prodiDropdown.append(option);
+                        });
+                    }
+
+                    // Set Prodi yang sudah terpilih
+                    prodiDropdown.val(prodi);
+
                     modal.find('#editProdi').val(prodi);
                     modal.find('#editNamaLengkap').val(nama_lengkap);
                     modal.find('#editEmail').val(email);
@@ -1374,13 +1429,14 @@
                         if (year == selectedYear && month.toLowerCase() === selectedMonth.toLowerCase()) {
                             formattedData.push({
                                 no: index + 1,
-                                prodi: row[1],
-                                nim: row[2],
-                                nama: row[3],
-                                emailDiajukan: row[4],
-                                emailPengguna: row[5],
-                                tanggalPengajuan: row[7],
-                                status: status || row[8],
+                                fakultas: row[1],
+                                prodi: row[2],
+                                nim: row[3],
+                                nama: row[4],
+                                emailDiajukan: row[5],
+                                emailPengguna: row[6],
+                                tanggalPengajuan: row[8],
+                                status: status || row[9],
                             });
                         }
                     });
@@ -1388,13 +1444,14 @@
                     data.each((row, index) => {
                         formattedData.push({
                             no: index + 1,
-                            prodi: row[1],
-                            nim: row[2],
-                            nama: row[3],
-                            emailDiajukan: row[4],
-                            emailPengguna: row[5],
-                            tanggalPengajuan: row[7],
-                            status: status || row[8],
+                            fakultas: row[1],
+                            prodi: row[2],
+                            nim: row[3],
+                            nama: row[4],
+                            emailDiajukan: row[5],
+                            emailPengguna: row[6],
+                            tanggalPengajuan: row[8],
+                            status: status || row[9],
                         });
                     });
                 }
@@ -1425,6 +1482,7 @@
         <thead>
             <tr>
                 <th>No</th>
+                <th>Fakultas</th>
                 <th>Program Studi</th>
                 <th>NIM</th>
                 <th>Nama</th>
@@ -1439,6 +1497,7 @@
                     printContent += `
         <tr>
             <td>${item.no}</td>
+            <td>${item.fakultas}</td>
             <td>${item.prodi}</td>
             <td>${item.nim}</td>
             <td>${item.nama}</td>

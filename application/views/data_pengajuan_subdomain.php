@@ -19,6 +19,7 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
+            background-color: #e0f5ec;
         }
 
         .sidebar {
@@ -26,7 +27,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            height: 100%;
+            height: 1500px;
             z-index: 1000;
         }
 

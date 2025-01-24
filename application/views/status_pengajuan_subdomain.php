@@ -714,12 +714,12 @@
                 const tabId = event.target.getAttribute('data-bs-target');
                 saveActiveTab(tabId);
             });
-        });
 
-        document.getElementById('whatsappButton').addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+            document.getElementById('whatsappButton').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
         });
     </script>

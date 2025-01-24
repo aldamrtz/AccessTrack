@@ -648,8 +648,8 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="number" min="7" class="form-control" id="nim" name="nim" placeholder=" " value="<?= $pengajuan_email->nim; ?>" disabled pattern="\d*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                                        <label for="nim" class="form-label">Nomor Induk Mahasiswa (NIM)</label>
+                                        <input type="text" class="form-control" id="fakultas" name="fakultas" placeholder=" " value="<?= $pengajuan_email->fakultas; ?>" disabled>
+                                        <label for="fakultas" class="form-label">Fakultas</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -660,7 +660,13 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="number" min="7" class="form-control" id="nim" name="nim" placeholder=" " value="<?= $pengajuan_email->nim; ?>" disabled pattern="\d*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                        <label for="nim" class="form-label">Nomor Induk Mahasiswa (NIM)</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder=" " value="<?= $pengajuan_email->nama_lengkap; ?>" disabled>
                                         <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
@@ -919,12 +925,12 @@
                 const tabId = event.target.getAttribute('data-bs-target');
                 saveActiveTab(tabId);
             });
-        });
 
-        document.getElementById('whatsappButton').addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+            document.getElementById('whatsappButton').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
         });
     </script>
