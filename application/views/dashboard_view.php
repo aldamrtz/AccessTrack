@@ -265,6 +265,24 @@
                                     <!-- Tampilkan Total Data -->
                                     <span class="text-primary font-weight-bold">Total: <?= $total_data; ?></span>
                                 </div>
+                                <div id="infoCards" style="margin-top: 20px; display: flex; justify-content: space-around;">
+                                    <div class="info-card">
+                                        <h4>Kartu Akses</h4>
+                                        <p>123</p>
+                                    </div>
+                                    <div class="info-card">
+                                        <h4>Laporan Keluhan</h4>
+                                        <p>45</p>
+                                    </div>
+                                    <div class="info-card">
+                                        <h4>Pengajuan Email</h4>
+                                        <p>78</p>
+                                    </div>
+                                    <div class="info-card">
+                                        <h4>Pengajuan Domain</h4>
+                                        <p>34</p>
+                                    </div>
+                                </div>
                                 <div class="card-body">
                                     <canvas id="my3DBarChart"></canvas>
                                 </div>
